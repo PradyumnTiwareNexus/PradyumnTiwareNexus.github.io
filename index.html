@@ -5,14 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Pradyumn Tiware Nexus — Cybersecurity Researcher</title>
 <meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer."/>
-<meta property="og:title" content="Pradyumn Tiware Nexus"/>
-<meta property="og:description" content="Cybersecurity Researcher • Bug Bounty Hunter • Recon Automation Developer."/>
 <meta property="og:image" content="assets/og-card.png"/>
 <link rel="icon" href="assets/favicon.png" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div id="particles" aria-hidden="true"></div>
+<div id="bg"></div>
 
 <header class="nav">
   <div class="container">
@@ -20,7 +18,6 @@
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
-      <a href="#tools">Tools</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -29,77 +26,68 @@
 <main>
   <section class="hero">
     <div class="container hero-grid">
-      <aside class="card profile-card">
+      <aside class="card profile-card" data-hover>
         <div class="avatar-wrap">
           <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar"/>
         </div>
         <h3 class="profile-name">PradyumnTiwareNexus</h3>
-        <p class="profile-sub">Cybersecurity Researcher<br/><span>Bug Bounty • Recon Automation</span></p>
-
+        <p class="profile-sub">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
         <div class="cta-row">
           <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
           <a class="btn ghost" href="#projects">See Projects</a>
         </div>
       </aside>
 
-      <section class="card lead-card">
+      <section class="card lead-card" data-hover>
         <h1 class="hero-title">Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
         <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
-
         <div class="quick">
-          <strong>Skills:</strong> Recon Automation · JS Analysis · API Security<br>
-          <strong>Tools:</strong> Burp Suite · Wireshark · Nmap · httpx · Custom Scripts
+          <strong>Core:</strong> Recon • JS Analysis • API Security • SOC Detection
         </div>
       </section>
     </div>
   </section>
 
-  <!-- ABOUT (FINAL PREMIUM) -->
   <section id="about" class="section">
-    <div class="container card about-card">
+    <div class="container card about-card" data-hover>
       <div class="about-grid">
         <div class="about-left">
           <h2 class="glow-title">About Me</h2>
           <p class="lead-paragraph">
-            I’m <strong>Pradyumn Tiware</strong>, a Cybersecurity Researcher, Bug Bounty Hunter, and Recon Automation Developer.
-            I focus on building advanced security pipelines that combine OSINT, automation, JS analysis, and attack-surface mapping.
-          </p>
-          <p class="lead-paragraph">
-            My mission is to find high-impact bugs, reduce noise, and uncover hidden vulnerabilities that others miss — ethically and responsibly.
+            I’m <strong>Pradyumn Tiware</strong> — Cybersecurity Researcher, Bug Bounty Hunter and Recon Automation Developer.
+            I design automated pipelines and analysis tooling to find high-impact vulnerabilities across web platforms and APIs.
           </p>
 
           <div class="focus-list">
             <strong>My areas of focus:</strong>
             <ul>
-              <li>🔍 Recon automation & tooling (subdomains, wayback, JS, API)</li>
+              <li>🔍 Recon automation & tooling (subdomains, Wayback, JS, API)</li>
               <li>🛡 Web exploitation & endpoint analysis</li>
               <li>🧩 JavaScript deep-inspection & secret detection</li>
-              <li>🌐 Asset discovery & attack surface expansion</li>
+              <li>🌐 Asset & attack-surface discovery</li>
               <li>🔐 API security & authentication analysis</li>
-              <li>📚 Historical archive analysis (CDX)</li>
+              <li>📚 Historical archive (CDX) research</li>
               <li>🛰 SOC-style log review, threat hunting & detection</li>
-              <li>🤝 Responsible disclosure & research collaboration</li>
+              <li>🤝 Responsible disclosure & collaboration</li>
             </ul>
           </div>
         </div>
 
         <aside class="about-right">
-          <div class="glass-stats">
-            <div class="stat-item">
+          <div class="glass-stats grid-2">
+            <div class="stat-item big">
               <div class="stat-label">Experience</div>
-              <div class="stat-value">4.6 <span class="stat-small">years</span></div>
-            </div>
-
-            <div class="stat-item">
-              <div class="stat-label">Specialization</div>
-              <div class="stat-value stat-special">
-                Recon Automation<br>Bug Hunting<br>JS Analysis<br>API Security<br>SOC / Threat Hunting
-              </div>
+              <div class="stat-value big-val">4.6<span class="stat-small"> yrs</span></div>
             </div>
 
             <div class="stat-item">
               <div class="stat-label">Programs</div>
               <div class="stat-value">Private + Public</div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-label">Specialization</div>
+              <div class="stat-value stat-special">Recon • Bug Hunting • JS • API • SOC</div>
             </div>
 
             <div class="stat-item">
@@ -111,7 +99,7 @@
           <div class="icon-boxes">
             <div class="icon-row">
               <div class="icon-thing">💻<span>HTML</span></div>
-              <div class="icon-thing">⚙️<span>C / C++</span></div>
+              <div class="icon-thing">⚙️<span>C/C++</span></div>
               <div class="icon-thing">☕<span>Java</span></div>
             </div>
             <div class="icon-row">
@@ -123,30 +111,19 @@
         </aside>
       </div>
 
-      <!-- Stats & Skills block (moved below for cleaner hero) -->
-      <div class="stats-skills">
-        <div class="stats-grid">
-          <div class="stat-card"><h4>Experience</h4><p>4.6 years</p></div>
-          <div class="stat-card"><h4>Specialization</h4><p>Recon • JS • API • Bug Hunting • SOC Analysis</p></div>
-          <div class="stat-card"><h4>Programs</h4><p>Private + Public</p></div>
-          <div class="stat-card"><h4>Practices</h4><p>Responsible</p></div>
-        </div>
-
-        <div class="skills-grid">
-          <div class="skill">HTML</div>
-          <div class="skill">C / C++</div>
-          <div class="skill">Java</div>
-          <div class="skill">Wireshark</div>
-          <div class="skill">Burp Suite</div>
-          <div class="skill">Nmap</div>
-        </div>
+      <!-- skills row -->
+      <div class="skills-row">
+        <div class="skill-pill">Recon</div>
+        <div class="skill-pill">JS Analysis</div>
+        <div class="skill-pill">API Security</div>
+        <div class="skill-pill">SOC / Detection</div>
+        <div class="skill-pill">Automation</div>
       </div>
     </div>
   </section>
 
-  <!-- Projects with 3D rotation cards -->
   <section id="projects" class="section dark">
-    <div class="container card">
+    <div class="container card" data-hover>
       <h2>Featured Projects</h2>
       <div class="project-row">
         <div class="project-card" tabindex="0">
@@ -159,8 +136,8 @@
 
         <div class="project-card" tabindex="0">
           <div class="project-inner">
-            <h3>Other Tool / Writeup</h3>
-            <p>Example project placeholder. Replace with your repo links or writeups.</p>
+            <h3>Writeup & Tools</h3>
+            <p>OSINT and recon tooling, workflow writeups and methodology guides.</p>
             <a href="#" target="_blank">Repository</a>
           </div>
         </div>
@@ -169,13 +146,12 @@
   </section>
 
   <section id="contact" class="section">
-    <div class="container card">
+    <div class="container card" data-hover>
       <h2>Contact</h2>
       <p>Responsible disclosure only — please use vendor bounty programs or email for coordination.</p>
       <ul class="contact-list">
         <li>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></li>
         <li>GitHub: <a href="https://github.com/PradyumnTiwareNexus" target="_blank">PradyumnTiwareNexus</a></li>
-        <li>Twitter: <a href="https://x.com/yourhandle" target="_blank">@yourhandle</a></li>
       </ul>
     </div>
   </section>
@@ -189,51 +165,39 @@
 </footer>
 
 <script>
-// particles background (subtle)
-(function(){
-  const canvas = document.createElement('canvas');
-  canvas.id='bg-canvas'; canvas.style.position='fixed'; canvas.style.left=0; canvas.style.top=0;
-  canvas.style.width='100%'; canvas.style.height='100%'; canvas.style.zIndex='-2'; canvas.style.opacity='0.12';
-  document.body.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
-  let particles=[];
-  function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
-  addEventListener('resize', resize); resize();
-  for(let i=0;i<Math.max(30, innerWidth/50);i++) particles.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:1+Math.random()*2,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4});
-  function frame(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; if(p.x<0)p.x=innerWidth; if(p.x>innerWidth)p.x=0; if(p.y<0)p.y=innerHeight; if(p.y>innerHeight)p.y=0; ctx.beginPath(); ctx.fillStyle='rgba(120,220,255,0.06)'; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); }); requestAnimationFrame(frame); }
-  frame();
-})();
+// subtle animated gradient background
+const bg = document.getElementById('bg');
+bg.style.position='fixed'; bg.style.left=0; bg.style.top=0; bg.style.right=0; bg.style.bottom=0; bg.style.zIndex='-3';
+bg.style.background = 'radial-gradient(600px 300px at 10% 10%, rgba(0,200,255,0.06), transparent), radial-gradient(500px 300px at 90% 80%, rgba(255,90,160,0.035), transparent)';
+bg.style.filter='blur(14px)';
 
-// reveal animations
+// hover glass glow using pointer movement
+document.addEventListener('mousemove', e=>{
+  const hoverEls = document.querySelectorAll('[data-hover]');
+  hoverEls.forEach(el=>{
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    el.style.setProperty('--mx', (x-0.5));
+    el.style.setProperty('--my', (y-0.5));
+  });
+});
+
+// reveal cards
 document.addEventListener('DOMContentLoaded', function(){
   document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), 100*i));
-  // skills glitch animation (cyberpunk)
-  const skills = document.querySelectorAll('.skill');
-  skills.forEach((s, i)=>{
-    s.style.setProperty('--delay', (0.6 + i*0.12) + 's');
-    setTimeout(()=> s.classList.add('glitch'), 800 + i*80);
-  });
-
-  // project card 3d tilt using mouse move
+  // project tilt
   document.querySelectorAll('.project-card').forEach(card=>{
     const inner = card.querySelector('.project-inner');
     card.addEventListener('mousemove', (e)=>{
       const rect = card.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      inner.style.transform = `rotateX(${ -y * 10 }deg) rotateY(${ x * 12 }deg) translateZ(8px)`;
+      inner.style.transform = `rotateX(${ -y * 8 }deg) rotateY(${ x * 10 }deg) translateZ(10px)`;
     });
     card.addEventListener('mouseleave', ()=> inner.style.transform = '');
-    card.addEventListener('focus', ()=> inner.style.transform = 'translateZ(8px)'); // keyboard access
-    card.addEventListener('blur', ()=> inner.style.transform = '');
   });
 });
-
-// simple visitor counter (countapi)
-(function(){
-  const key='portfolio_visits';
-  fetch('https://api.countapi.xyz/hit/pradyumntiware/'+key).then(r=>r.json()).then(j=>{ const el=document.getElementById('visits'); if(el && j && j.value!==undefined) el.innerText = j.value.toLocaleString(); }).catch(()=>{});
-})();
 </script>
 </body>
 </html>
