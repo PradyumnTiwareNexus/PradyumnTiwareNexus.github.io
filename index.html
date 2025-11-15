@@ -1,238 +1,172 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PradyumnTiwareNexus — Cybersecurity Researcher</title>
-  <meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer."/>
-  <meta property="og:title" content="PradyumnTiwareNexus"/>
-  <meta property="og:description" content="Cybersecurity Researcher • Bug Bounty • Recon Automation Developer."/>
-  <meta property="og:image" content="assets/og-card.png"/>
-  <link rel="icon" href="assets/favicon.png" />
-  <style>
-    :root{
-      --bg:#071014;
-      --card:#061018;
-      --glass:rgba(255,255,255,0.04);
-      --accent1:#07d3ff;
-      --accent2:#ff52a8;
-      --soft:#9fdfe8;
-      --muted:#8fbec6;
-      --radius:14px;
-      --glass-strong: rgba(255,255,255,0.06);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#020608 0%, #071014 60%);color:#dff7ff;-webkit-font-smoothing:antialiased}
-    .container{max-width:1100px;margin:0 auto;padding:28px}
-    header.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 8px}
-    .brand{font-weight:800;letter-spacing:0.6px}
-    nav.navlinks a{color:var(--muted);text-decoration:none;margin-left:16px;font-weight:600}
-    .hero{display:grid;grid-template-columns:320px 1fr;gap:22px;padding:18px 0 32px}
-    .card{background:linear-gradient(180deg,var(--glass), rgba(0,0,0,0.06));padding:18px;border-radius:var(--radius);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 20px rgba(0,0,0,0.6);position:relative;transition:transform .22s,box-shadow .22s}
-    .card:hover{transform:translateY(-6px);box-shadow:0 30px 80px rgba(0,0,0,0.6)}
-    /* profile */
-    .avatar-wrap{position:relative;display:block;width:170px;height:170px;margin:0 auto}
-    .avatar{width:170px;height:170px;border-radius:50%;object-fit:cover;border:8px solid rgba(255,255,255,0.06);display:block}
-    .neon-ring{position:absolute;left:-8px;top:-8px;width:186px;height:186px;border-radius:50%;pointer-events:none;filter:blur(36px);mix-blend-mode:screen;box-shadow:0 0 60px rgba(0,200,255,0.18)}
-    @keyframes neonPulse{0%{box-shadow:0 0 40px rgba(7,211,255,0.12)}50%{box-shadow:0 0 120px rgba(255,82,168,0.12)}100%{box-shadow:0 0 40px rgba(7,211,255,0.12)}}
-    .neon-ring.animated{animation:neonPulse 3.6s ease-in-out infinite}
-    .profile .name{font-size:20px;margin:12px 0 4px;text-align:center}
-    .profile .subtitle{font-size:13px;color:var(--soft);text-align:center;margin:0}
-    .lead.card{padding:26px;display:flex;flex-direction:column;justify-content:center}
-    .lead h1{font-size:28px;margin:0 0 12px}
-    .accent{color:var(--accent1);font-weight:800}
-    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    .stat{padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03));text-align:center}
-    .stat.big{font-weight:900;font-size:34px;color:var(--accent1)}
-    .stat .lbl{font-size:12px;color:var(--muted);margin-top:6px}
-    /* projects */
-    .projects-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
-    .proj{width:340px;min-height:120px;display:flex;flex-direction:column;justify-content:center}
-    .proj h3{margin:0 0 8px}
-    /* 3D hover subtle */
-    .card.parallax{transform-style:preserve-3d;will-change:transform}
-    /* music player */
-    .music-card .player{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-    .playlist{min-width:240px;max-width:480px}
-    .playlist div{padding:10px;border-radius:8px;margin-bottom:6px;background:rgba(255,255,255,0.02);cursor:pointer}
-    .player-controls{display:flex;align-items:center;gap:10px}
-    .player-controls button{padding:8px 12px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#001;cursor:pointer}
-    /* contact form */
-    .contact-form label{display:block;margin:8px 0;color:#dff7ff}
-    .contact-form input,.contact-form textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#dff7ff}
-    /* cursor-follow glow overlay */
-    .cursor-glow{position:fixed;left:0;top:0;pointer-events:none;width:260px;height:260px;border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:screen;filter:blur(28px);opacity:0.5;transition:transform .08s linear}
-    /* footer */
-    footer.footer{padding:28px;text-align:center;color:#8fbec6}
-    /* responsive */
-    @media (max-width:980px){.hero{grid-template-columns:1fr;}.projects-row{justify-content:center}.lead h1{font-size:22px}}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pradyumn Tiware Nexus — Cybersecurity Researcher</title>
+<meta name="description" content="Pradyumn Tiware — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer" />
+<link rel="icon" href="assets/favicon.png" />
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- cursor glow element -->
-  <div id="cursorGlow" class="cursor-glow" style="background:radial-gradient(circle at 30% 30%, rgba(7,211,255,0.22), rgba(255,82,168,0.12) 40%, transparent 60%);z-index:9999;mix-blend-mode:screen;display:none"></div>
-
-  <header class="topbar container">
+<header class="nav">
+  <div class="container">
     <div class="brand">PradyumnTiwareNexus</div>
-    <nav class="navlinks">
+    <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
-      <a href="#music">Music</a>
       <a href="#contact">Contact</a>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <main class="container">
-    <section class="hero">
-      <aside class="card profile">
+<main>
+  <section class="hero">
+    <div class="container hero-grid">
+      <aside class="card profile-card hover-lift" data-hover>
         <div class="avatar-wrap">
-          <!-- Replace the image at assets/profile-circle.png with your chosen avatar -->
-          <img id="avatar" class="avatar" src="assets/profile-circle.png" alt="PradyumnTiwareNexus avatar">
-          <div class="neon-ring animated"></div>
+          <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar"/>
+          <div class="avatar-ring"></div>
         </div>
-        <h3 class="name">PradyumnTiwareNexus</h3>
-        <p class="subtitle">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
+        <h3 class="profile-name">PradyumnTiwareNexus</h3>
+        <p class="profile-sub">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
+        <div class="tool-badges">
+          <span class="badge">Nmap</span>
+          <span class="badge">Burp Suite</span>
+          <span class="badge">Wireshark</span>
+          <span class="badge">Metasploit</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
+          <a class="btn ghost" href="#projects">See Projects</a>
+        </div>
       </aside>
 
-      <section class="card lead parallax">
-        <h1>Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
-        <p style="color:var(--muted);margin:6px 0 12px">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
-
-        <div class="stats-grid" aria-hidden="false">
-          <div class="stat big">4.6 <span style="font-size:14px;color:var(--muted);">yrs</span><div class="lbl">Experience</div></div>
-          <div class="stat">Recon • Bug Hunting • JS • API • SOC<div class="lbl">Specialization</div></div>
+      <section class="card lead-card hover-lift" data-hover>
+        <h1 class="hero-title">Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
+        <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
+        <div class="quick">
+          <strong>Core:</strong> Recon • JS Analysis • API Security • SOC Detection
         </div>
       </section>
-    </section>
+    </div>
+  </section>
 
-    <section id="projects" class="card">
-      <h2>Featured Projects</h2>
-      <div class="projects-row">
-        <article class="proj card parallax">
-          <h3>Recon Pipeline Enhanced v2.1</h3>
-          <p style="color:var(--muted)">Automated recon: subdomains → httpx → JS → Wayback → secrets → nuclei targets.</p>
-          <p><a href="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced" target="_blank" style="color:var(--accent1);text-decoration:none">Repository →</a></p>
-        </article>
+  <section id="about" class="section">
+    <div class="container about-wrap">
+      <div class="about-left card hover-lift" data-hover>
+        <h2>About Me</h2>
+        <p>I'm <strong>Pradyumn Tiware</strong> — a Cybersecurity Researcher, Bug Bounty Hunter, and Recon Automation Developer. I design automated pipelines and tooling to find high-impact vulnerabilities across web platforms and APIs. I also perform SOC-style log analysis and threat hunting for private engagements.</p>
+        <ul class="focus-list">
+          <li>Recon automation & tooling (subdomains, Wayback, JS, API)</li>
+          <li>Web exploitation & endpoint analysis</li>
+          <li>JavaScript deep-inspection & secret detection</li>
+          <li>API security & authentication analysis</li>
+          <li>SOC-style log review & threat hunting</li>
+        </ul>
       </div>
-    </section>
 
-    <section id="music" class="card music-card" style="margin-top:18px">
-      <h2>Music & Focus</h2>
-      <div class="player">
-        <div id="playlist" class="playlist" aria-live="polite"></div>
-        <div class="player-controls">
-          <button id="prev">⏮</button>
-          <button id="play">▶</button>
-          <button id="next">⏭</button>
-          <div style="color:var(--muted);font-size:13px"><span id="cur">0:00</span> / <span id="dur">0:00</span></div>
+      <aside class="about-right">
+        <div class="glass-stats card hover-lift" data-hover>
+          <div class="stat-grid">
+            <div class="stat-item stat-large" data-hoverable>
+              <div class="label">Experience</div>
+              <div class="value">4.6 <span class="yrs">yrs</span></div>
+            </div>
+            <div class="stat-item" data-hoverable>
+              <div class="label">Specialization</div>
+              <div class="value">Recon • Bug Hunting • JS • API • SOC</div>
+            </div>
+            <div class="stat-item" data-hoverable>
+              <div class="label">Programs</div>
+              <div class="value">Private + Public</div>
+            </div>
+            <div class="stat-item" data-hoverable>
+              <div class="label">Practices</div>
+              <div class="value">Responsible</div>
+            </div>
+          </div>
+
+          <div class="skill-pills">
+            <span>HTML</span><span>C / C++</span><span>Java</span><span>Wireshark</span><span>Burp</span><span>Nmap</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="container card hover-lift" data-hover>
+      <h2>Featured Projects</h2>
+      <div class="project-row">
+        <div class="project-card">
+          <div class="project-inner">
+            <h3>Recon Pipeline Enhanced v2.1</h3>
+            <p>Automated recon pipeline: subdomains → httpx → JS → Wayback → secrets → nuclei targets.</p>
+            <a href="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced" target="_blank">Repository</a>
+          </div>
         </div>
       </div>
-      <p style="color:var(--muted);margin-top:12px;font-size:13px">Tip: upload MP3s to <code>assets/audio/</code> named <code>focus1.mp3</code>, <code>focus2.mp3</code>, <code>focus3.mp3</code>.</p>
-    </section>
+    </div>
+  </section>
 
-    <section id="contact" class="card" style="margin-top:18px">
+  <section id="music" class="section">
+    <div class="container card hover-lift" data-hover>
+      <h2>Music & Mood</h2>
+      <!-- placeholder Spotify embed, user can replace with playlist URI -->
+      <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" width="100%" height="120" style="border-radius:12px;border:0;overflow:hidden" allow="encrypted-media"></iframe>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container card hover-lift" data-hover>
       <h2>Contact</h2>
-      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="contact-form">
-        <label>Name<input type="text" name="name" required></label>
-        <label>Email<input type="email" name="email" required></label>
-        <label>Message<textarea name="message" rows="5" required></textarea></label>
-        <div style="margin-top:8px"><button type="submit" class="btn">Send</button></div>
-        <p style="color:var(--muted);font-size:13px;margin-top:8px">Use vendor bug bounty programs for live testing. Responsible disclosure only.</p>
+      <p>Responsible disclosure only — please use vendor bounty programs or email for coordination.</p>
+      <form id="contact-form" class="contact-form" onsubmit="handleContact(event)">
+        <label>Name<input type="text" id="cf-name" required></label>
+        <label>Email<input type="email" id="cf-email" required></label>
+        <label>Message<textarea id="cf-msg" rows="4" required></textarea></label>
+        <div class="form-actions">
+          <button type="submit" class="btn">Send (test)</button>
+        </div>
+        <p class="muted">Eat & Repeat & sleep.</p>
       </form>
-    </section>
+    </div>
+  </section>
 
-    <footer class="footer" style="margin-top:28px">
-      <div>© 2025 Pradyumn Tiware — Stay Ethical • Stay Sharp</div>
-    </footer>
-  </main>
+</main>
 
-  <script>
-  // ---------------------------
-  // Cursor-follow glow
-  // ---------------------------
-  (function(){
-    const glow = document.getElementById('cursorGlow');
-    if(!glow) return;
-    glow.style.display = 'block';
-    document.addEventListener('mousemove', e=>{
-      glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) scale(1)`;
-    });
-    // hide on mobile/touch (optional)
-    document.addEventListener('touchstart', ()=>glow.style.display='none');
-  })();
+<footer class="footer">
+  <div class="container">
+    <div>© 2025 Pradyumn Tiware</div>
+    <div>Stay Ethical • Stay Sharp</div>
+  </div>
+</footer>
 
-  // ---------------------------
-  // Card parallax subtle
-  // ---------------------------
-  (function(){
-    const cards = document.querySelectorAll('.card.parallax');
-    cards.forEach(card=>{
-      card.addEventListener('mousemove', e=>{
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top) / r.height - 0.5;
-        const rx = (-py * 6).toFixed(2);
-        const ry = (px * 8).toFixed(2);
-        card.style.transform = `translateY(-6px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-      });
-      card.addEventListener('mouseleave', ()=>{ card.style.transform=''; });
-    });
-  })();
+<script>
+// bring hovered card to front and add glow based on cursor
+document.querySelectorAll('[data-hover]').forEach(el=>{
+  el.addEventListener('mouseenter', ()=> el.classList.add('lifted'));
+  el.addEventListener('mouseleave', ()=> el.classList.remove('lifted'));
+  // add mousemove glow effect for children with data-hoverable
+  el.addEventListener('mousemove', (e)=>{
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    el.style.setProperty('--mx', x + 'px');
+    el.style.setProperty('--my', y + 'px');
+  });
+});
 
-  // ---------------------------
-  // Simple playlist player
-  // ---------------------------
-  (function(){
-    const playlist = [
-      {title:'Focus 1', src:'assets/audio/focus1.mp3'},
-      {title:'Focus 2', src:'assets/audio/focus2.mp3'},
-      {title:'Focus 3', src:'assets/audio/focus3.mp3'}
-    ];
-    const plEl = document.getElementById('playlist');
-    const audio = new Audio(); let idx = 0;
-    function render(){
-      plEl.innerHTML='';
-      playlist.forEach((p,i)=>{
-        const d = document.createElement('div');
-        d.textContent = p.title;
-        if(i===idx) d.style.fontWeight='700';
-        d.onclick = ()=> playIndex(i);
-        plEl.appendChild(d);
-      });
-    }
-    function playIndex(i){
-      idx = i;
-      audio.src = playlist[i].src;
-      audio.play().catch(()=>{});
-      render();
-    }
-    document.getElementById('play').addEventListener('click', ()=>{
-      if(!audio.src) playIndex(0);
-      else audio.paused?audio.play():audio.pause();
-    });
-    document.getElementById('next').addEventListener('click', ()=> playIndex((idx+1)%playlist.length));
-    document.getElementById('prev').addEventListener('click', ()=> playIndex((idx-1+playlist.length)%playlist.length));
-    audio.addEventListener('timeupdate', updateTime);
-    function updateTime(){
-      const cur = document.getElementById('cur'), dur = document.getElementById('dur');
-      if(cur) cur.textContent = formatTime(audio.currentTime);
-      if(dur) dur.textContent = isNaN(audio.duration)?'0:00':formatTime(audio.duration);
-    }
-    function formatTime(t){ if(!t) return '0:00'; const m=Math.floor(t/60), s=Math.floor(t%60); return m+':'+(s<10?'0'+s:s); }
-    render();
-  })();
-
-  // ---------------------------
-  // CountAPI: increment a hit (optional)
-  // ---------------------------
-  (function(){
-    // This increments a simple open counter: no token needed (public)
-    fetch('https://api.countapi.xyz/hit/pradyumntiware/portfolio_v5')
-      .then(r=>r.json()).then(j=>{
-        // you could show j.value somewhere if you want
-        console.log('visit counter', j);
-      }).catch(()=>{});
-  })();
-  </script>
+// contact form demo handler
+function handleContact(e){
+  e.preventDefault();
+  const name = document.getElementById('cf-name').value;
+  const email = document.getElementById('cf-email').value;
+  const msg = document.getElementById('cf-msg').value;
+  alert('Demo form submitted.\n' + name + ' — ' + email + '\nMessage length: ' + msg.length + ' chars.\nReplace with real backend to send emails.');
+  document.getElementById('contact-form').reset();
+}
+</script>
 </body>
 </html>
