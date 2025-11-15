@@ -4,14 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Pradyumn Tiware Nexus — Cybersecurity Researcher</title>
-<meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer."/>
-<meta property="og:image" content="assets/og-card.png"/>
 <link rel="icon" href="assets/favicon.png" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div id="bg"></div>
-
 <header class="nav">
   <div class="container">
     <div class="brand">PradyumnTiwareNexus</div>
@@ -26,7 +22,7 @@
 <main>
   <section class="hero">
     <div class="container hero-grid">
-      <aside class="card profile-card" data-hover>
+      <aside class="card profile-card hover-lift">
         <div class="avatar-wrap">
           <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar"/>
         </div>
@@ -38,9 +34,9 @@
         </div>
       </aside>
 
-      <section class="card lead-card" data-hover>
+      <section class="card lead-card hover-lift">
         <h1 class="hero-title">Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
-        <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
+        <p class="muted">Creator of Recon Pipeline Enhanced v2.1. Focused on web security, OSINT and high-value bug hunting.</p>
         <div class="quick">
           <strong>Core:</strong> Recon • JS Analysis • API Security • SOC Detection
         </div>
@@ -49,96 +45,54 @@
   </section>
 
   <section id="about" class="section">
-    <div class="container card about-card" data-hover>
+    <div class="container card about-card hover-lift">
       <div class="about-grid">
         <div class="about-left">
-          <h2 class="glow-title">About Me</h2>
-          <p class="lead-paragraph">
-            I’m <strong>Pradyumn Tiware</strong> — Cybersecurity Researcher, Bug Bounty Hunter and Recon Automation Developer.
-            I design automated pipelines and analysis tooling to find high-impact vulnerabilities across web platforms and APIs.
-          </p>
-
-          <div class="focus-list">
-            <strong>My areas of focus:</strong>
-            <ul>
-              <li>🔍 Recon automation & tooling (subdomains, Wayback, JS, API)</li>
-              <li>🛡 Web exploitation & endpoint analysis</li>
-              <li>🧩 JavaScript deep-inspection & secret detection</li>
-              <li>🌐 Asset & attack-surface discovery</li>
-              <li>🔐 API security & authentication analysis</li>
-              <li>📚 Historical archive (CDX) research</li>
-              <li>🛰 SOC-style log review, threat hunting & detection</li>
-              <li>🤝 Responsible disclosure & collaboration</li>
-            </ul>
-          </div>
+          <h2>About Me</h2>
+          <p>I’m <strong>Pradyumn Tiware</strong> — Cybersecurity Researcher, Bug Bounty Hunter and Recon Automation Developer.
+          I design automated pipelines and tooling to find high-impact vulnerabilities across web platforms and APIs.</p>
+          <ul>
+            <li>Recon automation & tooling (subdomains, Wayback, JS, API)</li>
+            <li>Web exploitation & endpoint analysis</li>
+            <li>JavaScript deep-inspection & secret detection</li>
+            <li>API security & authentication analysis</li>
+            <li>SOC-style log review & threat hunting</li>
+          </ul>
         </div>
 
         <aside class="about-right">
-          <div class="glass-stats grid-2">
+          <div class="glass-stats">
             <div class="stat-item big">
               <div class="stat-label">Experience</div>
-              <div class="stat-value big-val">4.6<span class="stat-small"> yrs</span></div>
+              <div class="stat-value big-val">4.6 <span class="stat-small">yrs</span></div>
             </div>
-
+            <div class="stat-item">
+              <div class="stat-label">Specialization</div>
+              <div class="stat-value">Recon • Bug Hunting • JS • API • SOC</div>
+            </div>
             <div class="stat-item">
               <div class="stat-label">Programs</div>
               <div class="stat-value">Private + Public</div>
             </div>
-
-            <div class="stat-item">
-              <div class="stat-label">Specialization</div>
-              <div class="stat-value stat-special">Recon • Bug Hunting • JS • API • SOC</div>
-            </div>
-
             <div class="stat-item">
               <div class="stat-label">Practices</div>
               <div class="stat-value">Responsible</div>
             </div>
           </div>
-
-          <div class="icon-boxes">
-            <div class="icon-row">
-              <div class="icon-thing">💻<span>HTML</span></div>
-              <div class="icon-thing">⚙️<span>C/C++</span></div>
-              <div class="icon-thing">☕<span>Java</span></div>
-            </div>
-            <div class="icon-row">
-              <div class="icon-thing">🧰<span>Wireshark</span></div>
-              <div class="icon-thing">🛠️<span>Burp</span></div>
-              <div class="icon-thing">🔎<span>Nmap</span></div>
-            </div>
-          </div>
         </aside>
-      </div>
-
-      <!-- skills row -->
-      <div class="skills-row">
-        <div class="skill-pill">Recon</div>
-        <div class="skill-pill">JS Analysis</div>
-        <div class="skill-pill">API Security</div>
-        <div class="skill-pill">SOC / Detection</div>
-        <div class="skill-pill">Automation</div>
       </div>
     </div>
   </section>
 
   <section id="projects" class="section dark">
-    <div class="container card" data-hover>
+    <div class="container card hover-lift">
       <h2>Featured Projects</h2>
       <div class="project-row">
-        <div class="project-card" tabindex="0">
+        <div class="project-card">
           <div class="project-inner">
             <h3>Recon Pipeline Enhanced v2.1</h3>
-            <p>Automated recon: subdomains → httpx → JS → Wayback → secrets → nuclei targets.</p>
+            <p>Automated recon pipeline for high-value targets.</p>
             <a href="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced" target="_blank">Repository</a>
-          </div>
-        </div>
-
-        <div class="project-card" tabindex="0">
-          <div class="project-inner">
-            <h3>Writeup & Tools</h3>
-            <p>OSINT and recon tooling, workflow writeups and methodology guides.</p>
-            <a href="#" target="_blank">Repository</a>
           </div>
         </div>
       </div>
@@ -146,7 +100,7 @@
   </section>
 
   <section id="contact" class="section">
-    <div class="container card" data-hover>
+    <div class="container card hover-lift">
       <h2>Contact</h2>
       <p>Responsible disclosure only — please use vendor bounty programs or email for coordination.</p>
       <ul class="contact-list">
@@ -155,6 +109,7 @@
       </ul>
     </div>
   </section>
+
 </main>
 
 <footer class="footer">
@@ -165,38 +120,10 @@
 </footer>
 
 <script>
-// subtle animated gradient background
-const bg = document.getElementById('bg');
-bg.style.position='fixed'; bg.style.left=0; bg.style.top=0; bg.style.right=0; bg.style.bottom=0; bg.style.zIndex='-3';
-bg.style.background = 'radial-gradient(600px 300px at 10% 10%, rgba(0,200,255,0.06), transparent), radial-gradient(500px 300px at 90% 80%, rgba(255,90,160,0.035), transparent)';
-bg.style.filter='blur(14px)';
-
-// hover glass glow using pointer movement
-document.addEventListener('mousemove', e=>{
-  const hoverEls = document.querySelectorAll('[data-hover]');
-  hoverEls.forEach(el=>{
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width;
-    const y = (e.clientY - r.top) / r.height;
-    el.style.setProperty('--mx', (x-0.5));
-    el.style.setProperty('--my', (y-0.5));
-  });
-});
-
-// reveal cards
-document.addEventListener('DOMContentLoaded', function(){
-  document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), 100*i));
-  // project tilt
-  document.querySelectorAll('.project-card').forEach(card=>{
-    const inner = card.querySelector('.project-inner');
-    card.addEventListener('mousemove', (e)=>{
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      inner.style.transform = `rotateX(${ -y * 8 }deg) rotateY(${ x * 10 }deg) translateZ(10px)`;
-    });
-    card.addEventListener('mouseleave', ()=> inner.style.transform = '');
-  });
+// bring hovered card to front
+document.querySelectorAll('.hover-lift').forEach(el=>{
+  el.addEventListener('mouseenter', ()=> el.classList.add('lifted'));
+  el.addEventListener('mouseleave', ()=> el.classList.remove('lifted'));
 });
 </script>
 </body>
