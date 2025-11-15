@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pradyumn Tiware Nexus — Cybersecurity Researcher</title>
-  <meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer. Creator of Recon Pipeline v2.1."/>
+  <meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer."/>
   <meta property="og:title" content="Pradyumn Tiware Nexus"/>
   <meta property="og:description" content="Cybersecurity Researcher • Bug Bounty Hunter • Recon Automation Developer."/>
   <meta property="og:image" content="assets/og-card.png"/>
@@ -12,106 +12,138 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<header class="nav">
-  <div class="container">
-    <div class="brand">PradyumnTiwareNexus</div>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#tools">Tools</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-</header>
+  <div id="particles" aria-hidden="true"></div>
 
-<main>
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="profile card">
-        <div class="avatar-wrap">
-          <img src="assets/profile-circle.png" alt="avatar" class="avatar"/>
-          <div class="name-arc">PradyumnTiwareNexus</div>
-        </div>
-        <div class="role">Cybersecurity Researcher<br><span>Bug Bounty • Recon Automation</span></div>
+  <header class="nav">
+    <div class="container">
+      <div class="brand">PradyumnTiwareNexus</div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#tools">Tools</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <aside class="card profile-card">
+          <div class="avatar-wrap">
+            <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar"/>
+          </div>
+          <h3 class="profile-name">PradyumnTiwareNexus</h3>
+          <p class="profile-sub">Cybersecurity Researcher<br/><span>Bug Bounty • Recon Automation</span></p>
+
+          <div class="stat-row">
+            <div class="stat">
+              <div class="stat-value" id="visits">--</div>
+              <div class="stat-label">Profile visits</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">3</div>
+              <div class="stat-label">Pinned projects</div>
+            </div>
+          </div>
+        </aside>
+
+        <section class="card lead-card">
+          <h1>Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
+          <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
+
+          <div class="cta-row">
+            <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
+            <a class="btn ghost" href="#projects">See Projects</a>
+          </div>
+
+          <div class="quick">
+            <strong>Skills:</strong> HTML · C · C++ · Java · Bash · Python<br>
+            <strong>Tools:</strong> Burp Suite · Wireshark · Nmap · Metasploit · httpx
+          </div>
+        </section>
       </div>
+    </section>
 
-      <div class="lead card">
-        <h1>Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
-        <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
-        <div class="cta-row">
-          <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
-          <a class="btn ghost" href="#projects">See Projects</a>
+    <section id="about" class="section">
+      <div class="container card">
+        <h2>About</h2>
+        <p>I research web security, automate reconnaissance pipelines and responsibly disclose findings. I publish tools and writeups for the community.</p>
+      </div>
+    </section>
+
+    <section id="tools" class="section">
+      <div class="container">
+        <h2>Tools & Tech</h2>
+        <div class="tools-grid card">
+          <div class="tool"><span class="tool-icon">⚙️</span><div>Burp Suite</div></div>
+          <div class="tool"><span class="tool-icon">🧠</span><div>Wireshark</div></div>
+          <div class="tool"><span class="tool-icon">🔍</span><div>Nmap</div></div>
+          <div class="tool"><span class="tool-icon">🧰</span><div>Metasploit</div></div>
+          <div class="tool"><span class="tool-icon">🧩</span><div>httpx</div></div>
+          <div class="tool"><span class="tool-icon">📜</span><div>Recon scripts</div></div>
         </div>
+      </div>
+    </section>
 
-        <ul class="quick">
-          <li>Targets: private programs (high-value SaaS)</li>
-          <li>Specialties: Recon, JS-analysis, Wayback, automation</li>
-          <li>Open-source: Recon tooling & writeups</li>
+    <section id="projects" class="section dark">
+      <div class="container card">
+        <h2>Featured Projects</h2>
+        <div class="cards">
+          <article class="card project">
+            <h3>Recon Pipeline Enhanced v2.1</h3>
+            <p>Automated recon: subdomains → httpx → JS → Wayback → secrets → nuclei targets.</p>
+            <p><a href="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced" target="_blank">Repository →</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container card">
+        <h2>Contact</h2>
+        <p>Responsible disclosure only — please use vendor bounty programs or email for coordination.</p>
+        <ul class="contact-list">
+          <li>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></li>
+          <li>GitHub: <a href="https://github.com/PradyumnTiwareNexus" target="_blank">PradyumnTiwareNexus</a></li>
+          <li>Twitter: <a href="https://x.com/yourhandle" target="_blank">@yourhandle</a></li>
         </ul>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <section id="about" class="section">
-    <div class="container card">
-      <h2>About</h2>
-      <p>I research web security, automate reconnaissance pipelines and responsibly disclose findings. I publish tools and writeups for the community.</p>
-      <div class="badges">
-        <span>Recon</span><span>OSINT</span><span>Bug Bounty</span><span>Automation</span>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="section">
+  <footer class="footer">
     <div class="container">
-      <h2>Featured Projects</h2>
-      <div class="cards">
-        <article class="card">
-          <h3>Recon Pipeline Enhanced v2.1</h3>
-          <p>Automated recon pipeline: subdomains → httpx → JS → Wayback → secrets → nuclei targets.</p>
-          <p><a href="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced" target="_blank">Repository →</a></p>
-        </article>
-
-        <article class="card">
-          <h3>Writeups & Tools</h3>
-          <p>Security writeups, utility scripts and automation recipes focused on recon and responsible disclosure.</p>
-          <p><a href="https://github.com/PradyumnTiwareNexus" target="_blank">More on GitHub →</a></p>
-        </article>
-      </div>
+      <div>© 2025 Pradyumn Tiware</div>
+      <div>Stay Ethical • Stay Sharp</div>
     </div>
-  </section>
+  </footer>
 
-  <section id="tools" class="section dark">
-    <div class="container card">
-      <h2>Tools & Tech</h2>
-      <div class="grid">
-        <div>bash, python</div>
-        <div>httpx, subfinder, amass</div>
-        <div>gau, wayback, katana</div>
-        <div>nuclei, gf, rg</div>
-      </div>
-    </div>
-  </section>
+  <script>
+  (function(){
+    // lightweight particle layer
+    const canvas = document.createElement('canvas');
+    canvas.id = 'bg-canvas';
+    canvas.style.position='fixed'; canvas.style.left=0; canvas.style.top=0;
+    canvas.style.width='100%'; canvas.style.height='100%'; canvas.style.zIndex='-2'; canvas.style.opacity='0.14';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+    addEventListener('resize', resize); resize();
+    for(let i=0;i<Math.max(25, innerWidth/60);i++){ particles.push({x:Math.random()*innerWidth, y:Math.random()*innerHeight, r: 1+Math.random()*2, vx:(Math.random()-0.5)*0.3, vy:(Math.random()-0.5)*0.3}) }
+    function frame(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; if(p.x<0)p.x=innerWidth; if(p.x>innerWidth)p.x=0; if(p.y<0)p.y=innerHeight; if(p.y>innerHeight)p.y=0; ctx.beginPath(); ctx.fillStyle='rgba(180,230,255,0.06)'; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); }); requestAnimationFrame(frame); }
+    frame();
+  })();
 
-  <section id="contact" class="section">
-    <div class="container card">
-      <h2>Contact</h2>
-      <p>Responsible disclosure only — please use vendor bounty programs or email for coordination.</p>
-      <ul class="contact-list">
-        <li>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></li>
-        <li>GitHub: <a href="https://github.com/PradyumnTiwareNexus" target="_blank">PradyumnTiwareNexus</a></li>
-        <li>Twitter: <a href="https://x.com/yourhandle" target="_blank">@yourhandle</a></li>
-      </ul>
-    </div>
-  </section>
-</main>
+  // reveal cards
+  document.addEventListener('DOMContentLoaded', function(){ document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), 120*i)); });
 
-<footer class="footer">
-  <div class="container">
-    <div>© 2025 Pradyumn Tiware</div>
-    <div>Stay Ethical • Stay Sharp</div>
-  </div>
-</footer>
-
+  // CountAPI visitor counter
+  (function(){
+    const key = 'portfolio_visits'; // namespace key
+    fetch('https://api.countapi.xyz/hit/pradyumntiware/' + key).then(r=>r.json()).then(j=>{ const el=document.getElementById('visits'); if(el && j && j.value!==undefined) el.innerText = j.value.toLocaleString(); }).catch(()=>{});
+  })();
+  </script>
 </body>
 </html>
