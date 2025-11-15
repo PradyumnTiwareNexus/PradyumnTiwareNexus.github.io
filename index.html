@@ -5,123 +5,131 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PradyumnTiwareNexus — Cybersecurity Researcher</title>
   <meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer."/>
-  <meta property="og:title" content="Pradyumn Tiware Nexus"/>
+  <meta property="og:title" content="PradyumnTiwareNexus"/>
   <meta property="og:description" content="Cybersecurity Researcher • Bug Bounty Hunter • Recon Automation Developer."/>
   <meta property="og:image" content="assets/og-card.png"/>
   <link rel="icon" href="assets/favicon.png" />
   <style>
+    /* ---------- Base / Theme ---------- */
     :root{
-      --bg:#071018;
-      --card-bg: rgba(8,18,22,0.62);
+      --bg:#071016;
+      --panel: rgba(12,18,22,0.65);
+      --glass: rgba(20,28,33,0.55);
+      --muted:#9aa6ad;
+      --accent-a:#2de6ff; /* cyan */
+      --accent-b:#ff5fb4; /* pink */
       --glass-border: rgba(255,255,255,0.04);
-      --accent1: #19e1ff; /* cyan */
-      --accent2: #ff4fb0; /* pink */
-      --muted: #9fb7c0;
-      --glass-glow: rgba(25,225,255,0.07);
+      --card-radius:16px;
+      --glow: 0 10px 30px rgba(45,230,255,0.06);
+      --text:#d8e8ee;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
-
-    html,body{height:100%; margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: linear-gradient(180deg,#05070a 0%, #061016 50%); color:#e7fbff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
-    a{color:var(--accent1); text-decoration:none}
-    .container{width:min(1200px,94%); margin:0 auto; padding:28px 0;}
-
-    /* Header */
-    header.nav{position:sticky; top:0; z-index:50; backdrop-filter: blur(6px); background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.06)); border-bottom:1px solid rgba(255,255,255,0.02);}
-    header .container{display:flex; align-items:center; justify-content:space-between; gap:12px;}
-    .brand{font-weight:800; letter-spacing:0.4px}
-    header nav a{margin-left:18px; color:#cdeef7; font-weight:600; opacity:.95}
-
-    main{padding:28px 0 80px;}
-
-    /* Hero */
-    .hero-grid{display:grid; grid-template-columns:320px 1fr; gap:30px; align-items:start}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.045)); border-radius:14px; padding:20px; box-shadow: 0 8px 30px rgba(2,8,12,0.6); border:1px solid var(--glass-border); backdrop-filter: blur(8px); transition:transform .18s ease; overflow:hidden}
-    .profile-card{display:flex; flex-direction:column; align-items:center; text-align:center; padding:26px}
-    .avatar-wrap{position:relative; width:200px; height:200px; margin:6px 0 12px}
-    .avatar{width:100%; height:100%; border-radius:50%; object-fit:cover; display:block; border:12px solid rgba(255,255,255,0.95); box-shadow: 0 10px 40px rgba(0,0,0,0.6);}
-
-    /* animated neon ring */
-    .avatar-wrap::before{
-      content:""; position:absolute; inset: -18px; border-radius:50%;
-      background: radial-gradient(circle at 20% 20%, rgba(25,225,255,0.12), transparent 20%),
-                  radial-gradient(circle at 80% 80%, rgba(255,79,176,0.09), transparent 20%);
-      filter: blur(28px); z-index:-2;
-      transition: transform .25s ease;
-    }
+    html,body{height:100%;margin:0;background:
+      radial-gradient( circle at 10% 10%, rgba(45,230,255,0.02), transparent 8%),
+      linear-gradient(180deg,#021014 0%, #071016 45%, #050709 100%); color:var(--text); }
+    a{color:var(--accent-a); text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:28px}
+    .nav{padding:14px 0; position:sticky; top:0; backdrop-filter: blur(6px); z-index:50}
+    .nav .container{display:flex;align-items:center;gap:16px}
+    .brand{font-weight:700; letter-spacing:0.4px}
+    nav a{margin-left:18px;color:rgba(220,230,236,0.75)}
+    /* ---------- Grid / Hero ---------- */
+    .hero-grid{display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:start;margin-top:12px}
+    /* ---------- Card / Glass ---------- */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:24px; border-radius:var(--card-radius);
+          border:1px solid var(--glass-border); box-shadow:var(--glow); transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s}
+    .card.visible{opacity:1;transform:none}
+    .profile-card{position:relative;padding-top:36px}
+    .avatar-wrap{width:210px;height:210px;border-radius:999px;margin:0 auto;position:relative;display:flex;align-items:center;justify-content:center;
+      background:conic-gradient(from 0deg at 50% 50%, rgba(45,230,255,0.06), rgba(255,95,180,0.06));
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+    .avatar{width:190px;height:190px;border-radius:999px;object-fit:cover;display:block;border:10px solid #fff;box-shadow:0 6px 30px rgba(0,0,0,0.6)}
+    /* neon ring */
     .avatar-wrap::after{
-      content:""; position:absolute; inset:-30px; border-radius:50%;
-      box-shadow: 0 0 48px 14px rgba(25,225,255,0.035), 0 0 26px 6px rgba(255,79,176,0.02);
-      opacity:.9; z-index:-3; transition: all .2s ease;
+      content:""; position:absolute; inset:-12px; border-radius:50%;
+      background: radial-gradient(circle at 30% 20%, rgba(45,230,255,0.12), transparent 10%),
+                  radial-gradient(circle at 80% 60%, rgba(255,95,180,0.12), transparent 10%);
+      filter:blur(20px); mix-blend-mode:screen; opacity:0.95;
+      animation: pulseRing 2.6s infinite ease-in-out;
+      pointer-events:none;
+    }
+    @keyframes pulseRing{
+      0%{transform:scale(1);opacity:0.95}
+      50%{transform:scale(1.08);opacity:0.7}
+      100%{transform:scale(1);opacity:0.95}
     }
 
-    .profile-name{font-size:20px; font-weight:800; margin:8px 0 2px}
-    .profile-sub{color:var(--muted); font-weight:600; font-size:13px}
+    .profile-name{font-size:20px;text-align:center;margin:10px 0 6px;font-weight:800}
+    .profile-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:16px}
 
-    .stat-row{display:flex; gap:12px; margin-top:12px}
-    .stat{background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03)); padding:10px 12px; border-radius:10px; width:110px; text-align:center; box-shadow: inset 0 -4px 8px rgba(0,0,0,0.22)}
-    .stat-value{font-weight:800; font-size:20px; color:var(--accent1)}
-    .stat-label{font-size:12px; color:var(--muted)}
+    .stat-row{display:flex;gap:12px;justify-content:center;margin-top:6px}
+    .stat{background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008));padding:12px 18px;border-radius:12px;min-width:110px;text-align:center}
+    .stat-value{font-weight:800;font-size:20px;color:var(--accent-a)}
+    .stat-label{color:var(--muted);font-size:12px}
 
-    .lead-card h1{font-size:34px; margin:4px 0 8px; line-height:1.02}
-    .accent{color:var(--accent1)}
-    .muted{color:var(--muted); margin-bottom:12px}
-    .cta-row{display:flex; gap:12px; margin:16px 0}
-    .btn{display:inline-block; padding:12px 16px; border-radius:10px; background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:#041017; font-weight:800; box-shadow: 0 8px 30px rgba(0,0,0,0.45)}
-    .btn.ghost{background:transparent; color:#cdeef7; border:1px solid rgba(255,255,255,0.04)}
+    .btn{display:inline-block;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));
+         color:#031018;font-weight:700;box-shadow:0 8px 30px rgba(45,230,255,0.06);border:none;margin-right:10px}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
 
-    .quick{color:var(--muted); font-weight:600; margin-top:6px}
+    /* lead card */
+    .lead-card h1{font-size:34px;margin:0 0 8px;line-height:1.02}
+    .lead-card .accent{color:var(--accent-a)}
+    .muted{color:var(--muted);margin-bottom:12px}
+    .quick{margin-top:12px;color:var(--muted);font-weight:600}
 
-    /* Sections */
-    .section{margin-top:28px}
-    .section .card{padding:26px}
-    h2{font-size:22px; margin:0 0 12px; color:#e7fbff}
+    /* ---------- Sections ---------- */
+    .section{padding:40px 0}
+    .section .container.card{display:grid;grid-template-columns:1fr 320px;gap:28px}
+    /* about layout */
+    .about-left{padding-right:12px}
+    .focus-list{margin-top:12px;color:var(--muted);line-height:1.6}
+    .focus-list li{margin:10px 0}
 
-    /* ABOUT layout -> left content + right boxes */
-    .about-grid{display:grid; grid-template-columns: 1fr 360px; gap:22px; align-items:start}
-    .about-left p{color:#cfeff8; line-height:1.6}
-    .about-right{display:grid; gap:12px; grid-template-columns:1fr 1fr}
-    .info-box{padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(0,0,0,0.03)); border-radius:12px; text-align:center; font-weight:800; color:#cfeff8}
-    .info-box .mut{font-weight:600; color:var(--muted); font-size:13px}
+    /* experience boxes right column */
+    .right-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .stat-block{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));text-align:center}
+    .stat-block h3{margin:0;font-size:22px;color:var(--accent-a)}
+    .kcl{font-weight:800;color:#e7fdfd;font-size:18px}
 
-    /* EXP/TOOLS grid: make boxes glassy and hoverable */
-    .right-tools{display:grid; grid-template-columns:1fr; gap:12px}
-    .skill-pill{display:inline-flex; align-items:center; gap:10px; padding:10px 12px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.035)); border-radius:10px; color:#dff8ff; font-weight:700; margin:6px 6px 6px 0; border:1px solid rgba(255,255,255,0.02)}
+    /* Tools grid */
+    .tools-grid{display:flex;gap:12px;flex-wrap:wrap}
+    .tool{padding:12px 18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));box-shadow:0 8px 18px rgba(0,0,0,0.5)}
+    .tool .tool-icon{margin-right:8px;font-size:18px}
 
-    /* Tools & Tech - pills (from earlier answer) */
-    .tools-container{margin-top:6px; padding:18px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04)); box-shadow: 0 12px 40px rgba(2,8,12,0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.03)}
-    .tools-title{font-size:18px; margin:0 0 12px; color:#e7fbff; font-weight:800}
-    .tools-pills{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    .tool-pill{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.035)); border: 1px solid rgba(255,255,255,0.02); color: #cdeef7; font-weight:700; font-size:14px; cursor:default; transition: transform .16s ease, box-shadow .16s ease, background .16s ease; box-shadow: 0 6px 20px rgba(2,8,12,0.45); user-select:none}
-    .tool-pill .pill-icon{width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:16px; border-radius:8px; background: linear-gradient(90deg, rgba(0,224,255,0.08), rgba(255,79,176,0.06)); box-shadow: inset 0 -2px 6px rgba(0,0,0,0.25)}
-    .tool-pill:hover{transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 40px rgba(0,200,255,0.06), 0 6px 18px rgba(0,0,0,0.5); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05))}
-    .tool-pill.big{padding:12px 18px; font-size:15px}
-    @media (max-width:900px){ .hero-grid{grid-template-columns:1fr; } .about-grid{grid-template-columns:1fr} }
+    /* projects */
+    .cards{display:flex;flex-direction:column;gap:12px}
+    .project{padding:14px;border-radius:12px}
+    .project a{color:var(--accent-a)}
 
-    /* Projects simple cards */
-    .cards{display:flex; gap:12px; flex-wrap:wrap}
-    .project{padding:14px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03)); width:320px; box-shadow:0 8px 26px rgba(0,0,0,0.45)}
+    /* music player */
+    .music-controls{display:flex;gap:12px;align-items:center}
+    .music-play{padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));border:none;color:#021018;font-weight:700}
+    .music-select{padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
 
-    /* music box */
-    .music-card{display:flex; gap:12px; align-items:center; padding:14px; border-radius:12px}
-    .player{width:100%; display:flex; gap:12px; align-items:center}
-    .playlist{max-width:420px}
-    .play-btn{padding:10px 14px; border-radius:10px; background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#041017; font-weight:800; cursor:pointer}
+    /* contact form */
+    form input, form textarea, .music-select{width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.25);color:var(--text);outline:none}
+    form button{display:block;width:100%;padding:12px;border-radius:12px;border:none;margin-top:12px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));font-weight:800}
 
-    /* contact */
-    .contact-list a{color:#cfeef8}
-    form.contact{display:flex; flex-direction:column; gap:8px; max-width:520px}
+    /* hover effects / cursor glow */
+    .card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+    .tool:hover,.project:hover{transform:translateY(-6px); box-shadow:0 20px 60px rgba(45,230,255,0.04)}
+    /* fake custom cursor highlight on interactive areas */
+    .interactive{position:relative;overflow:hidden}
+    .interactive::after{content:"";position:absolute;left:0;top:0;right:0;bottom:0;border-radius:inherit;pointer-events:none;
+      background:linear-gradient(90deg, rgba(45,230,255,0.03), rgba(255,95,180,0.03)); opacity:0;transition:opacity .28s}
+    .interactive:hover::after{opacity:1}
 
-    footer{padding:22px 0; color:var(--muted); text-align:center}
-
-    /* small reveal animations for cards */
-    .card.visible{transform:translateY(0); opacity:1}
-    .card{transform:translateY(10px); opacity:0; transition:all .36s ease}
-    /* hover glow element style is appended via JS */
-
+    /* responsive */
+    @media(max-width:900px){
+      .hero-grid{grid-template-columns:1fr;padding:0 12px}
+      .profile-card{order:2}
+      .lead-card{order:1}
+      .section .container.card{grid-template-columns:1fr}
+      .right-grid{grid-template-columns:repeat(2,1fr)}
+    }
   </style>
 </head>
 <body>
-  <div id="particles" aria-hidden="true"></div>
-
   <header class="nav">
     <div class="container">
       <div class="brand">PradyumnTiwareNexus</div>
@@ -135,314 +143,259 @@
   </header>
 
   <main>
-    <div class="container">
-      <section class="hero">
-        <div class="hero-grid">
-          <!-- left profile column -->
-          <aside class="card profile-card visible">
-            <div class="avatar-wrap">
-              <!-- use your uploaded circular avatar image as assets/profile-circle.png -->
-              <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar"/>
+    <section class="hero">
+      <div class="container hero-grid">
+        <!-- LEFT: PROFILE -->
+        <aside class="card profile-card interactive">
+          <div class="avatar-wrap">
+            <!-- replace this path with the avatar you uploaded -->
+            <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar" onerror="this.style.opacity=.25"/>
+          </div>
+          <h3 class="profile-name">PradyumnTiwareNexus</h3>
+          <p class="profile-sub">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
+
+          <div class="stat-row">
+            <div class="stat">
+              <div class="stat-value" id="visits">--</div>
+              <div class="stat-label">Profile visits</div>
             </div>
-            <h3 class="profile-name">PradyumnTiwareNexus</h3>
-            <p class="profile-sub">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
-
-            <div class="stat-row">
-              <div class="stat">
-                <div class="stat-value" id="visits">--</div>
-                <div class="stat-label">Profile visits</div>
-              </div>
-              <div class="stat">
-                <div class="stat-value">3</div>
-                <div class="stat-label">Pinned projects</div>
-              </div>
+            <div class="stat">
+              <div class="stat-value">3</div>
+              <div class="stat-label">Pinned projects</div>
             </div>
-
-            <div style="margin-top:14px">
-              <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
-              <a class="btn ghost" href="#projects">See Projects</a>
-            </div>
-          </aside>
-
-          <!-- right lead column -->
-          <section class="card lead-card visible">
-            <h1>Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
-            <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
-
-            <div class="quick">
-              <strong>Skills:</strong> HTML · C · C++ · Java · Bash · Python · JS deep-inspection<br>
-              <strong>Tools:</strong> Burp Suite · Wireshark · Nmap · Metasploit · httpx · VSCode · Kali / Parrot
-            </div>
-          </section>
-        </div>
-      </section>
-
-      <!-- About -->
-      <section id="about" class="section">
-        <div class="card visible about-grid">
-          <div class="about-left">
-            <h2>About</h2>
-            <p>
-              I’m <strong>Pradyumn Tiware</strong>, a Cybersecurity Researcher, Bug Bounty Hunter, and Recon Automation Developer.
-              I build intelligent recon pipelines combining OSINT, automation, and deep archive analysis to find high-impact vulnerabilities.
-              I work ethically and focus on quality findings for private & public programs.
-            </p>
-
-            <h3 style="margin-top:12px">My areas of focus:</h3>
-            <ul style="color:#cfeff8; line-height:1.6">
-              <li>🔎 Recon automation & tooling (subdomains, wayback, JS, API)</li>
-              <li>🛡️ Web exploitation & endpoint analysis</li>
-              <li>🧩 JavaScript deep-inspection & secret detection</li>
-              <li>🌐 Asset discovery & attack-surface expansion</li>
-              <li>🔑 API security & authentication analysis</li>
-              <li>🗂️ Historical archive (CDX) analysis</li>
-              <li>🛰️ SOC-style log review & threat hunting</li>
-              <li>🤝 Responsible disclosure & research collaboration</li>
-            </ul>
           </div>
 
-          <aside class="about-right">
-            <div class="info-box">
-              <div class="mut">Experience</div>
-              <div style="font-size:28px; margin-top:6px; color:var(--accent1); font-weight:900">4.6 yrs</div>
-            </div>
+          <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+            <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
+            <a class="btn ghost" href="#projects">See Projects</a>
+          </div>
+        </aside>
 
-            <div class="info-box">
-              <div class="mut">Specialization</div>
-              <div style="margin-top:8px; font-weight:900; color:#fff">Recon • Bug Hunting • JS • API • SOC</div>
-            </div>
+        <!-- RIGHT: HERO / SUMMARY -->
+        <section class="card lead-card interactive">
+          <h1>Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
+          <p class="muted"><strong>Creator of Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
 
-            <div class="info-box">
-              <div class="mut">Programs</div>
-              <div style="margin-top:8px; font-weight:800">Private + Public</div>
-            </div>
+          <div style="margin-top:8px;color:var(--muted);font-weight:700">
+            <span style="display:block;margin-bottom:6px"><strong>Skills:</strong> HTML · C · C++ · Java · Bash · Python · JS deep-inspection</span>
+            <span style="display:block"><strong>Tools:</strong> Burp Suite · Wireshark · Nmap · Metasploit · httpx · VSCode · Kali / Parrot</span>
+          </div>
+        </section>
+      </div>
+    </section>
 
-            <div class="info-box">
-              <div class="mut">Practices</div>
-              <div style="margin-top:8px; font-weight:800">Responsible Disclosure</div>
-            </div>
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="container card">
+        <div class="about-left">
+          <h2>About Me</h2>
+          <p style="color:var(--muted)">
+            I'm <strong>Pradyumn Tiware</strong>, a Cybersecurity Researcher and Recon Automation Developer. I build automation, perform deep JS and API analysis, and hunt high-impact bugs responsibly.
+            I focus on tools & processes that reduce noise and surface the highest-value targets.
+          </p>
 
-            <div style="grid-column:1/-1; display:flex; flex-wrap:wrap; margin-top:8px;">
-              <div class="skill-pill">💻 HTML</div>
-              <div class="skill-pill">⚙️ C / C++</div>
-              <div class="skill-pill">☕ Java</div>
-              <div class="skill-pill">🐧 Wireshark</div>
-              <div class="skill-pill">🛡️ Burp Suite</div>
-              <div class="skill-pill">🔍 Nmap</div>
-            </div>
-          </aside>
+          <h3 style="margin-top:14px">My areas of focus</h3>
+          <ul class="focus-list">
+            <li>🔎 Recon automation & tooling (subdomains, wayback, JS, API)</li>
+            <li>🛡️ Web exploitation & endpoint analysis</li>
+            <li>🧩 JavaScript deep-inspection & secret detection</li>
+            <li>🌐 Asset discovery & attack-surface expansion</li>
+            <li>🔑 API security & authentication analysis</li>
+            <li>🗂️ Historical archive (CDX) analysis</li>
+            <li>🛰️ SOC-style log review, threat hunting & detection</li>
+            <li>🤝 Responsible disclosure & research collaboration</li>
+          </ul>
         </div>
-      </section>
 
-      <!-- Tools & Tech -->
-      <section id="tools" class="section">
-        <div class="card visible">
-          <div class="tools-container">
-            <div class="tools-title">Tools & Tech</div>
-            <div class="tools-pills">
-              <div class="tool-pill big" title="Burp Suite">
-                <span class="pill-icon">🛡️</span> Burp Suite
-              </div>
+        <aside class="right-grid">
+          <div class="stat-block">
+            <div style="font-size:12px;color:var(--muted)">Experience</div>
+            <div class="kcl">4.6 yrs</div>
+          </div>
 
-              <div class="tool-pill" title="Wireshark">
-                <span class="pill-icon">🌊</span> Wireshark
-              </div>
+          <div class="stat-block">
+            <div style="font-size:12px;color:var(--muted)">Specialization</div>
+            <div style="font-weight:800;margin-top:8px">Recon • Bug Hunting • JS • API • SOC</div>
+          </div>
 
-              <div class="tool-pill" title="Nmap">
-                <span class="pill-icon">🔎</span> Nmap
-              </div>
+          <div class="stat-block">
+            <div style="font-size:12px;color:var(--muted)">Programs</div>
+            <div style="font-weight:800;margin-top:8px">Private + Public</div>
+          </div>
 
-              <div class="tool-pill" title="Metasploit">
-                <span class="pill-icon">🧰</span> Metasploit
-              </div>
+          <div class="stat-block">
+            <div style="font-size:12px;color:var(--muted)">Practices</div>
+            <div style="font-weight:800;margin-top:8px">Responsible Disclosure</div>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-              <div class="tool-pill" title="httpx">
-                <span class="pill-icon">🧩</span> httpx
-              </div>
+    <!-- TOOLS -->
+    <section id="tools" class="section">
+      <div class="container card">
+        <h2>Tools & Tech</h2>
+        <div class="tools-grid" style="margin-top:14px">
+          <div class="tool interactive"><span class="tool-icon">⚙️</span> Burp Suite</div>
+          <div class="tool interactive"><span class="tool-icon">🧠</span> Wireshark</div>
+          <div class="tool interactive"><span class="tool-icon">🔍</span> Nmap</div>
+          <div class="tool interactive"><span class="tool-icon">💼</span> Metasploit</div>
+          <div class="tool interactive"><span class="tool-icon">🧩</span> httpx</div>
+          <div class="tool interactive"><span class="tool-icon">🖥️</span> VSCode</div>
+          <div class="tool interactive"><span class="tool-icon">🐧</span> Kali / Parrot</div>
+          <div class="tool interactive"><span class="tool-icon">📜</span> Recon scripts</div>
+        </div>
+      </div>
+    </section>
 
-              <div class="tool-pill" title="Recon scripts">
-                <span class="pill-icon">📜</span> Recon scripts
-              </div>
+    <!-- PROJECTS & MUSIC -->
+    <section id="projects" class="section">
+      <div class="container card">
+        <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+          <div style="flex:1;min-width:320px">
+            <h2>Featured Projects</h2>
+            <div class="cards" style="margin-top:12px">
+              <article class="card project interactive">
+                <h3>Recon Pipeline Enhanced v2.1</h3>
+                <p>Automates subdomains → httpx → JS → Wayback → secrets → nuclei targets. Designed for high-value SaaS & private programs.</p>
+                <p><a href="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced" target="_blank">Repository →</a></p>
+              </article>
 
-              <div class="tool-pill" title="Kali / Parrot">
-                <span class="pill-icon">🐧</span> Kali / Parrot
-              </div>
-
-              <div class="tool-pill" title="VSCode">
-                <span class="pill-icon">💻</span> VSCode
-              </div>
-
-              <div class="tool-pill" title="WireShark/Burp plugins">
-                <span class="pill-icon">🔧</span> Burp Exts / Plugins
-              </div>
+              <article class="card project interactive">
+                <h3>Other Tool / Writeup</h3>
+                <p>Example placeholder — replace with your repo link or writeup.</p>
+                <p><a href="#" target="_blank">Repository →</a></p>
+              </article>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- Projects -->
-      <section id="projects" class="section">
-        <div class="card visible">
-          <h2>Featured Projects</h2>
-          <div class="cards">
-            <article class="card project">
-              <h3>Recon Pipeline Enhanced v2.1</h3>
-              <p>Automated recon: subdomains → httpx → JS → Wayback → secrets → nuclei targets.</p>
-              <p><a href="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced" target="_blank">Repository →</a></p>
-            </article>
+          <div style="width:360px">
+            <h2>Music & Mood</h2>
+            <p style="color:var(--muted)">A small playlist to keep focused while reconning.</p>
 
-            <article class="card project">
-              <h3>Other Tools & Writeups</h3>
-              <p>Tooling, writeups and research notes related to JS analysis and wayback hunting.</p>
-              <p><a href="https://github.com/PradyumnTiwareNexus" target="_blank">View all →</a></p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- Music & Contact / small player -->
-      <section class="section">
-        <div class="card visible music-card">
-          <div style="flex:1">
-            <h2 style="margin:0 0 6px">Music & Mood</h2>
-            <p style="color:var(--muted); margin:0 0 8px">A small playlist to keep focused while reconning.</p>
-
-            <div class="player">
-              <div class="playlist">
-                <div style="display:flex; gap:8px; align-items:center">
-                  <button id="playBtn" class="play-btn">Play</button>
-                  <select id="trackList" style="padding:8px;border-radius:8px;background:transparent;color:#e7fbff;border:1px solid rgba(255,255,255,0.04)">
-                    <option value="assets/music1.mp3">Working Energy — Kinhbach</option>
-                    <option value="assets/music2.mp3">Focus Loop — Instrumental</option>
-                    <option value="assets/music3.mp3">LoFi Hack — Chill</option>
-                  </select>
-                </div>
-                <div id="currentTrack" style="color:var(--muted); margin-top:8px">Stopped</div>
+            <div class="card" style="padding:16px">
+              <div class="music-controls">
+                <button class="music-play" id="playBtn">Play</button>
+                <select id="trackSelect" class="music-select">
+                  <option value="assets/music/working-energy.mp3">Working Energy — Kinhbach</option>
+                  <option value="assets/music/lofi-sample.mp3">Lofi Focus — Sample</option>
+                </select>
               </div>
-              <div style="margin-left:auto; min-width:120px; text-align:right">
-                <small style="color:var(--muted)">Tip: mute if you are recording PoC videos</small>
-              </div>
+              <div style="margin-top:10px;color:var(--muted)" id="trackLabel">Loaded: Working Energy — Kinhbach</div>
+
+              <!-- hidden audio element -->
+              <audio id="player" preload="auto">
+                <source src="assets/music/working-energy.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
             </div>
+
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Contact -->
-      <section id="contact" class="section">
-        <div class="card visible" style="display:flex; gap:20px; flex-wrap:wrap">
-          <div style="flex:1 1 460px">
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="container card">
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:20px">
+          <div>
             <h2>Contact</h2>
-            <p style="color:var(--muted)">Responsible disclosure only — please use vendor bounty programs or contact via email for coordination.</p>
+            <p style="color:var(--muted)">Responsible disclosure only — please use vendor bounty programs or email for coordination.</p>
 
-            <!-- Formspree: replace action with your endpoint -->
-            <form class="contact" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-              <input type="text" name="name" placeholder="Your name" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e7fbff">
-              <input type="email" name="_replyto" placeholder="Your email" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e7fbff">
-              <textarea name="message" rows="5" placeholder="Brief description (program, scope...)" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e7fbff"></textarea>
-              <button class="btn" type="submit">Send</button>
+            <!-- NOTE: Replace the form endpoint below with your Formspree endpoint or other email endpoint.
+                 Example Formspree URL: https://formspree.io/f/your_form_id  -->
+            <form id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST">
+              <input type="text" name="name" placeholder="Your name" required />
+              <input type="email" name="email" placeholder="Your email" required />
+              <textarea name="message" placeholder="Brief description (program, scope...)" rows="6" required></textarea>
+              <button type="submit">Send</button>
+              <div style="margin-top:8px;color:var(--muted);font-size:13px">Tip: replace <code>YOUR_FORMSPREE_ENDPOINT</code> with your Formspree endpoint to receive messages.</div>
             </form>
+
           </div>
 
-          <aside style="width:260px">
-            <h3 style="margin-top:6px">Quick Links</h3>
-            <ul class="contact-list" style="list-style:none; padding:0; margin:8px 0 0">
-              <li>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></li>
-              <li>GitHub: <a href="https://github.com/PradyumnTiwareNexus" target="_blank">PradyumnTiwareNexus</a></li>
-              <li>X: <a href="https://x.com/yourhandle" target="_blank">@yourhandle</a></li>
-            </ul>
+          <aside>
+            <h3>Quick Links</h3>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px">
+              <a class="card" href="mailto:your-email@example.com">Email: your-email@example.com</a>
+              <a class="card" href="https://github.com/PradyumnTiwareNexus" target="_blank">GitHub</a>
+              <a class="card" href="https://x.com/yourhandle" target="_blank">X / Twitter</a>
+            </div>
           </aside>
         </div>
-      </section>
-
-    </div>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <div class="container">
-      <div>© 2025 Pradyumn Tiware — Stay Ethical • Stay Sharp</div>
+  <footer style="padding:24px 0">
+    <div class="container" style="text-align:center;color:var(--muted)">
+      © 2025 Pradyumn Tiware — Stay Ethical • Stay Sharp
     </div>
   </footer>
 
-  <!-- JavaScript: small animations, visitor counter, music player, hover glow -->
+  <!-- ---------- Scripts ---------- -->
   <script>
-    // reveal cards on load
-    document.addEventListener('DOMContentLoaded', function(){
-      document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), 120*i));
-    });
+    // simple reveal
+    document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), 80*i));
 
-    // CountAPI visitor counter - will show number in #visits
+    // CountAPI guest counter (no key needed; namespace 'pradyumntiware' + key 'portfolio_visits')
     (function(){
-      const key = 'portfolio_visits';
-      fetch('https://api.countapi.xyz/hit/pradyumntiware/' + key)
+      const el = document.getElementById('visits');
+      if(!el) return;
+      fetch('https://api.countapi.xyz/hit/pradyumntiware/portfolio_visits')
         .then(r=>r.json())
         .then(j=>{
-          if(j && j.value!==undefined){
-            const el=document.getElementById('visits');
-            if(el) el.innerText = j.value.toLocaleString();
-          }
-        }).catch(()=>{});
+          if(j && j.value!==undefined) el.innerText = j.value.toLocaleString();
+        }).catch(()=>{ el.innerText='--' });
     })();
 
-    // tiny glow under hovered pill
-    (function(){
-      const glow = document.createElement('div');
-      glow.style.position = 'fixed';
-      glow.style.pointerEvents='none';
-      glow.style.width='160px';
-      glow.style.height='64px';
-      glow.style.borderRadius='20px';
-      glow.style.background = 'radial-gradient(closest-side, rgba(25,225,255,0.12), rgba(255,79,176,0.06), transparent 70%)';
-      glow.style.transition='transform .12s ease, opacity .12s ease, left .06s ease, top .06s ease';
-      glow.style.opacity='0';
-      glow.style.zIndex='9998';
-      document.body.appendChild(glow);
+    // music player controls
+    const player = document.getElementById('player');
+    const playBtn = document.getElementById('playBtn');
+    const trackSelect = document.getElementById('trackSelect');
+    const trackLabel = document.getElementById('trackLabel');
+    let isPlaying=false;
+    playBtn.addEventListener('click', ()=>{
+      if(!isPlaying){ player.play(); playBtn.innerText='Pause'; isPlaying=true; }
+      else{ player.pause(); playBtn.innerText='Play'; isPlaying=false; }
+    });
+    trackSelect.addEventListener('change', (e)=>{
+      const src = e.target.value;
+      player.src = src;
+      const label = e.target.options[e.target.selectedIndex].text;
+      trackLabel.innerText = 'Loaded: ' + label;
+      if(isPlaying){ player.pause(); player.load(); player.play(); }
+    });
 
-      document.querySelectorAll('.tool-pill').forEach(el=>{
-        el.addEventListener('mouseenter', e=>{
-          const r = el.getBoundingClientRect();
-          glow.style.left = (r.left + r.width/2 - 80) + 'px';
-          glow.style.top = (r.top + r.height/2 - 32) + 'px';
-          glow.style.opacity = '1';
-          glow.style.transform = 'scale(1.02)';
-        });
-        el.addEventListener('mouseleave', ()=> {
-          glow.style.opacity = '0';
-          glow.style.transform = 'scale(.9)';
-        });
+    // contact form feedback
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e)=>{
+      // keep default POST so Formspree handles it; show quick UI change
+      setTimeout(()=> { alert('Message sent (if configured). Check your Formspree / email.'); }, 600);
+    });
+
+    // small cursor-follow glow on interactive cards
+    document.querySelectorAll('.interactive').forEach(card=>{
+      card.addEventListener('mousemove', (ev)=>{
+        const rect = card.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const y = ev.clientY - rect.top;
+        // set CSS variable to use for dynamic glow if needed (not used heavily here)
+        card.style.setProperty('--mx', x + 'px');
+        card.style.setProperty('--my', y + 'px');
       });
-    })();
+    });
 
-    // simple music player (local files in assets/ — use your mp3s)
-    (function(){
-      const audio = new Audio();
-      const playBtn = document.getElementById('playBtn');
-      const trackList = document.getElementById('trackList');
-      const current = document.getElementById('currentTrack');
-
-      function setTrack(url){
-        audio.src = url;
-        audio.load();
-        current.innerText = 'Loaded: ' + trackList.options[trackList.selectedIndex].text;
-      }
-
-      trackList.addEventListener('change', ()=> setTrack(trackList.value));
-      setTrack(trackList.value);
-
-      playBtn.addEventListener('click', function(){
-        if(audio.paused){
-          audio.play().catch(()=>{});
-          playBtn.innerText = 'Pause';
-        } else {
-          audio.pause();
-          playBtn.innerText = 'Play';
-        }
+    // small accessibility: if avatar image missing, paint a colored circle
+    document.querySelectorAll('.avatar').forEach(a=>{
+      a.addEventListener('error', ()=> {
+        a.style.background = 'linear-gradient(90deg,var(--accent-a),var(--accent-b))';
+        a.style.border = '10px solid rgba(255,255,255,0.95)';
+        a.style.width='180px'; a.style.height='180px';
+        a.style.display='block';
       });
-
-      audio.addEventListener('ended', ()=> playBtn.innerText = 'Play');
-      audio.addEventListener('play', ()=> current.innerText = 'Playing: ' + trackList.options[trackList.selectedIndex].text);
-      audio.addEventListener('pause', ()=> current.innerText = 'Paused');
-    })();
+    });
   </script>
-
 </body>
 </html>
