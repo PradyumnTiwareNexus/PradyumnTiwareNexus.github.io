@@ -1,4 +1,3 @@
-<!-- Save as index.html (drop assets/profile-circle.png, favicon, og-card into assets/) -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,110 +10,128 @@
   <meta property="og:image" content="assets/og-card.png"/>
   <link rel="icon" href="assets/favicon.png" />
   <style>
+    /* --------- theme --------- */
     :root{
-      --bg:#071019;
-      --panel:#0e1619;
+      --bg:#041017;
+      --panel:rgba(255,255,255,0.02);
       --glass: rgba(255,255,255,0.03);
-      --accent1: #10e0d3;
-      --accent2: #ff57b8;
-      --muted:#9aa8ad;
+      --muted:#9fb1b3;
       --card-radius:16px;
+      --accent1:#0fe4d0; /* cyan */
+      --accent2:#ff5fb8; /* pink */
+      --neon-shadow: 0 10px 40px rgba(16,224,208,0.12);
       --glass-border: rgba(255,255,255,0.04);
+      --glass-strong: rgba(255,255,255,0.06);
     }
-    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
-    body{background:linear-gradient(180deg,#071019 0%, #071a1b 60%);color:#e7f8f8; -webkit-font-smoothing:antialiased;}
-    .container{max-width:1150px;margin:0 auto;padding:28px;}
-    header.nav{position:sticky;top:0;background:linear-gradient(180deg, rgba(0,0,0,0.25), transparent);backdrop-filter: blur(4px);z-index:40;border-bottom:1px solid rgba(255,255,255,0.02)}
-    header .container{display:flex;align-items:center;gap:18px}
-    .brand{font-weight:700;color:#d8f8f6}
-    header nav{margin-left:auto;display:flex;gap:14px}
-    header nav a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px}
-    header nav a:hover{color:var(--accent1);background:rgba(16,224,211,0.03)}
+    html,body{height:100%;margin:0;background:
+      radial-gradient(1000px 600px at 10% 10%, rgba(16,224,208,0.02), transparent 8%),
+      radial-gradient(900px 500px at 90% 80%, rgba(255,87,184,0.015), transparent 6%),
+      var(--bg);font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:#e9fbfa}
+    .container{max-width:1100px;margin:0 auto;padding:28px}
 
-    /* hero */
-    .hero{padding:40px 0 10px}
-    .hero-grid{display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:start}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:var(--card-radius); padding:22px; box-shadow: 0 6px 22px rgba(2,8,10,0.6); border:1px solid var(--glass-border); transition:transform .22s ease, box-shadow .22s ease; opacity:0; transform:translateY(8px)}
+    /* nav */
+    header.nav{position:sticky;top:0;background:linear-gradient(180deg, rgba(0,0,0,0.25), transparent);backdrop-filter: blur(6px);z-index:60;border-bottom:1px solid rgba(255,255,255,0.02)}
+    header .container{display:flex;align-items:center;gap:18px}
+    .brand{font-weight:800;color:#d9fbf6}
+    nav{margin-left:auto;display:flex;gap:12px}
+    nav a{color:var(--muted);text-decoration:none;padding:8px;border-radius:10px}
+    nav a:hover{color:var(--accent1);background:rgba(16,224,208,0.03)}
+
+    /* hero layout */
+    .hero{padding:36px 0 6px}
+    .hero-grid{display:grid;grid-template-columns:320px 1fr;gap:26px;align-items:start}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.016), rgba(255,255,255,0.008)); border-radius:var(--card-radius); padding:20px; box-shadow: 0 8px 30px rgba(0,0,0,0.6); border:1px solid var(--glass-border); transition:transform .22s,box-shadow .22s,opacity .22s; opacity:0; transform:translateY(8px)}
     .card.visible{opacity:1; transform:none}
 
-    /* profile card */
-    .profile-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:28px}
-    .avatar-wrap{position:relative;width:220px;height:220px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:-56px 0 12px; box-shadow: 0 14px 50px rgba(0,0,0,0.6)}
-    .avatar{width:196px;height:196px;border-radius:50%;object-fit:cover;border:12px solid #0b0f10;background:radial-gradient(circle at 30% 20%, rgba(16,224,211,0.12), transparent 30%);}
-    /* neon ring */
+    /* left column — profile */
+    .profile-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:22px}
+    .avatar-wrap{position:relative;width:220px;height:220px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:-60px 0 12px;box-shadow:0 18px 60px rgba(2,8,10,0.7)}
+    .avatar{width:196px;height:196px;border-radius:50%;object-fit:cover;border:12px solid #071216;background:radial-gradient(circle at 30% 20%, rgba(16,224,208,0.11), transparent 30%)}
+    /* stronger animated neon ring + subtle pulsing */
     .avatar-wrap::before{
-      content:"";position:absolute;left:-12px;top:-12px;right:-12px;bottom:-12px;border-radius:50%;
-      background: conic-gradient(from 120deg, var(--accent1), var(--accent2), var(--accent1));
-      filter: blur(10px);opacity:0.85;mix-blend-mode:screen;z-index:-1; animation: spin 6s linear infinite;
-      box-shadow: 0 0 40px rgba(16,224,211,0.25), inset 0 8px 20px rgba(255,255,255,0.02);
+      content:"";position:absolute;inset:-12px;border-radius:50%;background:conic-gradient(from 150deg,var(--accent1),var(--accent2),var(--accent1));filter:blur(12px);opacity:0.95;mix-blend-mode:screen;animation:spin 5.6s linear infinite, pulse 2.6s ease-in-out infinite;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes pulse{0%{box-shadow:0 0 22px rgba(16,224,208,0.12)}50%{box-shadow:0 0 44px rgba(255,95,184,0.12)}100%{box-shadow:0 0 22px rgba(16,224,208,0.12)}}
 
-    .profile-name{font-size:20px;font-weight:700;margin:12px 0 6px;color:#eafbf9}
-    .profile-sub{font-size:13px;color:var(--muted);line-height:1.3}
+    .profile-name{font-size:20px;font-weight:800;margin:10px 0 6px;color:#e8fbfa}
+    .profile-sub{font-size:13px;color:var(--muted);line-height:1.35}
 
-    .stat-row{display:flex;gap:14px;margin-top:12px;width:100%;justify-content:center}
-    .stat{background:rgba(255,255,255,0.02);padding:14px;border-radius:12px;min-width:120px}
+    .stat-row{display:flex;gap:12px;margin-top:12px;width:100%;justify-content:center}
+    .stat{background:rgba(255,255,255,0.02);padding:12px;border-radius:12px;min-width:110px}
     .stat-value{font-size:20px;font-weight:800;color:var(--accent1);text-align:center}
     .stat-label{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
 
-    .btn{display:inline-block;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#031214;font-weight:700;text-decoration:none;margin-top:14px}
+    .btn{display:inline-block;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#031214;font-weight:800;text-decoration:none;margin-top:14px}
     .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted);margin-left:8px}
 
-    .lead-card h1{font-size:36px;margin:0 0 10px;line-height:1.05}
+    /* right hero */
+    .lead-card h1{font-size:34px;margin:0 0 8px;line-height:1.02}
     .lead-card .accent{color:var(--accent1)}
-    .lead-card p.muted{color:var(--muted);margin:10px 0}
+    .lead-card p.muted{color:var(--muted);margin:8px 0 12px}
 
-    .quick{margin-top:16px;color:var(--muted);font-size:14px}
+    .quick{margin-top:12px;color:var(--muted);font-size:14px;line-height:1.45}
 
-    /* About / focus area layout */
+    /* ABOUT section */
     .section{padding:30px 0}
-    .section .container.card{display:grid;grid-template-columns:1fr 360px;gap:26px;align-items:start}
-    .left-col{padding-right:8px}
+    .about-wrap{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+    .left-col h2{margin-top:0}
     .about-list{margin:12px 0;padding-left:18px;color:#dff6f4}
     .about-list li{margin:8px 0;line-height:1.45}
 
-    /* right side stats squares */
+    /* right stats boxes */
     .right-stats{display:flex;flex-direction:column;gap:12px}
-    .stat-block{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02);min-height:86px}
+    .stat-block{padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.008));border:1px solid rgba(255,255,255,0.02);min-height:86px}
     .stat-block h3{margin:0;color:#bfeeea;font-weight:700}
-    .skill-pill{display:inline-flex;align-items:center;padding:8px 12px;margin:6px;border-radius:10px;background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.02);color:var(--muted);font-weight:600}
+    .skill-pill{display:inline-flex;align-items:center;padding:8px 12px;margin:6px;border-radius:10px;background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.02);color:var(--muted);font-weight:700}
 
-    /* Tools & tech row */
-    .tools-grid{display:flex;gap:12px;flex-wrap:wrap;padding:14px;border-radius:12px}
-    .tool{background:rgba(255,255,255,0.02);padding:12px 14px;border-radius:10px;display:flex;gap:10px;align-items:center;color:var(--muted);font-weight:700}
-    .tool .tool-icon{font-size:18px}
+    /* Tools & Tech split */
+    .tools-card{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+    .tools-col{flex:1;min-width:260px;max-width:520px}
+    .tools-col h3{margin:0 0 12px}
+    .tools-grid{display:flex;flex-wrap:wrap;gap:12px}
+    .tool{background:rgba(255,255,255,0.02);padding:10px 14px;border-radius:12px;display:flex;gap:10px;align-items:center;color:var(--muted);font-weight:700;box-shadow:0 8px 30px rgba(2,8,10,0.6)}
+    .tool .icon{font-size:18px}
 
-    /* Projects */
+    /* hacker GIF block (decorative) */
+    .hacker-area{border-radius:12px;overflow:hidden;min-height:160px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
+    .hacker-area img{width:100%;height:100%;object-fit:cover;opacity:0.95;display:block}
+
+    /* projects, music and contact */
     .cards{display:flex;gap:14px;flex-wrap:wrap}
-    .project{min-width:240px;padding:18px}
-
-    /* Music */
-    .music-box{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
+    .project{min-width:240px;padding:16px}
+    .music-box{padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));border:1px solid rgba(255,255,255,0.02)}
     .music-controls{display:flex;gap:12px;align-items:center}
 
-    /* contact */
+    /* contact form */
     form.contact-form{display:flex;flex-direction:column;gap:10px}
     input[type="text"],input[type="email"],textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.03);padding:12px;border-radius:10px;color:#dff6f4}
     textarea{min-height:120px;resize:vertical}
     .submit-btn{padding:12px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#031214;font-weight:800;cursor:pointer}
 
+    /* footer */
     footer.footer{padding:30px 0;color:var(--muted);text-align:center}
 
-    /* hover physics: cursor glow, card lift */
-    .card:hover{transform:translateY(-6px);box-shadow:0 22px 60px rgba(2,8,10,0.7)}
-    .hover-glow{position:fixed;pointer-events:none;z-index:80;width:220px;height:220px;border-radius:50%;mix-blend-mode:screen;filter:blur(32px);opacity:0;transition:opacity .18s linear, transform .18s linear}
-    .hover-glow.show{opacity:0.9}
-    /* small responsive */
+    /* hover + cursor effects */
+    .card:hover{transform:translateY(-8px);box-shadow:0 26px 80px rgba(2,8,10,0.8)}
+    /* custom cursor elements */
+    .cursor-dot, .cursor-ring { position: fixed; pointer-events: none; z-index:9999; transition: transform .08s linear, opacity .18s linear; mix-blend-mode:screen; }
+    .cursor-dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(180deg,var(--accent1),var(--accent2));box-shadow:0 6px 18px rgba(16,224,208,0.25);}
+    .cursor-ring{width:68px;height:68px;border-radius:50%;border:2px dashed rgba(255,255,255,0.06);box-shadow:0 10px 40px rgba(16,224,208,0.08);transform:translate(-50%,-50%);opacity:0.9}
+    .cursor-ring.large{width:120px;height:120px;border-width:3px;opacity:0.95}
+
+    /* highlight on focus: when hovering interactive, ring gets accent */
+    .cursor-acc { box-shadow: 0 18px 70px rgba(16,224,208,0.18); border-color: rgba(16,224,208,0.45); }
+
+    /* responsive */
     @media (max-width:980px){
       .hero-grid{grid-template-columns:1fr;gap:18px}
-      .section .container.card{grid-template-columns:1fr}
+      .about-wrap{grid-template-columns:1fr}
       .avatar-wrap{margin:0 auto -40px}
     }
   </style>
 </head>
 <body>
-  <!-- subtle moving particle layer generated by JS -->
   <div id="particles" aria-hidden="true"></div>
 
   <header class="nav">
@@ -132,11 +149,11 @@
   <main>
     <section class="hero">
       <div class="container hero-grid">
-        <!-- left profile column -->
+        <!-- PROFILE -->
         <aside class="card profile-card visible">
           <div class="avatar-wrap">
-            <!-- place your avatar image at assets/profile-circle.png -->
-            <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar"/>
+            <!-- put your avatar at assets/profile-circle.png -->
+            <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar" />
           </div>
           <h3 class="profile-name">PradyumnTiwareNexus</h3>
           <p class="profile-sub">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
@@ -152,20 +169,20 @@
             </div>
           </div>
 
-          <div style="margin-top:16px;display:flex;gap:10px;justify-content:center">
+          <div style="margin-top:14px;display:flex;gap:10px;justify-content:center">
             <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
             <a class="btn ghost" href="#projects">See Projects</a>
           </div>
         </aside>
 
-        <!-- right main column -->
+        <!-- HERO TEXT -->
         <section class="card lead-card visible">
           <h1>Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
           <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
 
           <div class="quick">
-            <strong>Skills:</strong> HTML · C · C++ · Java · Bash · Python · JS deep-inspection<br/>
-            <strong>Tools:</strong> Burp Suite · Wireshark · Nmap · Metasploit · httpx · VSCode · Kali / Parrot
+            <strong>Skills:</strong> HTML · C · C++ · Java · Go · Bash · Python · JS deep-inspection<br/>
+            <strong>Tools:</strong> Burp Suite · Wireshark · Nmap · Metasploit · httpx · VSCode · Kali / Parrot · SQLmap · Postman
           </div>
         </section>
       </div>
@@ -173,10 +190,10 @@
 
     <!-- ABOUT -->
     <section id="about" class="section">
-      <div class="container card visible">
-        <div class="left-col">
+      <div class="container card visible about-wrap">
+        <div>
           <h2>About Me</h2>
-          <p>I'm <strong>Pradyumn Tiware</strong>, a Cybersecurity Researcher, Bug Bounty Hunter, and Recon Automation Developer. I build advanced recon pipelines combining OSINT, automation, and deep JS + archive analysis to find high-impact vulnerabilities.</p>
+          <p>I'm <strong>Pradyumn Tiware</strong>, a Cybersecurity Researcher, Bug Bounty Hunter and Recon Automation Developer. I build automated recon pipelines and perform deep JS & archive analysis to find high-impact vulnerabilities in an ethical way.</p>
 
           <h3 style="margin-top:14px">My areas of focus:</h3>
           <ul class="about-list">
@@ -194,9 +211,8 @@
         <aside class="right-stats">
           <div class="stat-block">
             <h3>Experience</h3>
-            <div style="font-weight:800;font-size:28px;color:var(--accent1);margin-top:8px">4.6 yrs</div>
+            <div style="font-size:26px;font-weight:900;color:var(--accent1);margin-top:8px">4.6 yrs</div>
           </div>
-
           <div class="stat-block">
             <h3>Specialization</h3>
             <div style="margin-top:8px;font-weight:800;color:#dff6f4">Recon • Bug Hunting • JS • API • SOC</div>
@@ -204,46 +220,80 @@
 
           <div class="stat-block" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center">
             <div style="width:100%;text-align:center;font-weight:700;color:var(--muted);margin-bottom:6px">Programs</div>
-            <div class="skill-pill">Private + Public</div>
+            <div class="skill-pill">Private</div>
+            <div class="skill-pill">Public</div>
+            <div style="width:100%;text-align:center;font-weight:700;color:var(--muted);margin:8px 0 6px">Practices</div>
             <div class="skill-pill">Responsible Disclosure</div>
           </div>
 
           <div class="stat-block">
             <div style="font-weight:700;color:var(--muted);margin-bottom:8px">Technologies</div>
             <div style="display:flex;flex-wrap:wrap;gap:8px">
-              <div class="skill-pill">💻 HTML</div>
-              <div class="skill-pill">⚙️ C / C++</div>
-              <div class="skill-pill">☕ Java</div>
-              <div class="skill-pill">🐧 Wireshark</div>
-              <div class="skill-pill">🛡️ Burp Suite</div>
-              <div class="skill-pill">🔍 Nmap</div>
+              <div class="skill-pill">HTML</div>
+              <div class="skill-pill">CSS</div>
+              <div class="skill-pill">Java</div>
+              <div class="skill-pill">C / C++</div>
+              <div class="skill-pill">Go</div>
+              <div class="skill-pill">Python</div>
+              <div class="skill-pill">Bash</div>
+              <div class="skill-pill">SQL / SQLmap</div>
+              <div class="skill-pill">Postman</div>
             </div>
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- Tools -->
+    <!-- TOOLS -->
     <section id="tools" class="section">
       <div class="container card visible">
         <h2>Tools & Tech</h2>
-        <div class="tools-grid" style="margin-top:12px">
-          <div class="tool"><span class="tool-icon">⚙️</span> Burp Suite</div>
-          <div class="tool"><span class="tool-icon">🧠</span> Wireshark</div>
-          <div class="tool"><span class="tool-icon">🔎</span> Nmap</div>
-          <div class="tool"><span class="tool-icon">💼</span> Metasploit</div>
-          <div class="tool"><span class="tool-icon">🧩</span> httpx</div>
-          <div class="tool"><span class="tool-icon">🧰</span> Recon scripts</div>
-          <div class="tool"><span class="tool-icon">🖥️</span> VSCode</div>
-          <div class="tool"><span class="tool-icon">🐧</span> Kali / Parrot</div>
+        <div style="margin-top:12px" class="tools-card">
+          <!-- left: pentest/bounty tools -->
+          <div class="tools-col">
+            <h3>Bug-bounty & Pentest Tools</h3>
+            <div class="tools-grid">
+              <div class="tool"><span class="icon">🔧</span>&nbsp;Burp Suite</div>
+              <div class="tool"><span class="icon">🧠</span>&nbsp;Wireshark</div>
+              <div class="tool"><span class="icon">🔍</span>&nbsp;Nmap</div>
+              <div class="tool"><span class="icon">💼</span>&nbsp;Metasploit</div>
+              <div class="tool"><span class="icon">🧩</span>&nbsp;httpx</div>
+              <div class="tool"><span class="icon">🧰</span>&nbsp;Recon scripts</div>
+              <div class="tool"><span class="icon">🛡️</span>&nbsp;SQLmap</div>
+              <div class="tool"><span class="icon">🪄</span>&nbsp;Burp Extensions</div>
+            </div>
+
+            <div style="height:12px"></div>
+            <div class="hacker-area" title="hacker-style gif">
+              <!-- place assets/hacker.gif in repo -->
+              <img src="assets/hacker.gif" alt="hacker gif" />
+            </div>
+          </div>
+
+          <!-- right: languages & tech -->
+          <div class="tools-col">
+            <h3>Languages & Tech</h3>
+            <div class="tools-grid">
+              <div class="tool"><span class="icon">💻</span>&nbsp;HTML</div>
+              <div class="tool"><span class="icon">🎨</span>&nbsp;CSS</div>
+              <div class="tool"><span class="icon">☕</span>&nbsp;Java</div>
+              <div class="tool"><span class="icon">⚙️</span>&nbsp;C / C++</div>
+              <div class="tool"><span class="icon">🐍</span>&nbsp;Python</div>
+              <div class="tool"><span class="icon">🧭</span>&nbsp;Go</div>
+              <div class="tool"><span class="icon">🖥️</span>&nbsp;VSCode</div>
+              <div class="tool"><span class="icon">🐧</span>&nbsp;Kali / Parrot</div>
+              <div class="tool"><span class="icon">📮</span>&nbsp;Postman</div>
+              <div class="tool"><span class="icon">🔒</span>&nbsp;SOC Tools</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Projects / Music / Contact -->
+    <!-- PROJECTS + MUSIC + CONTACT -->
     <section id="projects" class="section">
       <div class="container">
-        <div class="card visible" style="margin-bottom:18px">
+        <div class="card visible" style="margin-bottom:16px">
           <h2>Featured Projects</h2>
           <div class="cards" style="margin-top:12px">
             <article class="card project">
@@ -254,39 +304,30 @@
 
             <article class="card project">
               <h3>Other Tool / Writeup</h3>
-              <p>Example project placeholder. Replace with your repo links or writeups.</p>
+              <p>Example tool / writeup placeholder — replace with your real repos.</p>
               <p><a href="#" style="color:var(--accent1)">Repository →</a></p>
             </article>
           </div>
         </div>
 
-        <!-- Music & mood -->
         <div class="card music-box visible" style="margin-bottom:18px">
           <h2>Music & Mood</h2>
-          <p style="color:var(--muted)">A small playlist to keep focused while reconning.</p>
-
-          <!-- simple play UI + embed Spotify (you can replace with your playlist iframe) -->
-          <div style="display:flex;gap:12px;align-items:center;margin-top:10px">
+          <p style="color:var(--muted)">Small playlist to keep focused while reconning. Tip: mute when recording PoC videos.</p>
+          <div class="music-controls" style="margin-top:12px">
             <button class="btn" id="playBtn">Play</button>
             <select id="trackSelect" style="background:transparent;border:1px solid rgba(255,255,255,0.03);color:#dff6f4;padding:10px;border-radius:10px;">
-              <option value="https://open.spotify.com/embed/track/1V4E1v4d1...">Working Energy — Kinhbach</option>
-              <!-- add more Spotify embed URLs (the value should be full embed src for iframe) -->
+              <option value="https://open.spotify.com/embed/track/2XU0oxnq2qxCpomAAuJY8K">Working Energy — Kinhbach</option>
             </select>
           </div>
-
           <div style="margin-top:12px">
-            <!-- Spotify embedded player (replace src with your public track/playlist) -->
             <iframe id="spotifyFrame" style="border-radius:12px;border:0;width:100%;height:108px" src="https://open.spotify.com/embed/track/2XU0oxnq2qxCpomAAuJY8K" allow="encrypted-media"></iframe>
             <div style="color:var(--muted);margin-top:8px" id="loaded">Loaded: Working Energy — Kinhbach</div>
           </div>
         </div>
 
-        <!-- contact -->
         <div class="card visible" id="contact">
           <h2>Contact</h2>
           <p style="color:var(--muted)">Responsible disclosure only — please use vendor bounty programs or email for coordination.</p>
-
-          <!-- Formspree: replace YOUR_FORMSPREE_ID with your real ID -->
           <form class="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
             <input type="text" name="name" placeholder="Your name" required />
             <input type="email" name="email" placeholder="Your email" required />
@@ -299,91 +340,93 @@
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <div>© 2025 Pradyumn Tiware — Stay Ethical • Stay Sharp</div>
-    </div>
+    <div class="container">© 2025 Pradyumn Tiware — Stay Ethical • Stay Sharp</div>
   </footer>
 
-  <!-- neon hover glow element -->
-  <div id="hoverGlow" class="hover-glow" aria-hidden="true"></div>
+  <!-- custom cursor elements -->
+  <div class="cursor-ring" id="cursorRing" style="left:0;top:0;transform:translate(-50%,-50%);"></div>
+  <div class="cursor-dot" id="cursorDot" style="left:0;top:0;transform:translate(-50%,-50%);"></div>
 
   <script>
-    // particles (subtle moving dots)
+    /* ---------- subtle particles ---------- */
     (function(){
       const canvas = document.createElement('canvas');
-      canvas.style.position='fixed';canvas.style.left=0;canvas.style.top=0;canvas.style.zIndex='-2';
+      canvas.style.position='fixed'; canvas.style.left=0; canvas.style.top=0;
+      canvas.style.width='100%'; canvas.style.height='100%'; canvas.style.zIndex='-3';
       canvas.style.pointerEvents='none'; document.body.appendChild(canvas);
       const ctx = canvas.getContext('2d');
-      let particles=[];
-      function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+      function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
       addEventListener('resize', resize); resize();
-      for(let i=0;i<Math.max(18, innerWidth/80);i++){
-        particles.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:1+Math.random()*2,vx:(Math.random()-0.5)*0.25,vy:(Math.random()-0.5)*0.25});
+      const dots=[];
+      for(let i=0;i<Math.max(20,innerWidth/80);i++){
+        dots.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:1+Math.random()*2, vx:(Math.random()-0.5)*0.25, vy:(Math.random()-0.5)*0.25});
       }
-      function frame(){
+      function anim(){
         ctx.clearRect(0,0,canvas.width,canvas.height);
-        particles.forEach(p=>{
-          p.x+=p.vx; p.y+=p.vy;
-          if(p.x<0)p.x=canvas.width; if(p.x>canvas.width)p.x=0;
-          if(p.y<0)p.y=canvas.height; if(p.y>canvas.height)p.y=0;
-          ctx.beginPath(); ctx.fillStyle='rgba(180,230,255,0.04)'; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+        dots.forEach(d=>{
+          d.x+=d.vx; d.y+=d.vy;
+          if(d.x<0)d.x=canvas.width; if(d.x>canvas.width)d.x=0;
+          if(d.y<0)d.y=canvas.height; if(d.y>canvas.height)d.y=0;
+          ctx.beginPath(); ctx.fillStyle='rgba(180,230,255,0.03)'; ctx.arc(d.x,d.y,d.r,0,Math.PI*2); ctx.fill();
         });
-        requestAnimationFrame(frame);
+        requestAnimationFrame(anim);
       }
-      frame();
+      anim();
     })();
 
-    // reveal cards
-    document.addEventListener('DOMContentLoaded', function(){
+    /* reveal cards */
+    document.addEventListener('DOMContentLoaded', ()=> {
       document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), 120*i));
     });
 
-    // hover glow follows cursor and highlights focused cards
-    const glow = document.getElementById('hoverGlow');
-    document.addEventListener('mousemove', e=>{
-      glow.style.left = (e.clientX - 110) + 'px';
-      glow.style.top = (e.clientY - 110) + 'px';
-      glow.style.transform = 'translate3d(0,0,0)';
-      glow.classList.add('show');
-      glow.style.background = 'radial-gradient(circle at 30% 30%, rgba(16,224,211,0.14), rgba(255,87,184,0.08) 20%, rgba(8,12,14,0) 60%)';
-    });
-    document.addEventListener('mouseout', ()=> glow.classList.remove('show'));
-
-    // small hover effect on interactive things (cards lift already handled by CSS)
-    document.querySelectorAll('.tool,.project,.stat').forEach(el=>{
-      el.addEventListener('mouseenter', ()=> {el.style.transform='translateY(-8px)';});
-      el.addEventListener('mouseleave', ()=> {el.style.transform='none';});
-    });
-
-    // CountAPI visitor counter
+    /* visitor counter (CountAPI) */
     (function(){
-      const key = 'portfolio_visits';
-      fetch('https://api.countapi.xyz/hit/pradyumntiware/' + key)
-        .then(r=>r.json())
-        .then(j=>{ const el=document.getElementById('visits'); if(el && j && j.value!==undefined) el.innerText = j.value.toLocaleString(); })
-        .catch(()=>{});
+      fetch('https://api.countapi.xyz/hit/pradyumntiware/portfolio_visits').then(r=>r.json()).then(j=>{
+        if(j && j.value !== undefined) document.getElementById('visits').innerText = j.value.toLocaleString();
+      }).catch(()=>{});
     })();
 
-    // music controls: simply replaces iframe src when play pressed or selection changes
+    /* music: replace iframe src when pressing play */
     (function(){
       const playBtn = document.getElementById('playBtn');
       const select = document.getElementById('trackSelect');
       const iframe = document.getElementById('spotifyFrame');
       const loaded = document.getElementById('loaded');
-
       playBtn.addEventListener('click', ()=>{
-        // if you want a toggle, you can adjust; for now clicking loads selected src
-        const selected = select.options[select.selectedIndex];
-        // selected value should be spotify embed src or iframe url - for simplicity we keep one sample
-        // update iframe src if custom value provided; otherwise just focus iframe
-        // (note: cross-origin controls prevent JS-based play unpause for iframes in many browsers)
-        if(selected.value){
-          iframe.src = selected.value;
-          loaded.innerText = 'Loaded: ' + selected.text;
-        }
-        iframe.scrollIntoView({behavior:'smooth',block:'center'});
+        const val = select.value;
+        if(val) { iframe.src = val; loaded.innerText = 'Loaded: ' + select.options[select.selectedIndex].text; }
+        iframe.scrollIntoView({behavior:'smooth'});
       });
     })();
+
+    /* custom cursor: ring + dot with interactions */
+    (function(){
+      const ring = document.getElementById('cursorRing');
+      const dot = document.getElementById('cursorDot');
+      let mx = window.innerWidth/2, my = window.innerHeight/2, rx=mx, ry=my;
+      document.addEventListener('mousemove', e=>{
+        mx = e.clientX; my = e.clientY;
+        dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+      });
+      // ring lags a bit
+      function loop(){ rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(loop); }
+      loop();
+      // when hovering interactive items, emphasize ring
+      const interactive = document.querySelectorAll('a, button, .tool, .project, input, textarea, select, .btn');
+      interactive.forEach(el=>{
+        el.addEventListener('mouseenter', ()=> { ring.classList.add('cursor-acc'); ring.classList.add('large'); });
+        el.addEventListener('mouseleave', ()=> { ring.classList.remove('cursor-acc'); ring.classList.remove('large'); });
+      });
+      // subtle tap animation
+      document.addEventListener('mousedown', ()=> { dot.style.transform='translate(-50%,-50%) scale(.8)'; });
+      document.addEventListener('mouseup', ()=> { dot.style.transform='translate(-50%,-50%) scale(1)'; });
+    })();
+
+    /* small hover lift on tool cards */
+    document.querySelectorAll('.tool').forEach(t=>{
+      t.addEventListener('mouseenter', ()=> t.style.transform='translateY(-6px) translateZ(0)');
+      t.addEventListener('mouseleave', ()=> t.style.transform='none');
+    });
   </script>
 </body>
 </html>
