@@ -19,38 +19,56 @@
       --chip-bg: rgba(255,255,255,0.02);
       --neon: 0 8px 30px rgba(45,225,230,0.06);
     }
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#041115 0%, #071017 60%);color:#dbeef0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#041115 0%, #071017 60%);color:#dbeef0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;overflow-x:hidden}
     *{box-sizing:border-box}
     .container{width:min(1200px,94%);margin:0 auto;padding:28px 0;}
     header.nav{padding:18px 0;}
     .brand{font-family:Montserrat,Inter;font-weight:800;color:#e6fefe;letter-spacing:0.2px}
     nav a{color:var(--muted);text-decoration:none;margin-left:18px}
+
     /* layout */
     .hero-grid{display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:start;margin-top:12px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008)); border-radius:14px;padding:22px;border:1px solid var(--glass-border);box-shadow:var(--neon);}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008)); border-radius:14px;padding:22px;border:1px solid var(--glass-border);box-shadow:var(--neon);opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s cubic-bezier(.2,.9,.2,1)}
+    .card.visible{opacity:1;transform:translateY(0)}
+
     /* profile card */
     .profile-card{position:relative;padding-top:34px;text-align:center}
-    .avatar-wrap{width:200px;height:200px;margin:0 auto;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center}
+    .avatar-wrap{width:200px;height:200px;margin:0 auto;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;transform:scale(.86);opacity:0;transition:transform .7s cubic-bezier(.2,.9,.2,1), opacity .7s}
+    .avatar-wrap.pop { transform:scale(1); opacity:1 }
     .avatar{width:90%;height:90%;object-fit:cover;border-radius:50%;display:block;border:10px solid #111}
     /* neon ring */
     .avatar-wrap::before{
       content:"";position:absolute;inset: -18px; border-radius:50%;
       background:linear-gradient(130deg,var(--accent1),var(--accent2));
-      filter:blur(12px);opacity:0.85;z-index:-2; transform:scale(1.03);
+      filter:blur(12px);opacity:0.0;z-index:-2; transform:scale(1.03);
+      transition:opacity .9s ease, transform .9s ease;
     }
+    .avatar-wrap.pulse::before{ opacity:0.95; transform:scale(1.07); animation: neon-pulse 2.6s infinite ease-in-out; }
+    @keyframes neon-pulse {
+      0%{ filter: blur(10px); transform:scale(1.03); opacity:0.7 }
+      50%{ filter: blur(20px); transform:scale(1.08); opacity:1 }
+      100%{ filter: blur(10px); transform:scale(1.03); opacity:0.7 }
+    }
+
     .profile-name{margin:12px 0 6px;font-weight:800;font-family:Montserrat;font-size:20px;color:#e9fbfc}
     .profile-sub{color:var(--muted);font-size:13px}
-    .stat-row{display:flex;gap:12px;justify-content:center;margin-top:18px}
+    .stat-row{display:flex;gap:12px;justify-content:center;margin-top:18px;opacity:0;transform:translateY(8px);transition:opacity .7s ease .35s, transform .7s ease .35s}
+    .stat-row.show{opacity:1;transform:translateY(0)}
     .stat{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));padding:12px 18px;border-radius:10px;min-width:120px}
     .stat-value{font-weight:800;color:var(--accent1);font-size:20px}
     .stat-label{font-size:12px;color:var(--muted)}
-    .btn{display:inline-block;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#042223;box-shadow:0 8px 30px rgba(255,90,140,0.08);margin:10px 6px}
+    .btn{display:inline-block;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#042223;box-shadow:0 8px 30px rgba(255,90,140,0.08);margin:10px 6px;opacity:0;transform:translateY(8px);transition:opacity .6s ease .45s, transform .6s ease .45s}
+    .btn.visible{opacity:1;transform:translateY(0)}
     .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+
     /* lead card */
-    .lead-card h1{font-family:Montserrat;font-size:34px;margin:0 0 8px;color:#f4ffff}
-    .lead-card .accent{color:var(--accent1)}
-    .lead-card p.muted{color:var(--muted);margin:10px 0 12px}
-    .quick{color:var(--muted);font-size:14px;margin-top:16px}
+    .lead-card h1{font-family:Montserrat;font-size:34px;margin:0 0 8px;color:#f4ffff;opacity:0;transform:translateX(18px);transition:opacity .7s ease .18s, transform .7s cubic-bezier(.2,.9,.2,1) .18s}
+    .lead-card h1.enter{opacity:1;transform:translateX(0)}
+    .lead-card p.muted{color:var(--muted);margin:10px 0 12px;opacity:0;transform:translateX(14px);transition:opacity .7s ease .28s, transform .7s ease .28s}
+    .lead-card p.enter{opacity:1;transform:translateX(0)}
+    .quick{color:var(--muted);font-size:14px;margin-top:16px;opacity:0;transition:opacity .7s ease .38s}
+    .quick.enter{opacity:1}
+
     /* sections */
     .section{margin-top:34px}
     .section h2{font-family:Montserrat;margin:0 0 14px}
@@ -64,23 +82,28 @@
     .chip{display:inline-block;padding:10px 14px;border-radius:10px;background:var(--chip-bg);margin:8px 8px 8px 0;border:1px solid rgba(255,255,255,0.02);transition:transform .18s ease, box-shadow .18s ease}
     .chip:hover{transform:translateY(-8px);box-shadow:0 14px 40px rgba(0,0,0,0.6), 0 6px 18px rgba(45,225,230,0.06)}
     .big-stat{font-size:28px;font-weight:800;color:var(--accent1);text-align:center;padding:20px;border-radius:12px}
+
     /* tools grid */
     .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
     .tools-col h3{margin:0 0 12px;font-size:18px;color:#cfeff0}
     .tool{display:inline-flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:var(--chip-bg);margin:8px;border:1px solid rgba(255,255,255,0.02);transition:transform .15s ease}
     .tool:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.6)}
     .tool .icon{width:20px;height:20px;display:inline-block;border-radius:6px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff;text-align:center;line-height:20px;font-size:12px}
+
     /* hacker gif box */
     .hacker-box{height:160px;border-radius:12px;border:1px dashed rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.004), rgba(255,255,255,0.002))}
-    .hacker-box img{max-height:140px;border-radius:10px}
+    .hacker-box img{max-height:140px;border-radius:10px;opacity:0;transform:translateY(8px);transition:opacity .6s ease .45s, transform .6s ease .45s}
+    .hacker-box.visible img{opacity:1;transform:translateY(0)}
+
     /* music player */
     .music-box{padding:18px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.008), rgba(255,255,255,0.006))}
     .play-btn{padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#031517;font-weight:800;border:none}
+
     /* contact */
     .contact-form input,.contact-form textarea,.contact-form select{width:100%;padding:12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);margin-bottom:12px}
     .contact-form button{width:100%;padding:12px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:#021418;font-weight:800}
+
     /* custom cursor (desktop) */
-    /* NOTE: add a file at assets/cursor-game.png (recommended 48x48 PNG) for custom pointer */
     #cursor {
       position:fixed;
       left:0;top:0;
@@ -91,7 +114,6 @@
       background-repeat:no-repeat;
       background-position:center;
       background-size:contain;
-      /* try to use an image for the visible cursor; fallback below */
       background-image: url('assets/cursor-game.png');
       box-shadow:0 8px 24px rgba(45,225,230,0.18);
       opacity:1;
@@ -100,47 +122,66 @@
       position:fixed;left:0;top:0;width:72px;height:72px;border-radius:50%;pointer-events:none;z-index:9998;
       border:2px dashed rgba(255,255,255,0.04);transform:translate(-50%,-50%) scale(1);opacity:0;transition:opacity .2s ease, transform .28s ease;
     }
-    /* fallback visible dot if image not present: create small inner circle */
-    #cursor.fallback {
-      background-image: none;
-      background-color: transparent;
-      box-shadow: none;
-    }
-    #cursor.fallback::after {
-      content:"";display:block;width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,var(--accent2),var(--accent1));
-      transform:translate(50%,50%);
-    }
-    /* when hovering interactive elements enlarge */
+    #cursor.fallback { background-image:none; }
+    #cursor.fallback::after { content:"";display:block;width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,var(--accent2),var(--accent1));transform:translate(50%,50%); }
     .cursor-large { transform:translate(-50%,-50%) scale(1.9); width:44px;height:44px; }
     .ripple-show { opacity:1; transform:translate(-50%,-50%) scale(1.05); }
 
-    /* custom pointer CSS for classic cursor fallback on desktop (also helps when image fails) */
+    /* native cursor fallback */
     @media (pointer: fine) {
-      /* set native cursor to custom image (if supported) as extra fallback */
       body { cursor: url('assets/cursor-game.png') 16 16, auto; }
     }
-
-    /* hide custom cursor on touch devices (mobile) for better UX */
     @media (pointer: coarse), (hover: none) {
       #cursor, #ripple { display:none !important; }
-      body { cursor: default; } /* use system touch cursor */
+      body { cursor: default; }
     }
 
-    /* utilities */
+    /* preloader overlay */
+    .preloader {
+      position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, rgba(4,17,21,0.98), rgba(7,16,23,0.98));
+      transition:opacity .6s ease, visibility .6s ease;backdrop-filter: blur(6px);
+      flex-direction:column;gap:12px;
+    }
+    .preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .preloader .logo {
+      width:92px;height:92px;border-radius:20px;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg,var(--accent1),var(--accent2));box-shadow:0 30px 80px rgba(45,225,230,0.07);
+      transform:translateY(0);
+      animation: logo-bob 1.8s infinite alternate ease-in-out;
+    }
+    .preloader .logo img { width:66%;height:66%;object-fit:contain;display:block;border-radius:8px }
+    .preloader .title { font-family:Montserrat;font-weight:800;color:#042223;background:linear-gradient(90deg,#fff,#fff);padding:8px 12px;border-radius:8px }
+    .preloader .loader-dots { color:var(--muted);font-size:13px;opacity:0.9 }
+
+    @keyframes logo-bob {
+      0% { transform: translateY(0) rotate(-2deg) }
+      100% { transform: translateY(-8px) rotate(2deg) }
+    }
+
+    /* small utility and responsive */
     .row{display:flex;gap:12px;align-items:center}
     footer.footer{padding:24px 0;color:var(--muted);text-align:center;font-size:13px}
-    /* responsive */
     @media (max-width:980px){
       .hero-grid{grid-template-columns:1fr;gap:16px}
-      /* Ensure profile-photo block appears first on stacked layout */
       .profile-card{order:-1}
       .about-grid{grid-template-columns:1fr}
       .tools-grid{grid-template-columns:1fr}
       .avatar-wrap{width:150px;height:150px}
+      .preloader .logo { width:76px;height:76px }
     }
   </style>
 </head>
 <body>
+  <!-- PRELOADER -->
+  <div id="preloader" class="preloader" aria-hidden="false">
+    <div class="logo" aria-hidden="true">
+      <!-- optional: small logo; fallback to initials if missing -->
+      <img src="assets/profile-circle.png" alt="logo" onerror="this.style.display='none'">
+    </div>
+    <div class="title">PradyumnTiwareNexus</div>
+    <div class="loader-dots" id="loaderDots">Loading<span id="dots">...</span></div>
+  </div>
+
   <!-- Custom cursor elements (desktop only) -->
   <div id="cursor" class=""></div>
   <div id="ripple"></div>
@@ -155,14 +196,13 @@
         <div class="hero-grid">
           <!-- profile -->
           <aside class="card profile-card" id="profileCard">
-            <div class="avatar-wrap">
-              <!-- make sure this image exists at assets/profile-circle.png -->
+            <div class="avatar-wrap" id="avatarWrap">
               <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar" id="avatar-img"/>
             </div>
             <h3 class="profile-name">PradyumnTiwareNexus</h3>
             <p class="profile-sub">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
 
-            <div class="stat-row">
+            <div class="stat-row" id="statRow">
               <div class="stat">
                 <div class="stat-value" id="visits">--</div>
                 <div class="stat-label">Profile visits</div>
@@ -174,16 +214,16 @@
             </div>
 
             <div style="margin-top:18px;">
-              <a class="btn" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
-              <a class="btn ghost" href="#projects">See Projects</a>
+              <a class="btn" id="btnGithub" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
+              <a class="btn ghost" id="btnProjects" href="#projects">See Projects</a>
             </div>
           </aside>
 
           <!-- lead -->
           <section class="card lead-card" id="leadCard">
-            <h1>Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
-            <p class="muted">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
-            <div class="quick">
+            <h1 id="leadTitle">Hi — I'm <span class="accent">Pradyumn</span>. I hunt bugs & build recon tools.</h1>
+            <p class="muted" id="leadDesc">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
+            <div class="quick" id="leadQuick">
               <strong>Skills:</strong> HTML · C · C++ · Java · Bash · Python · JS deep-inspection<br>
               <strong>Tools:</strong> Burp Suite · Wireshark · Nmap · Metasploit · httpx · VSCode · Kali / Parrot
             </div>
@@ -259,8 +299,7 @@
                 <div class="tool"><span class="icon">✨</span>Burp Extensions</div>
               </div>
 
-              <div style="margin-top:14px" class="hacker-box">
-                <!-- place hacker gif here (GIPHY) -->
+              <div style="margin-top:14px" class="hacker-box" id="hackerBox">
                 <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExenVlNHQ4NXIzeWJiY20xYXlpdWF2dGp1djRiNjZyeTN1Yzk5ZTR1cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/axnFGXT6MzvgY/giphy.gif" alt="hacker gif">
               </div>
             </div>
@@ -293,7 +332,6 @@
             <button id="playBtn" class="play-btn">Play</button>
             <select id="trackSelect" style="padding:10px;border-radius:8px;background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)">
               <option value="assets/audio/working-energy.mp3">Working Energy — Kinhbach</option>
-              <!-- replace with your audio files in assets/ -->
             </select>
             <div id="trackLabel" style="color:var(--muted);margin-left:8px">Loaded: Working Energy — Kinhbach</div>
           </div>
@@ -319,7 +357,6 @@
             <h2>Contact</h2>
             <p style="color:var(--muted)">Responsible disclosure only — please use vendor bounty programs or contact via email for coordination.</p>
 
-            <!-- Replace FORMSPREE_ENDPOINT with your Formspree action URL -->
             <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
               <input type="text" name="name" placeholder="Your name" required>
               <input type="email" name="_replyto" placeholder="Your email" required>
@@ -339,23 +376,84 @@
 
   <script>
     // -------------------------------
+    // Preloader behaviour + entrance animations
+    // -------------------------------
+    const preloader = document.getElementById('preloader');
+    const dots = document.getElementById('dots');
+    let dotCount = 3;
+    const dotInterval = setInterval(()=> {
+      dotCount = (dotCount + 1) % 4;
+      dots.innerText = '.'.repeat(dotCount);
+    }, 400);
+
+    // elements to reveal after preloader
+    const avatarWrap = document.getElementById('avatarWrap');
+    const statRow = document.getElementById('statRow');
+    const btns = [document.getElementById('btnGithub'), document.getElementById('btnProjects')];
+    const leadTitle = document.getElementById('leadTitle');
+    const leadDesc = document.getElementById('leadDesc');
+    const leadQuick = document.getElementById('leadQuick');
+    const cards = document.querySelectorAll('.card');
+
+    function revealSequence() {
+      // reveal profile card and avatar with small delay chain
+      avatarWrap.classList.add('pop');
+      setTimeout(()=> avatarWrap.classList.add('pulse'), 450);
+
+      // reveal main cards
+      cards.forEach((c,i) => {
+        setTimeout(()=> c.classList.add('visible'), 220 + i*70);
+      });
+
+      // reveal lead text stagger
+      setTimeout(()=> { leadTitle.classList.add('enter'); }, 380);
+      setTimeout(()=> { leadDesc.classList.add('enter'); }, 520);
+      setTimeout(()=> { leadQuick.classList.add('enter'); }, 680);
+
+      // stats and buttons
+      setTimeout(()=> { statRow.classList.add('show'); btns.forEach(b=>b.classList.add('visible')); }, 880);
+
+      // hacker gif
+      setTimeout(()=> { document.getElementById('hackerBox').classList.add('visible'); }, 980);
+    }
+
+    // Wait until window load OR 1.8s timeout whichever earlier for good UX
+    let loaded = false;
+    window.addEventListener('load', ()=> {
+      loaded = true;
+      finishPreloader();
+    });
+    // safety timeout so preloader doesn't hang
+    setTimeout(()=> { if(!loaded) finishPreloader(); }, 1800);
+
+    function finishPreloader() {
+      clearInterval(dotInterval);
+      if (!preloader) return;
+      preloader.classList.add('hidden');
+      preloader.setAttribute('aria-hidden','true');
+      // start entrance animations
+      setTimeout(revealSequence, 80);
+      // smooth-scroll to hero top (if no anchor)
+      setTimeout(()=> {
+        if (!location.hash) {
+          const hero = document.querySelector('.hero');
+          if (hero) hero.scrollIntoView({behavior: 'instant', block: 'start'});
+        }
+      }, 300);
+    }
+
+    // -------------------------------
     // Custom cursor behaviour (desktop)
     // -------------------------------
     const cursor = document.getElementById('cursor');
     const ripple = document.getElementById('ripple');
 
-    // detect if custom cursor image loads; if not, fallback to colored dot
     function checkCursorImage() {
       const img = new Image();
-      img.onload = () => {
-        // image exists — nothing else needed (background-image uses it)
-      };
-      img.onerror = () => {
-        cursor.classList.add('fallback');
-      };
+      img.onload = () => {};
+      img.onerror = () => { cursor.classList.add('fallback'); };
       img.src = 'assets/cursor-game.png';
     }
-    // run check only if device likely has fine pointer
     if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
       checkCursorImage();
       document.addEventListener('mousemove', e=>{
@@ -364,33 +462,49 @@
         ripple.style.left = e.clientX + 'px';
         ripple.style.top = e.clientY + 'px';
       });
-      // ripple on mouse down
       document.addEventListener('mousedown', ()=> {
         ripple.classList.add('ripple-show');
-        setTimeout(()=> ripple.classList.remove('ripple-show'), 300);
+        setTimeout(()=> ripple.classList.remove('ripple-show'), 320);
       });
-
-      // hover enlarge cursor over interactive items
       document.querySelectorAll('a,button,input,select,textarea,.tool,.chip').forEach(el=>{
         el.addEventListener('mouseenter', ()=> { cursor.classList.add('cursor-large'); });
         el.addEventListener('mouseleave', ()=> { cursor.classList.remove('cursor-large'); });
       });
     } else {
-      // touchscreen devices: hide custom elements (CSS already hides them), but ensure default pointer
       cursor.style.display = 'none';
       ripple.style.display = 'none';
     }
 
     // -------------------------------
-    // CountAPI visitor counter (optional)
+    // CountAPI visitor counter (with number animation)
     // -------------------------------
     (function(){
       const el = document.getElementById('visits');
       if(!el) return;
       fetch('https://api.countapi.xyz/hit/pradyumntiware/portfolio_visits').then(r=>r.json()).then(j=>{
-        if(j && j.value) el.innerText = j.value.toLocaleString();
+        if(j && j.value !== undefined) {
+          animateNumber(el, Math.max(0, j.value));
+        } else {
+          el.innerText = '--';
+        }
       }).catch(()=>{ el.innerText='--'; });
     })();
+
+    // simple number animation (from 0 to n)
+    function animateNumber(node, target) {
+      const start = Math.max(0, Math.floor(target * 0.6));
+      const duration = 900;
+      const startTime = performance.now();
+      function step(now) {
+        const t = Math.min(1, (now - startTime) / duration);
+        const eased = easeOutCubic(t);
+        const val = Math.floor(start + (target - start) * eased);
+        node.innerText = val.toLocaleString();
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3) }
 
     // -------------------------------
     // audio player
@@ -410,7 +524,7 @@
       audio.play(); playBtn.innerText='Pause';
     });
 
-    // Contact form: brief submit handler (Formspree default will handle)
+    // contact form submit small UX
     document.getElementById('contactForm').addEventListener('submit', function(e){
       setTimeout(()=> alert('Thanks — message submitted (Formspree will forward).'), 300);
     });
@@ -420,20 +534,6 @@
       this.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
         `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320"><rect width="100%" height="100%" rx="20" fill="#0b1113"/><text x="50%" y="52%" fill="#bff9fa" font-size="72" font-family="Montserrat" font-weight="800" text-anchor="middle" alignment-baseline="middle">PTN</text></svg>`
       );
-    });
-
-    // Ensure hero photo/profile is visible on page load (scroll to top of hero)
-    window.addEventListener('load', () => {
-      // small delay to ensure CSS stacking is applied on mobiles
-      setTimeout(() => {
-        const hero = document.querySelector('.hero');
-        if (hero) {
-          // scroll to top of hero (only if user didn't come from an anchor)
-          if (!location.hash) {
-            hero.scrollIntoView({behavior: 'instant', block: 'start'});
-          }
-        }
-      }, 120);
     });
   </script>
 </body>
