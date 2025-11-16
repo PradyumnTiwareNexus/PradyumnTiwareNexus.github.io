@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PradyumnTiwareNexus — Cybersecurity Researcher</title>
   <meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer."/>
-  <link rel="icon" href="assets/favicon.png" />
+  <!-- favicon: explicit sizes to help browsers pick correct icon -->
+  <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="assets/favicon.png" sizes="16x16" type="image/png" />
+  <!-- iOS / mobile home screen icon -->
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -403,6 +407,9 @@
   </div>
 
   <script>
+    // record preloader start time so we can ensure minimum visible time (400ms)
+    const _preloadStart = performance.now();
+
     // -------------------------------
     // THEME TOGGLE
     // -------------------------------
@@ -446,23 +453,34 @@
       setTimeout(()=> { leadDesc.classList.add('enter'); }, 520);
       setTimeout(()=> { leadQuick.classList.add('enter'); }, 680);
       setTimeout(()=> { statRow.classList.add('show'); btns.forEach(b=>b.classList.add('visible')); }, 880);
-      setTimeout(()=> { document.getElementById('hackerBox').classList.add('visible'); }, 980);
+      setTimeout(()=> { const hb = document.getElementById('hackerBox'); if(hb) hb.classList.add('visible'); }, 980);
     }
     let loaded = false;
     window.addEventListener('load', ()=> { loaded = true; finishPreloader(); });
-    setTimeout(()=> { if(!loaded) finishPreloader(); }, 1800);
+    // fallback: if load takes too long, ensure we still hide after a maximum wait,
+    // but also keep preloader visible at least MIN_PRELOAD_MS.
+    const MIN_PRELOAD_MS = 400; // 0.4 seconds as requested
+
+    // If load hasn't finished by 2000ms, still attempt to finish (graceful fallback)
+    setTimeout(()=> { if(!loaded) finishPreloader(); }, 2000);
+
     function finishPreloader() {
       clearInterval(dotInterval);
       if (!preloader) return;
-      preloader.classList.add('hidden');
-      preloader.setAttribute('aria-hidden','true');
-      setTimeout(revealSequence, 80);
+      // ensure the preloader is visible at least MIN_PRELOAD_MS
+      const waited = performance.now() - _preloadStart;
+      const remaining = Math.max(0, MIN_PRELOAD_MS - waited);
       setTimeout(()=> {
-        if (!location.hash) {
-          const hero = document.querySelector('.hero');
-          if (hero) hero.scrollIntoView({behavior: 'instant', block: 'start'});
-        }
-      }, 300);
+        preloader.classList.add('hidden');
+        preloader.setAttribute('aria-hidden','true');
+        setTimeout(revealSequence, 80);
+        setTimeout(()=> {
+          if (!location.hash) {
+            const hero = document.querySelector('.hero');
+            if (hero) hero.scrollIntoView({behavior: 'instant', block: 'start'});
+          }
+        }, 300);
+      }, remaining);
     }
 
     // -------------------------------
