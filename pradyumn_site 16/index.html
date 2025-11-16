@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PradyumnTiwareNexus — Cybersecurity Researcher</title>
+  <meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer."/>
+  <link rel="icon" href="assets/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#071017; --bg-2:#041115; --card:#071719; --accent1:#2de1e6; --accent2:#ff5aa7; --muted:#9fb0b1; --text:#dbeef0; --text-on-accent:#042223; }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg-2),var(--bg));color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow-x:hidden}
+    .container{width:min(1200px,94%);margin:0 auto;padding:28px 0;position:relative;z-index:10}
+    header.nav{padding:18px 0;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-family:Montserrat,Inter;font-weight:800;color:var(--text)}
+    .hero-grid{display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:start;margin-top:12px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008)); border-radius:14px;padding:22px;border:1px solid rgba(255,255,255,0.05);box-shadow:0 8px 30px rgba(45,225,230,0.06);opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+    .card.visible{opacity:1;transform:translateY(0)}
+    .profile-card{text-align:center}
+    .avatar-wrap{width:200px;height:200px;margin:0 auto;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;border:10px solid #0b1113}
+    .avatar{width:100%;height:100%;object-fit:cover;display:block}
+    .lead-video{width:100%;height:auto;border-radius:12px;display:block}
+    .lead-title{font-family:Montserrat;font-size:28px;margin:10px 0 6px;color:var(--text)}
+    .lead-sub{color:var(--muted);margin-bottom:12px}
+    .lead-meta{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;color:var(--muted)}
+    /* responsive: ensure everything stacks nicely on small screens */
+    @media (max-width:980px){
+      .hero-grid{grid-template-columns:1fr;gap:16px}
+      .avatar-wrap{width:150px;height:150px}
+      .lead-title{font-size:22px}
+    }
+    /* video cover adjustments for mobile */
+    .video-wrap{border-radius:12px;overflow:hidden;}
+    video{width:100%;height:auto;display:block;object-fit:cover}
+    /* cursor fallback */
+    @media (pointer: coarse),(hover:none){ #cursor, #ripple { display:none !important } body{cursor:auto} }
+    /* preloader min delay styling handled in JS */
+  </style>
+</head>
+<body>
+  <!-- Minimal preloader -->
+  <div id="preloader" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#071017;z-index:9999">
+    <div style="text-align:center;color:#dbeef0">
+      <div style="width:84px;height:84px;border-radius:14px;background:linear-gradient(90deg,#2de1e6,#ff5aa7);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px">
+        <img src="assets/profile-circle.png" alt="logo" style="width:62%;height:62%;object-fit:cover;border-radius:8px" onerror="this.style.display='none'"/>
+      </div>
+      <div style="font-weight:800">PradyumnTiwareNexus</div>
+      <div style="color:var(--muted);margin-top:8px">Loading...</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <header class="nav">
+      <div class="brand">PradyumnTiwareNexus</div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button id="themeToggle" style="padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)">Theme</button>
+        <a href="https://github.com/PradyumnTiwareNexus" target="_blank" style="padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);text-decoration:none">GitHub</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-grid">
+          <aside class="card profile-card" id="profileCard">
+            <div class="avatar-wrap"><img src="assets/profile-circle.png" alt="avatar" class="avatar"/></div>
+            <h3 style="margin:12px 0 4px;font-weight:800">PradyumnTiwareNexus</h3>
+            <p style="color:var(--muted);margin:0 0 12px">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
+            <div style="display:flex;gap:12px;justify-content:center">
+              <div style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.02);min-width:110px"><div style="font-weight:800;color:var(--accent1)" id="visits">--</div><div style="font-size:12px;color:var(--muted)">Profile visits</div></div>
+              <div style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.02);min-width:110px"><div style="font-weight:800;color:var(--accent1)">3</div><div style="font-size:12px;color:var(--muted)">Pinned projects</div></div>
+            </div>
+          </aside>
+
+          <section class="card lead-card" id="leadCard">
+            <!-- Embedded intro video (local file) -->
+            <div class="video-wrap" style="margin-bottom:12px">
+              <video class="lead-video" src="assets/intro-video.mp4" autoplay muted loop playsinline poster="assets/profile-circle.png"></video>
+            </div>
+
+            <div>
+              <h1 class="lead-title">Hi — I'm <span style="color:var(--accent1)">Pradyumn</span>.</h1>
+              <p class="lead-sub"><strong>Creator of Recon Pipeline Enhanced v2.1.</strong> Focused on web security, OSINT and high-value bug hunting.</p>
+              <div class="lead-meta">
+                <div style="font-weight:700;margin-bottom:6px">Responsible disclosure</div>
+                <div style="margin-bottom:6px"><strong>Skills:</strong> HTML · C · C++ · Java · Bash · Python · JS deep-inspection</div>
+                <div><strong>Tools:</strong> Burp Suite · Wireshark · Nmap · Metasploit · httpx · VSCode · Kali / Parrot</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Featured Case Study with GIF -->
+      <section style="margin-top:34px">
+        <div class="card" style="padding:22px;max-width:1200px;margin:0 auto">
+          <h2 style="margin:0 0 8px">Featured Case Study</h2>
+          <p style="color:var(--muted);margin:0 0 12px">A short walkthrough of a recon-to-report workflow (click project to view details).</p>
+          <div style="display:flex;align-items:center;justify-content:center">
+            <img src="https://tenor.com/fYok44RO4E0.gif" alt="case study gif" style="max-width:100%;border-radius:10px"/>
+          </div>
+        </div>
+      </section>
+
+      <footer style="padding:28px 0;text-align:center;color:var(--muted)">© 2025 Pradyumn Tiware — Stay Ethical • Stay Sharp</footer>
+    </main>
+  </div>
+
+  <script>
+    // minimal preloader hide with at least 700ms delay
+    (function(){
+      const pre = document.getElementById('preloader');
+      const minDelay = 700;
+      const start = performance.now();
+      window.addEventListener('load', ()=> {
+        const waited = performance.now() - start;
+        const remaining = Math.max(0, minDelay - waited);
+        setTimeout(()=> { pre.style.display='none'; document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), i*60)); }, remaining);
+      });
+      // fallback hide
+      setTimeout(()=> { pre.style.display='none'; document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), i*60)); }, 1800);
+    })();
+
+    // simple visits fetch
+    (function(){
+      const el = document.getElementById('visits');
+      if (!el) return;
+      fetch('https://api.countapi.xyz/hit/pradyumntiware/portfolio_visits').then(r=>r.json()).then(j=>{
+        if(j && j.value !== undefined) el.innerText = j.value.toLocaleString();
+        else el.innerText='--';
+      }).catch(()=>el.innerText='--');
+    })();
+
+    // theme toggle
+    (function(){
+      const btn = document.getElementById('themeToggle');
+      const root = document.documentElement;
+      const saved = localStorage.getItem('site_theme') || 'dark';
+      root.setAttribute('data-theme', saved);
+      btn.addEventListener('click', ()=> {
+        const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('site_theme', next);
+      });
+    })();
+  </script>
+</body>
+</html>
