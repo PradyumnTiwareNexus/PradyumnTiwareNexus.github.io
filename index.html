@@ -357,6 +357,10 @@
           <div class="card" style="padding:22px">
             <h2>Featured Case Study</h2>
             <p style="color:var(--muted)">A short walkthrough of a recon-to-report workflow (click project to view details).</p>
+            <!-- INSERTED GIF (Tenor) -->
+            <div style="margin-top:12px;display:flex;align-items:center;justify-content:center">
+              <img src="https://tenor.com/fYok44RO4E0.gif" alt="Case study walkthrough gif" style="max-width:100%;border-radius:10px;display:block" />
+            </div>
           </div>
 
           <aside class="card contact-form" style="padding:22px">
@@ -422,6 +426,7 @@
 
     // -------------------------------
     // PRELOADER + ENTRANCE ANIMATIONS
+    // (SLOWED: preloader hides after at least 700ms)
     // -------------------------------
     const preloader = document.getElementById('preloader');
     const dots = document.getElementById('dots');
@@ -438,6 +443,7 @@
     const leadDesc = document.getElementById('leadDesc');
     const leadQuick = document.getElementById('leadQuick');
     const cards = document.querySelectorAll('.card');
+
     function revealSequence() {
       avatarWrap.classList.add('pop');
       setTimeout(()=> avatarWrap.classList.add('pulse'), 450);
@@ -448,21 +454,29 @@
       setTimeout(()=> { statRow.classList.add('show'); btns.forEach(b=>b.classList.add('visible')); }, 880);
       setTimeout(()=> { document.getElementById('hackerBox').classList.add('visible'); }, 980);
     }
+
     let loaded = false;
     window.addEventListener('load', ()=> { loaded = true; finishPreloader(); });
     setTimeout(()=> { if(!loaded) finishPreloader(); }, 1800);
+
     function finishPreloader() {
       clearInterval(dotInterval);
       if (!preloader) return;
-      preloader.classList.add('hidden');
-      preloader.setAttribute('aria-hidden','true');
-      setTimeout(revealSequence, 80);
-      setTimeout(()=> {
-        if (!location.hash) {
-          const hero = document.querySelector('.hero');
-          if (hero) hero.scrollIntoView({behavior: 'instant', block: 'start'});
-        }
-      }, 300);
+      // ensure at least 700ms delay before hiding preloader for slower entrance
+      const MIN_DELAY = 700;
+      setTimeout(() => {
+        preloader.classList.add('hidden');
+        preloader.setAttribute('aria-hidden','true');
+        // start entrance animations slightly after hiding
+        setTimeout(revealSequence, 120);
+        // ensure hero is visible at top after small delay
+        setTimeout(()=> {
+          if (!location.hash) {
+            const hero = document.querySelector('.hero');
+            if (hero) hero.scrollIntoView({behavior: 'instant', block: 'start'});
+          }
+        }, 300);
+      }, MIN_DELAY);
     }
 
     // -------------------------------
@@ -521,7 +535,6 @@
       }
       setTimeout(tickType, deleting ? 40 : 60);
     }
-    // start after reveal
     setTimeout(()=> { tickType(); }, 900);
 
     // -------------------------------
@@ -535,21 +548,19 @@
       const cy = rect.top + rect.height/2;
       const dx = (e.clientX - cx) / rect.width;
       const dy = (e.clientY - cy) / rect.height;
-      const tx = dx * 12; // translate X small
-      const ty = dy * 10; // translate Y small
-      const rz = dx * 6; // small rotation
+      const tx = dx * 12;
+      const ty = dy * 10;
+      const rz = dx * 6;
       avatarImg.style.transform = `translate(${tx}px, ${ty}px) rotate(${rz}deg) scale(1.03)`;
     }
     function resetAvatar() { avatarImg.style.transform = ''; }
     if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
       heroSection.addEventListener('mousemove', onHeroMouse);
       heroSection.addEventListener('mouseleave', resetAvatar);
-      // touch devices skip
     }
 
     // -------------------------------
     // PARTICLES BACKGROUND (canvas)
-    // lightweight, performant; disabled on mobile / reduced-motion
     // -------------------------------
     (function initParticles(){
       const canvas = document.getElementById('particles-canvas');
@@ -561,7 +572,7 @@
       const ctx = canvas.getContext('2d');
       let w = canvas.width = innerWidth;
       let h = canvas.height = innerHeight;
-      const particleCount = Math.min(80, Math.floor((w*h) / 90000)); // scale by viewport
+      const particleCount = Math.min(80, Math.floor((w*h) / 90000));
       const particles = [];
       function rand(min,max){ return Math.random()*(max-min)+min; }
 
@@ -601,7 +612,7 @@
     })();
 
     // -------------------------------
-    // VISITOR COUNTER (CountAPI) with animated number
+    // VISITOR COUNTER (CountAPI)
     // -------------------------------
     (function(){
       const el = document.getElementById('visits');
@@ -664,7 +675,6 @@
       modalDesc.innerText = data.desc || '';
       modalRepoLink.href = data.repo || '#';
       modalRepoTitle.innerText = data.repo ? 'Repository' : 'Repo';
-      // screenshot placeholder (if you want to use real screenshots, extend data with screenshot URL)
       modalScreenshot.innerText = data.title || 'Preview';
       modalBackdrop.classList.add('show'); modalBackdrop.setAttribute('aria-hidden','false');
       modalClose.focus();
@@ -672,7 +682,6 @@
 
     function closeModal(){
       modalBackdrop.classList.remove('show'); modalBackdrop.setAttribute('aria-hidden','true');
-      // return focus to first project card
       const first = projectGrid.querySelector('.project-card');
       if (first) first.focus();
     }
@@ -705,7 +714,6 @@
 
     // small visibility: reveal immediately if JS disabled or fast load
     document.addEventListener('DOMContentLoaded', ()=> {
-      // slight stagger reveal for non-preloader path
       setTimeout(()=> { document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), i*50)); }, 80);
     });
   </script>
