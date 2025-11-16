@@ -5,88 +5,227 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PradyumnTiwareNexus — Cybersecurity Researcher</title>
   <meta name="description" content="Pradyumn Tiware Nexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer."/>
+  <!-- favicon: explicit sizes to help browsers pick correct icon -->
   <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="assets/favicon.png" sizes="16x16" type="image/png" />
+  <!-- iOS / mobile home screen icon -->
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#041217; --bg-2:#06121a; --card:#071719;
-      --accent1:#2de1e6; --accent2:#ff5aa7; --muted:#9fb0b1;
-      --glass-border: rgba(255,255,255,0.04); --text:#dbeef0; --text-on-accent:#042223;
-      --glass-blur:10px; --trans-quick:180ms;
+      --bg:#041217;
+      --bg-2:#06121a;
+      --card:#071719;
+      --glass: rgba(255,255,255,0.03);
+      --accent1:#2de1e6; /* cyan */
+      --accent2:#ff5aa7; /* pink */
+      --muted:#9fb0b1;
+      --glass-border: rgba(255,255,255,0.04);
+      --chip-bg: rgba(255,255,255,0.02);
+      --neon: 0 10px 40px rgba(45,225,230,0.06);
+      --text: #dbeef0;
+      --text-on-accent: #042223;
+      --card-glow: rgba(45,225,230,0.06);
+      --trans-quick: 180ms;
+      --glass-blur: 10px;
     }
+    /* light theme variables kept for toggle */
+    :root[data-theme="light"]{
+      --bg: #f6fbfb;
+      --bg-2: #eaf8f8;
+      --card:#ffffff;
+      --glass: rgba(2,6,6,0.03);
+      --accent1:#006e6a;
+      --accent2:#c62f6b;
+      --muted:#375d5d;
+      --glass-border: rgba(0,0,0,0.06);
+      --chip-bg: rgba(2,6,6,0.02);
+      --neon: 0 10px 40px rgba(0,110,106,0.06);
+      --text: #072023;
+      --text-on-accent: #ffffff;
+    }
+
     html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg-2) 0%, var(--bg) 100%);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;overflow-x:hidden}
     *{box-sizing:border-box}
     .container{width:min(1200px,94%);margin:0 auto;padding:28px 0;}
     header.nav{padding:18px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}
     .brand{font-family:Montserrat,Inter;font-weight:800;color:var(--text);letter-spacing:0.2px}
     .controls{display:flex;gap:10px;align-items:center}
+
     button.icon-btn{background:transparent;border:1px solid rgba(255,255,255,0.03);padding:8px;border-radius:10px;color:var(--muted);cursor:pointer;transition:all var(--trans-quick)}
-    button.icon-btn:hover{transform:translateY(-4px);box-shadow:0 8px 40px rgba(45,225,230,0.06)}
-    .hero-grid{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start;margin-top:12px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008)); border-radius:14px;padding:20px;border:1px solid var(--glass-border);backdrop-filter: blur(var(--glass-blur));opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s cubic-bezier(.2,.9,.2,1)}
+    button.icon-btn:hover{transform:translateY(-4px);box-shadow:var(--neon)}
+
+    /* layout */
+    .hero-grid{display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:start;margin-top:12px}
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008));
+      border-radius:14px;padding:22px;border:1px solid var(--glass-border);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      backdrop-filter: blur(var(--glass-blur));
+      opacity:0;transform:translateY(12px);
+      transition:opacity .6s ease, transform .6s cubic-bezier(.2,.9,.2,1);
+    }
     .card.visible{opacity:1;transform:translateY(0)}
-    .profile-card{position:relative;padding-top:28px;text-align:center}
-    .avatar-wrap{width:180px;height:180px;margin:0 auto;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;transform:scale(.86);opacity:0;transition:transform .7s, opacity .7s}
-    .avatar-wrap.pop{transform:scale(1);opacity:1}
-    .avatar{width:88%;height:88%;object-fit:cover;border-radius:50%;display:block;border:8px solid #0b1113;transition:transform .25s}
-    .avatar-wrap::before{content:"";position:absolute;inset:-16px;border-radius:50%;background:linear-gradient(130deg,var(--accent1),var(--accent2));filter:blur(10px);opacity:0;transform:scale(1.03);transition:opacity .9s, transform .9s}
-    .avatar-wrap.pulse::before{opacity:0.9;transform:scale(1.06);animation: neon-pulse 2.6s infinite}
-    @keyframes neon-pulse{0%{filter:blur(8px);transform:scale(1.03);opacity:0.6}50%{filter:blur(18px);transform:scale(1.08);opacity:1}100%{filter:blur(8px);transform:scale(1.03);opacity:0.6}}
-    .profile-name{margin:12px 0 6px;font-weight:800;font-family:Montserrat;font-size:18px;color:var(--text)}
+
+    /* profile card */
+    .profile-card{position:relative;padding-top:34px;text-align:center}
+    .avatar-wrap{width:200px;height:200px;margin:0 auto;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;transform:scale(.86);opacity:0;transition:transform .7s cubic-bezier(.2,.9,.2,1), opacity .7s}
+    .avatar-wrap.pop { transform:scale(1); opacity:1 }
+    .avatar{width:90%;height:90%;object-fit:cover;border-radius:50%;display:block;border:10px solid #0b1113;transition:transform .25s ease}
+    .avatar:hover{transform:translateY(-6px) scale(1.02)}
+    .avatar-wrap::before{content:"";position:absolute;inset: -18px; border-radius:50%; background:linear-gradient(130deg,var(--accent1),var(--accent2)); filter:blur(12px); opacity:0; z-index:-2; transform:scale(1.03); transition:opacity .9s ease, transform .9s ease;}
+    .avatar-wrap.pulse::before{ opacity:0.95; transform:scale(1.07); animation: neon-pulse 2.6s infinite ease-in-out; }
+    @keyframes neon-pulse { 0%{ filter: blur(10px); transform:scale(1.03); opacity:0.7 } 50%{ filter: blur(20px); transform:scale(1.08); opacity:1 } 100%{ filter: blur(10px); transform:scale(1.03); opacity:0.7 } }
+
+    .profile-name{margin:12px 0 6px;font-weight:800;font-family:Montserrat;font-size:20px;color:var(--text)}
     .profile-sub{color:var(--muted);font-size:13px}
-    .stat-row{display:flex;gap:12px;justify-content:center;margin-top:14px;opacity:0;transform:translateY(8px);transition:opacity .7s ease .35s}
+    .stat-row{display:flex;gap:12px;justify-content:center;margin-top:18px;opacity:0;transform:translateY(8px);transition:opacity .7s ease .35s, transform .7s ease .35s}
     .stat-row.show{opacity:1;transform:translateY(0)}
-    .stat{padding:10px 14px;border-radius:10px;min-width:110px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006))}
-    .stat-value{font-weight:800;color:var(--accent1);font-size:18px}
-    .btn{display:inline-block;padding:8px 14px;border-radius:10px;text-decoration:none;font-weight:700;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:var(--text-on-accent);box-shadow:0 8px 30px rgba(255,90,140,0.08);margin:8px 6px;opacity:0;transform:translateY(8px);transition:opacity .6s ease .45s, transform .6s ease .45s}
+    .stat{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));padding:12px 18px;border-radius:10px;min-width:120px}
+    .stat-value{font-weight:800;color:var(--accent1);font-size:20px}
+    .stat-label{font-size:12px;color:var(--muted)}
+    .btn{display:inline-block;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:var(--text-on-accent);box-shadow:0 8px 30px rgba(255,90,140,0.08);margin:10px 6px;opacity:0;transform:translateY(8px);transition:opacity .6s ease .45s, transform .6s ease .45s}
     .btn.visible{opacity:1;transform:translateY(0)}
     .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
-    .lead-card h1{font-family:Montserrat;font-size:32px;margin:0 0 8px;color:var(--text);opacity:0;transform:translateX(18px);transition:opacity .7s ease .18s, transform .7s .18s}
+
+    /* lead card */
+    .lead-card h1{font-family:Montserrat;font-size:34px;margin:0 0 8px;color:var(--text);opacity:0;transform:translateX(18px);transition:opacity .7s ease .18s, transform .7s cubic-bezier(.2,.9,.2,1) .18s}
     .lead-card h1.enter{opacity:1;transform:translateX(0)}
-    .lead-card p.muted{color:var(--muted);margin:10px 0 12px;opacity:0;transform:translateX(14px);transition:opacity .7s ease .28s}
+    .lead-card p.muted{color:var(--muted);margin:10px 0 12px;opacity:0;transform:translateX(14px);transition:opacity .7s ease .28s, transform .7s ease .28s}
     .lead-card p.enter{opacity:1;transform:translateX(0)}
     .quick{color:var(--muted);font-size:14px;margin-top:16px;opacity:0;transition:opacity .7s ease .38s}
     .quick.enter{opacity:1}
-    .about-grid{display:grid;grid-template-columns:1fr 300px;gap:18px}
-    .side-chips{display:grid;gap:12px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.008), rgba(255,255,255,0.006));}
-    .chip{display:inline-block;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.02);margin:6px;border:1px solid rgba(255,255,255,0.02)}
-    .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
-    .project-card{padding:10px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));cursor:pointer;border:1px solid rgba(255,255,255,0.02);transition:transform .18s ease, box-shadow .18s ease, border-color .18s}
-    .project-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,0.25)}
-    .project-card.active{transform:translateY(-12px);box-shadow:0 40px 90px rgba(0,0,0,0.45);border-color: rgba(45,225,230,0.12)}
-    .project-card.glow::after{content:'';position:absolute;inset:-6px;border-radius:16px;pointer-events:none;box-shadow:0 8px 48px rgba(45,225,230,0.08), 0 6px 24px rgba(255,90,140,0.06)}
-    .project-thumb{height:86px;border-radius:8px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:#042223;font-weight:800}
-    .music-box{padding:14px;border-radius:12px;background:linear-gradient(90deg, rgba(0,0,0,0.16), rgba(255,255,255,0.01));display:flex;align-items:center;gap:14px;backdrop-filter: blur(6px)}
-    .player-art{width:84px;height:84px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#042223}
+
+    /* sections */
+    .section{margin-top:34px}
+    .section h2{font-family:Montserrat;margin:0 0 14px}
+    /* about grid */
+    .about-grid{display:grid;grid-template-columns:1fr 360px;gap:22px}
+    .about-left{line-height:1.6}
+    .focus-list{margin:12px 0;padding-left:18px}
+    .focus-list li{margin:8px 0}
+    /* stats / chips column */
+    .side-chips{display:grid;grid-template-columns:1fr;gap:12px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.008), rgba(255,255,255,0.006));}
+    .chip{display:inline-block;padding:10px 14px;border-radius:10px;background:var(--chip-bg);margin:8px 8px 8px 0;border:1px solid rgba(255,255,255,0.02);transition:transform .18s ease, box-shadow .18s ease}
+    .chip:hover{transform:translateY(-8px);box-shadow:0 14px 40px rgba(0,0,0,0.6), 0 6px 18px rgba(45,225,230,0.06)}
+    .big-stat{font-size:28px;font-weight:800;color:var(--accent1);text-align:center;padding:20px;border-radius:12px}
+
+    /* tools grid & project cards */
+    .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+    .tools-col h3{margin:0 0 12px;font-size:18px;color:var(--text)}
+    .tool{display:inline-flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:var(--chip-bg);margin:8px;border:1px solid rgba(255,255,255,0.02);transition:transform .15s ease}
+    .tool:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.06)}
+    .tool .icon{width:20px;height:20px;display:inline-block;border-radius:6px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff;text-align:center;line-height:20px;font-size:12px}
+
+    .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:12px}
+    .project-card{
+      padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));
+      cursor:pointer;border:1px solid rgba(255,255,255,0.02);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      position:relative; overflow:visible;
+      backdrop-filter: blur(6px);
+    }
+    .project-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,0.25)}
+    /* on click show elevation + glow */
+    .project-card.active{transform:translateY(-14px);box-shadow:0 40px 90px rgba(0,0,0,0.45); border-color: rgba(45,225,230,0.12)}
+    .project-card.glow::after{ content:''; position:absolute; inset:-6px; border-radius:16px; pointer-events:none; box-shadow: 0 8px 48px rgba(45,225,230,0.08), 0 6px 24px rgba(255,90,140,0.06); opacity:1; transition:opacity .28s ease; }
+    .project-thumb{height:110px;border-radius:8px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:#042223;font-weight:800}
+
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,6,0.6);backdrop-filter: blur(4px);display:none;align-items:center;justify-content:center;z-index:12000;padding:20px}
+    .modal-backdrop.show{display:flex}
+    .modal{width:min(920px,100%);max-height:92vh;overflow:auto;border-radius:14px;background:var(--card);padding:18px;border:1px solid var(--glass-border);box-shadow:0 30px 80px rgba(0,0,0,0.6)}
+    .modal .modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .modal .modal-body{margin-top:12px;display:grid;grid-template-columns:1fr 320px;gap:12px}
+    .modal .screenshot{width:100%;height:240px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:var(--text-on-accent);font-weight:800}
+    .modal .meta{padding:12px;border-radius:8px;background:var(--chip-bg)}
+    .modal .meta a{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:var(--text-on-accent);text-decoration:none}
+
+    /* hacker gif box */
+    .hacker-box{height:160px;border-radius:12px;border:1px dashed rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.004), rgba(255,255,255,0.002))}
+    .hacker-box img{max-height:140px;border-radius:10px;opacity:0;transform:translateY(8px);transition:opacity .6s ease .45s, transform .6s ease .45s}
+    .hacker-box.visible img{opacity:1;transform:translateY(0)}
+
+    /* music player (spotify-like) */
+    .music-box{padding:18px;border-radius:12px;background:linear-gradient(90deg, rgba(0,0,0,0.16), rgba(255,255,255,0.01));display:flex;align-items:center;gap:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);backdrop-filter: blur(6px)}
+    .player-art{width:96px;height:96px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#042223}
     .player-meta{flex:1;min-width:0}
-    .play-circle{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .player-meta h4{margin:0 0 6px;font-family:Montserrat}
+    .player-meta p{margin:0;color:var(--muted);font-size:13px}
+    .player-controls{display:flex;align-items:center;gap:12px;margin-top:10px}
+    .play-circle{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .play-circle svg{width:20px;height:20px}
     .progress-wrap{height:8px;background:rgba(255,255,255,0.03);border-radius:20px;overflow:hidden;position:relative;flex:1}
     .progress{height:100%;width:0%;background:linear-gradient(90deg,var(--accent1),var(--accent2));transition:width .08s linear}
     .time{font-size:13px;color:var(--muted);margin-left:8px;white-space:nowrap}
     .visualizer{width:64px;display:flex;align-items:flex-end;gap:6px}
     .bar{width:6px;background:linear-gradient(180deg,var(--accent2),var(--accent1));border-radius:3px;opacity:0.95;transform-origin:bottom;transition:height .12s linear}
-    .contact-form input,.contact-form textarea{width:100%;padding:12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text);margin-bottom:12px}
+
+    /* contact */
+    .contact-form input,.contact-form textarea,.contact-form select{width:100%;padding:12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text);margin-bottom:12px}
     .contact-form button{width:100%;padding:12px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:var(--text-on-accent);font-weight:800;cursor:pointer}
+    .contact-form .row{display:flex;gap:8px}
+    .contact-form .row input{flex:1}
     .note{font-size:13px;color:var(--muted);margin-top:8px}
-    #particles-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.12}
-    .preloader{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, rgba(4,17,21,0.98), rgba(7,16,23,0.98));transition:opacity .6s ease, visibility .6s ease;backdrop-filter: blur(6px);flex-direction:column;gap:12px}
+
+    /* particles canvas (behind content) */
+    #particles-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.16}
+
+    /* custom cursor (desktop) */
+    #cursor { position:fixed; left:0; top:0; width:28px; height:28px; border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform .08s ease, width .12s ease, height .12s ease, opacity .12s ease; background-repeat:no-repeat; background-position:center; background-size:contain; background-image: url('assets/cursor-game.png'); box-shadow:0 8px 24px rgba(45,225,230,0.12); opacity:1; }
+    #ripple { position:fixed;left:0;top:0;width:72px;height:72px;border-radius:50%;pointer-events:none;z-index:9998;border:2px dashed rgba(255,255,255,0.04);transform:translate(-50%,-50%) scale(1);opacity:0;transition:opacity .2s ease, transform .28s ease;}
+    #cursor.fallback { background-image:none; }
+    #cursor.fallback::after { content:"";display:block;width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,var(--accent2),var(--accent1));transform:translate(50%,50%); }
+    .cursor-large { transform:translate(-50%,-50%) scale(1.9); width:44px;height:44px; }
+    .ripple-show { opacity:1; transform:translate(-50%,-50%) scale(1.05); }
+
+    @media (pointer: fine) { body { cursor: url('assets/cursor-game.png') 16 16, auto; } }
+    @media (pointer: coarse), (hover: none) { #cursor, #ripple, #particles-canvas { display:none !important; } body { cursor: default; } }
+
+    /* preloader overlay */
+    .preloader { position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, rgba(4,17,21,0.98), rgba(7,16,23,0.98));transition:opacity .6s ease, visibility .6s ease;backdrop-filter: blur(6px);flex-direction:column;gap:12px;}
     .preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
-    .preloader .logo{width:84px;height:84px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--accent1),var(--accent2));box-shadow:0 30px 80px rgba(45,225,230,0.07)}
-    @media (max-width:980px){.hero-grid{grid-template-columns:1fr;gap:16px}.profile-card{order:-1}.about-grid{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.visualizer{display:none}}
+    .preloader .logo { width:92px;height:92px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--accent1),var(--accent2));box-shadow:0 30px 80px rgba(45,225,230,0.07);transform:translateY(0);animation: logo-bob 1.8s infinite alternate ease-in-out;}
+    .preloader .logo img { width:66%;height:66%;object-fit:contain;display:block;border-radius:8px }
+    .preloader .title { font-family:Montserrat;font-weight:800;color:var(--text-on-accent);background:linear-gradient(90deg,#fff,#fff);padding:8px 12px;border-radius:8px }
+    .preloader .loader-dots { color:var(--muted);font-size:13px;opacity:0.9 }
+    @keyframes logo-bob { 0% { transform: translateY(0) rotate(-2deg) } 100% { transform: translateY(-8px) rotate(2deg) } }
+
+    /* small util */
+    .row{display:flex;gap:12px;align-items:center}
+    footer.footer{padding:24px 0;color:var(--muted);text-align:center;font-size:13px}
+    @media (max-width:980px){
+      .hero-grid{grid-template-columns:1fr;gap:16px}
+      .profile-card{order:-1}
+      .about-grid{grid-template-columns:1fr}
+      .tools-grid{grid-template-columns:1fr}
+      .avatar-wrap{width:150px;height:150px}
+      .preloader .logo { width:76px;height:76px }
+      .music-box{flex-direction:column;align-items:stretch}
+      .visualizer{display:none}
+    }
+    /* prefers reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+    }
   </style>
 </head>
 <body>
+  <!-- PARTICLES CANVAS (behind content) -->
   <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
+  <!-- PRELOADER -->
   <div id="preloader" class="preloader" aria-hidden="false">
-    <div class="logo"><img src="assets/profile-circle.png" alt="logo" style="width:72px;height:72px;border-radius:12px"></div>
-    <div class="title" style="font-weight:800;color:var(--text)"><!-- blank title --></div>
+    <div class="logo" aria-hidden="true">
+      <img src="assets/profile-circle.png" alt="logo" onerror="this.style.display='none'">
+    </div>
+    <div class="title">PradyumnTiwareNexus</div>
     <div class="loader-dots" id="loaderDots">Loading<span id="dots">...</span></div>
   </div>
 
-  <div id="cursor"></div><div id="ripple"></div>
+  <!-- Custom cursor elements (desktop only) -->
+  <div id="cursor" class=""></div>
+  <div id="ripple"></div>
 
   <div class="container" style="position:relative;z-index:10">
     <header class="nav">
@@ -100,93 +239,158 @@
     <main>
       <section class="hero">
         <div class="hero-grid">
+          <!-- profile -->
           <aside class="card profile-card" id="profileCard">
-            <div class="avatar-wrap" id="avatarWrap"><img src="assets/profile-circle.png" alt="Pradyumn" class="avatar" id="avatar-img"></div>
+            <div class="avatar-wrap" id="avatarWrap">
+              <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar" id="avatar-img"/>
+            </div>
             <h3 class="profile-name">PradyumnTiwareNexus</h3>
             <p class="profile-sub">Cybersecurity Researcher • Bug Bounty • Recon Automation</p>
+
             <div class="stat-row" id="statRow">
-              <div class="stat"><div class="stat-value" id="visits">948</div><div class="stat-label">Profile visits</div></div>
-              <div class="stat"><div class="stat-value">3</div><div class="stat-label">Pinned projects</div></div>
+              <div class="stat">
+                <div class="stat-value" id="visits">948</div>
+                <div class="stat-label">Profile visits</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Pinned projects</div>
+              </div>
             </div>
-            <div style="margin-top:12px;"><a class="btn" id="btnGithub" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a><a class="btn ghost" id="btnProjects" href="#projects">See Projects</a></div>
+
+            <div style="margin-top:18px;">
+              <a class="btn" id="btnGithub" href="https://github.com/PradyumnTiwareNexus" target="_blank">View GitHub</a>
+              <a class="btn ghost" id="btnProjects" href="#projects">See Projects</a>
+            </div>
           </aside>
 
+          <!-- lead -->
           <section class="card lead-card" id="leadCard">
             <h1 id="leadTitle">Hi — I'm <span class="accent">Pradyumn</span>.</h1>
             <p class="muted" id="leadDesc">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. Focused on web security, OSINT and high-value bug hunting.</p>
-            <div class="quick" id="leadQuick"><span id="typewriter"></span>
-              <div style="margin-top:10px"><strong>Skills:</strong> HTML · C · C++ · Java · Bash · Python · JS deep-inspection<br><strong>Tools:</strong> Burp Suite · Wireshark · Nmap · Metasploit · httpx · VSCode · Kali / Parrot</div>
+            <div class="quick" id="leadQuick">
+              <span id="typewriter"></span>
+              <div style="margin-top:10px"><strong>Skills:</strong> HTML · C · C++ · Java · Bash · Python · JS deep-inspection<br>
+              <strong>Tools:</strong> Burp Suite · Wireshark · Nmap · Metasploit · httpx · VSCode · Kali / Parrot</div>
             </div>
           </section>
         </div>
       </section>
 
+      <!-- About -->
       <section id="about" class="section">
-        <div class="container card about-grid" style="padding:18px">
+        <div class="container card about-grid" style="padding:22px;">
           <div class="about-left">
             <h2>About</h2>
-            <p style="color:var(--muted)">I'm <strong>Pradyumn Tiware</strong>, a Cybersecurity Researcher...</p>
+            <p style="color:var(--muted)">
+              I'm <strong>Pradyumn Tiware</strong>, a Cybersecurity Researcher, Bug Bounty Hunter, and Recon Automation Developer. I build intelligent recon pipelines combining OSINT, automation, JS analysis and archive forensics to find high-impact bugs responsibly.
+            </p>
+
             <h3 style="margin-top:14px">My areas of focus:</h3>
-            <ul class="focus-list"><li>🔎 Recon automation</li><li>🛡️ Web exploitation</li><li>🧩 JS analysis</li></ul>
+            <ul class="focus-list">
+              <li>🔎 Recon automation & tooling (subdomains, wayback, JS, API)</li>
+              <li>🛡️ Web exploitation & endpoint analysis</li>
+              <li>🧩 JavaScript deep-inspection & secret detection</li>
+              <li>🌐 Asset discovery & attack-surface expansion</li>
+              <li>🔑 API security & authentication analysis</li>
+              <li>🗂️ Historical archive (CDX) analysis</li>
+              <li>🛰️ SOC-style log review, threat hunting & detection</li>
+              <li>🤝 Responsible disclosure & research collaboration</li>
+            </ul>
           </div>
 
           <aside class="side-chips">
             <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
-              <div><div style="font-size:13px;color:var(--muted)">Programs</div><div class="chip">Private</div><div class="chip">Public</div></div>
-              <div><div style="font-size:13px;color:var(--muted)">Practices</div><div class="chip">Responsible Disclosure</div></div>
+              <div>
+                <div style="font-size:13px;color:var(--muted)">Programs</div>
+                <div class="chip">Private</div><div class="chip">Public</div>
+              </div>
+              <div>
+                <div style="font-size:13px;color:var(--muted)">Practices</div>
+                <div class="chip">Responsible Disclosure</div>
+              </div>
             </div>
-            <div style="display:flex;flex-wrap:wrap;margin-top:6px"><div class="chip">💻 HTML</div><div class="chip">🐍 Python</div><div class="chip">🔧 Bash</div></div>
+
+            <div style="display:flex;flex-wrap:wrap;margin-top:6px">
+              <div class="chip">💻 HTML</div>
+              <div class="chip">⚙️ C / C++</div>
+              <div class="chip">☕ Java</div>
+              <div class="chip">🐧 Wireshark</div>
+              <div class="chip">🛡️ Burp Suite</div>
+              <div class="chip">🔍 Nmap</div>
+              <div class="chip">🐍 Python</div>
+              <div class="chip">🔧 Bash</div>
+              <div class="chip">🧪 SQL / SQLmap</div>
+              <div class="chip">📮 Postman</div>
+            </div>
           </aside>
         </div>
       </section>
 
+      <!-- Tools & Projects -->
       <section id="tools" class="section">
-        <div class="container card" style="padding:18px">
+        <div class="container card" style="padding:22px;">
           <h2>Tools & Projects</h2>
+
           <div class="project-grid" id="projectGrid">
+            <!-- Project 1 -->
             <div class="project-card" data-project='{"title":"Recon Pipeline Enhanced","desc":"Automated recon: subdomains → httpx → JS → Wayback → secret detection → nuclei targets.","repo":"https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced"}' tabindex="0">
               <div class="project-thumb">Recon Pipeline</div>
-              <div style="margin-top:8px"><strong>Recon Pipeline Enhanced</strong><div style="color:var(--muted);font-size:13px">Automated recon & orchestration</div></div>
+              <div style="margin-top:10px"><strong>Recon Pipeline Enhanced</strong><div style="color:var(--muted);font-size:13px">Automated recon & orchestration</div></div>
             </div>
 
+            <!-- Project 2 placeholder -->
             <div class="project-card" data-project='{"title":"Recon Helper Tools","desc":"Small scripts & utilities for OSINT and JS analysis.","repo":"https://github.com/PradyumnTiwareNexus"}' tabindex="0">
               <div class="project-thumb">Helpers</div>
-              <div style="margin-top:8px"><strong>Recon Helper Tools</strong><div style="color:var(--muted);font-size:13px">Scripts & utilities</div></div>
+              <div style="margin-top:10px"><strong>Recon Helper Tools</strong><div style="color:var(--muted);font-size:13px">Scripts & utilities</div></div>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- Music & Mood -->
       <section id="music" class="section">
         <div class="container card music-box">
-          <div style="display:flex;align-items:center;gap:12px;flex:1">
+          <div style="display:flex;align-items:center;gap:18px;flex:1">
             <div class="player-art">PT</div>
             <div class="player-meta">
               <h4 id="trackTitle">Working Energy — Kinhbach</h4>
-              <p style="color:var(--muted)">Focus playlist</p>
-              <div class="player-controls" style="margin-top:10px">
+              <p>Focus playlist</p>
+
+              <div class="player-controls">
                 <div style="display:flex;align-items:center;gap:12px;flex:1">
                   <div id="playBtn" class="play-circle" title="Play / Pause" aria-label="Play">
-                    <svg id="playIcon" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5z" fill="#dbeef0"/></svg>
+                    <svg id="playIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7L8 5z" fill="#dbeef0"/></svg>
                   </div>
-                  <div style="min-width:220px;flex:1">
-                    <div class="progress-wrap" id="progressWrap"><div class="progress" id="progressBar"></div></div>
+
+                  <div style="min-width:260px;flex:1">
+                    <div class="progress-wrap" id="progressWrap" aria-hidden="true"><div class="progress" id="progressBar"></div></div>
                   </div>
+
                   <div class="time" id="timeLabel">0:00 / 3:21</div>
                 </div>
-                <div class="visualizer" aria-hidden="true"><div class="bar" style="height:12px"></div><div class="bar" style="height:18px"></div><div class="bar" style="height:8px"></div><div class="bar" style="height:14px"></div></div>
+
+                <div class="visualizer" aria-hidden="true">
+                  <div class="bar" style="height:12px"></div>
+                  <div class="bar" style="height:18px"></div>
+                  <div class="bar" style="height:8px"></div>
+                  <div class="bar" style="height:14px"></div>
+                </div>
               </div>
             </div>
           </div>
+
           <audio id="audio" src="assets/audio/working-energy.mp3" preload="metadata"></audio>
         </div>
       </section>
 
+      <!-- Contact -->
       <section id="contact" class="section">
         <div class="container" style="display:grid;grid-template-columns:1fr 420px;gap:20px">
           <div class="card" style="padding:22px">
             <h2>Featured Case Study</h2>
             <p style="color:var(--muted)">A short walkthrough of a recon-to-report workflow (click project to view details).</p>
+            <!-- space kept intentionally under the featured case study -->
             <div style="height:120px"></div>
           </div>
 
@@ -194,132 +398,276 @@
             <h2>Contact</h2>
             <p style="color:var(--muted)">Responsible disclosure only — please use vendor bounty programs or contact via email for coordination.</p>
 
+            <!-- improved form: honeypot + mailto fallback to bugcrowdninjatest1.com@gmail.com -->
             <form id="contactForm" novalidate>
+              <!-- honeypot field (hidden) - bots will fill this, humans won't -->
               <input type="text" name="hp_field" id="hp_field" style="display:none" autocomplete="off">
-              <div style="display:flex;gap:8px"><input type="text" id="name" name="name" placeholder="Your name" required><input type="email" id="email" name="email" placeholder="Your email" required></div>
+
+              <div class="row">
+                <input type="text" id="name" name="name" placeholder="Your name" required>
+                <input type="email" id="email" name="email" placeholder="Your email" required>
+              </div>
               <textarea id="message" name="message" placeholder="Brief description (program, scope...)" rows="5" required></textarea>
-              <button type="submit" id="sendBtn">Send</button>
+              <button type="submit">Send</button>
               <div class="note" id="formNote">Or email: <a href="mailto:bugcrowdninjatest1.com@gmail.com" style="color:var(--muted)">bugcrowdninjatest1.com@gmail.com</a></div>
             </form>
           </aside>
         </div>
       </section>
 
-      <footer class="footer">© 2025 Pradyumn Tiware — Stay Ethical • Stay Sharp</footer>
+      <footer class="footer">
+        © 2025 Pradyumn Tiware — Stay Ethical • Stay Sharp
+      </footer>
     </main>
   </div>
 
+  <!-- Modal (project) -->
   <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal" role="document" aria-labelledby="modalTitle">
-      <div class="modal-head"><h3 id="modalTitle">Project</h3><div><button id="modalClose" class="icon-btn" aria-label="Close project">Close</button></div></div>
-      <div class="modal-body"><div><div id="modalScreenshot" class="screenshot">Screenshot</div><div style="margin-top:12px" id="modalDesc" class="muted"></div></div><aside class="meta"><div><strong id="modalRepoTitle">Repo</strong></div><a id="modalRepoLink" href="#" target="_blank" rel="noopener">Open repository</a></aside></div>
+      <div class="modal-head">
+        <h3 id="modalTitle">Project</h3>
+        <div>
+          <button id="modalClose" class="icon-btn" aria-label="Close project">Close</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div id="modalScreenshot" class="screenshot">Screenshot</div>
+          <div style="margin-top:12px" id="modalDesc" class="muted"></div>
+        </div>
+        <aside class="meta">
+          <div><strong id="modalRepoTitle">Repo</strong></div>
+          <a id="modalRepoLink" href="#" target="_blank" rel="noopener">Open repository</a>
+        </aside>
+      </div>
     </div>
   </div>
 
-  <!-- EMAILJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
-    // Replace these with values from your EmailJS dashboard
-    const EMAILJS_SERVICE_ID = 'YOUR_EMAILJS_SERVICE_ID';
-    const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
-    const EMAILJS_PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY';
-
-    // init emailjs
-    (function(){ if(window.emailjs) emailjs.init(EMAILJS_PUBLIC_KEY || 'public_placeholder'); })();
-
-    // preloader timing
+    // start time for preloader minimum display
     const _preloadStart = performance.now();
+
+    // THEME TOGGLE (unchanged behavior)
+    const themeToggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    function applyTheme(t) { root.setAttribute('data-theme', t); localStorage.setItem('site_theme', t); themeToggle.innerText = t === 'light' ? 'Light' : 'Dark'; }
+    const savedTheme = localStorage.getItem('site_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    applyTheme(savedTheme);
+    themeToggle.addEventListener('click', () => { const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'; applyTheme(next); });
+
+    // PRELOADER + ensure >= 400ms (0.4s)
     const preloader = document.getElementById('preloader');
     const dots = document.getElementById('dots');
     let dotCount = 3;
-    const dotInterval = setInterval(()=>{ dotCount=(dotCount+1)%4; dots.innerText='.'.repeat(dotCount); }, 400);
-    let loaded=false;
-    window.addEventListener('load', ()=>{ loaded=true; finishPreloader(); });
-    setTimeout(()=>{ if(!loaded) finishPreloader(); }, 2000);
+    const dotInterval = setInterval(()=> { dotCount = (dotCount + 1) % 4; dots.innerText = '.'.repeat(dotCount); }, 400);
+    let loaded = false;
+    window.addEventListener('load', ()=> { loaded = true; finishPreloader(); });
+    setTimeout(()=> { if(!loaded) finishPreloader(); }, 2000);
     const MIN_PRELOAD_MS = 400;
-    function finishPreloader(){ clearInterval(dotInterval); if(!preloader) return; const waited = performance.now()-_preloadStart; const remaining = Math.max(0, MIN_PRELOAD_MS - waited); setTimeout(()=>{ preloader.classList.add('hidden'); setTimeout(revealSequence,80); }, remaining); }
+    function finishPreloader(){
+      clearInterval(dotInterval);
+      if (!preloader) return;
+      const waited = performance.now() - _preloadStart;
+      const remaining = Math.max(0, MIN_PRELOAD_MS - waited);
+      setTimeout(()=> {
+        preloader.classList.add('hidden');
+        preloader.setAttribute('aria-hidden','true');
+        setTimeout(revealSequence, 80);
+      }, remaining);
+    }
 
-    // reveal sequence
-    function revealSequence(){ document.getElementById('avatarWrap').classList.add('pop'); setTimeout(()=>document.getElementById('avatarWrap').classList.add('pulse'),450); document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=>c.classList.add('visible'), 220 + i*40)); setTimeout(()=>document.getElementById('leadTitle').classList.add('enter'),380); setTimeout(()=>document.getElementById('leadDesc').classList.add('enter'),520); setTimeout(()=>document.getElementById('leadQuick').classList.add('enter'),680); setTimeout(()=>document.getElementById('statRow').classList.add('show'),880); }
+    // REVEAL sequence
+    function revealSequence() {
+      document.getElementById('avatarWrap').classList.add('pop');
+      setTimeout(()=> document.getElementById('avatarWrap').classList.add('pulse'), 450);
+      document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), 220 + i*50));
+      setTimeout(()=> { document.getElementById('leadTitle').classList.add('enter'); }, 380);
+      setTimeout(()=> { document.getElementById('leadDesc').classList.add('enter'); }, 520);
+      setTimeout(()=> { document.getElementById('leadQuick').classList.add('enter'); }, 680);
+      setTimeout(()=> { document.getElementById('statRow').classList.add('show'); document.querySelectorAll('.btn').forEach(b=>b.classList.add('visible')); }, 880);
+    }
 
-    // cursor basic
-    const cursor = document.getElementById('cursor'); const ripple = document.getElementById('ripple');
-    if(window.matchMedia && window.matchMedia('(pointer: fine)').matches){ document.addEventListener('mousemove', e=>{ cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; ripple.style.left = e.clientX + 'px'; ripple.style.top = e.clientY + 'px'; }); document.addEventListener('mousedown', ()=>{ ripple.classList.add('ripple-show'); setTimeout(()=>ripple.classList.remove('ripple-show'),320); }); }
+    // CUSTOM CURSOR (desktop)
+    const cursor = document.getElementById('cursor');
+    const ripple = document.getElementById('ripple');
+    function checkCursorImage() {
+      const img = new Image();
+      img.onload = () => {};
+      img.onerror = () => { cursor.classList.add('fallback'); };
+      img.src = 'assets/cursor-game.png';
+    }
+    if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+      checkCursorImage();
+      document.addEventListener('mousemove', e=>{ cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; ripple.style.left = e.clientX + 'px'; ripple.style.top = e.clientY + 'px'; });
+      document.addEventListener('mousedown', ()=> { ripple.classList.add('ripple-show'); setTimeout(()=> ripple.classList.remove('ripple-show'), 320); });
+      document.querySelectorAll('a,button,input,select,textarea,.tool,.chip,.project-card').forEach(el=>{ el.addEventListener('mouseenter', ()=> { cursor.classList.add('cursor-large'); }); el.addEventListener('mouseleave', ()=> { cursor.classList.remove('cursor-large'); }); });
+    } else { cursor.style.display = 'none'; ripple.style.display = 'none'; }
 
-    // typewriter
-    (function(){ const typeEl = document.getElementById('typewriter'); const phrases = ["I hunt bugs & build recon tools.","Recon automation • OSINT • JS analysis","Responsible disclosure • High-value findings"]; let t=0,c=0,d=false; function tick(){ if(!typeEl) return; const full = phrases[t]; if(!d){ c++; typeEl.innerHTML=`<code>${full.slice(0,c)}</code>`; if(c===full.length){ d=true; setTimeout(tick,1000); return; } } else { c--; typeEl.innerHTML=`<code>${full.slice(0,c)}</code>`; if(c===0){ d=false; t=(t+1)%phrases.length; setTimeout(tick,220); return; } } setTimeout(tick, d?40:60); } setTimeout(tick,900); })();
-
-    // particles (lightweight)
-    (function initParticles(){ const canvas = document.getElementById('particles-canvas'); if(!canvas) return; const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; const isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches; if(prefersReduced||isTouch){ canvas.style.display='none'; return; } const ctx = canvas.getContext('2d'); let w = canvas.width = innerWidth, h = canvas.height = innerHeight; const particleCount = Math.min(60, Math.floor((w*h)/90000)); const particles = []; function rand(min,max){ return Math.random()*(max-min)+min; } for(let i=0;i<particleCount;i++){ particles.push({ x:Math.random()*w, y:Math.random()*h, r:rand(0.8,2.2), vx:rand(-0.25,0.25), vy:rand(-0.05,0.12), alpha:rand(0.06,0.28) }); } function resize(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; } addEventListener('resize', resize); function draw(){ ctx.clearRect(0,0,w,h); for(let p of particles){ p.x += p.vx; p.y += p.vy; if(p.x<-10) p.x = w+10; if(p.x> w+10) p.x = -10; if(p.y>h+10) p.y = -10; const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*8); g.addColorStop(0, `rgba(45,225,230,${p.alpha})`); g.addColorStop(1, `rgba(255,90,140,0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } requestAnimationFrame(draw); } draw(); })();
-
-    // visits default 948 then try CountAPI
-    (function(){ const el = document.getElementById('visits'); if(!el) return; el.innerText='948'; fetch('https://api.countapi.xyz/hit/pradyumntiware/portfolio_visits').then(r=>r.json()).then(j=>{ if(j && j.value !== undefined) el.innerText = j.value.toLocaleString(); }).catch(()=>{}); })();
-
-    // Audio player (spotify-like)
-    (function(){ const audio = document.getElementById('audio'); const playBtn = document.getElementById('playBtn'); const playIcon = document.getElementById('playIcon'); const progressBar = document.getElementById('progressBar'); const timeLabel = document.getElementById('timeLabel'); const bars = document.querySelectorAll('.visualizer .bar');
-
-      function fmt(s){ const m=Math.floor(s/60), ss=Math.floor(s%60).toString().padStart(2,'0'); return `${m}:${ss}`; }
-
-      audio.addEventListener('loadedmetadata', ()=>{ timeLabel.innerText = `0:00 / ${fmt(audio.duration||0)}`; });
-      audio.addEventListener('timeupdate', ()=>{ const pct = (audio.currentTime / (audio.duration || 1))*100; progressBar.style.width = pct + '%'; timeLabel.innerText = `${fmt(audio.currentTime)} / ${fmt(audio.duration||0)}`; bars.forEach((b,i)=>{ const h = 6 + Math.abs(Math.sin((audio.currentTime + i)*3.2 + i))*26; b.style.height = `${Math.max(6, Math.min(46,h))}px`; }); });
-
-      playBtn.addEventListener('click', ()=>{ if(audio.paused){ audio.play().catch(()=>{}); playIcon.innerHTML = '<path d=\"M6 19h4V5H6v14zm8-14v14h4V5h-4z\" fill=\"#dbeef0\"/>'; } else { audio.pause(); playIcon.innerHTML = '<path d=\"M8 5v14l11-7L8 5z\" fill=\"#dbeef0\"/>'; } });
-
-      const wrap = document.getElementById('progressWrap'); wrap.addEventListener('click', (e)=>{ const rect = wrap.getBoundingClientRect(); const pct = (e.clientX - rect.left)/rect.width; audio.currentTime = (audio.duration||0) * pct; });
-      audio.addEventListener('ended', ()=>{ playIcon.innerHTML = '<path d=\"M8 5v14l11-7L8 5z\" fill=\"#dbeef0\"/>'; });
+    // TYPEWRITER HERO
+    (function(){
+      const typeEl = document.getElementById('typewriter');
+      const phrases = ["I hunt bugs & build recon tools.","Recon automation • OSINT • JS analysis","Responsible disclosure • High-value findings"];
+      let tIdx=0, cIdx=0, deleting=false;
+      function tickType(){
+        if(!typeEl) return;
+        const full = phrases[tIdx];
+        if(!deleting){ cIdx++; typeEl.innerHTML = `<code>${full.slice(0, cIdx)}</code>`; if(cIdx===full.length){ deleting=true; setTimeout(tickType,1000); return; } }
+        else { cIdx--; typeEl.innerHTML = `<code>${full.slice(0,cIdx)}</code>`; if(cIdx===0){ deleting=false; tIdx=(tIdx+1)%phrases.length; setTimeout(tickType,220); return; } }
+        setTimeout(tickType, deleting?40:60);
+      }
+      setTimeout(tickType,900);
     })();
 
-    // Projects modal + glow
-    (function(){ const projectGrid = document.getElementById('projectGrid'); const modalBackdrop = document.getElementById('modalBackdrop'); const modalTitle = document.getElementById('modalTitle'); const modalDesc = document.getElementById('modalDesc'); const modalRepoLink = document.getElementById('modalRepoLink'); const modalClose = document.getElementById('modalClose');
+    // AVATAR PARALLAX (subtle)
+    const avatarImg = document.querySelector('.avatar');
+    const heroSection = document.querySelector('.hero');
+    function onHeroMouse(e){
+      const rect = heroSection.getBoundingClientRect();
+      const cx = rect.left + rect.width/2;
+      const cy = rect.top + rect.height/2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+      const tx = dx * 12; const ty = dy * 10; const rz = dx * 6;
+      avatarImg.style.transform = `translate(${tx}px, ${ty}px) rotate(${rz}deg) scale(1.03)`;
+    }
+    function resetAvatar(){ avatarImg.style.transform = ''; }
+    if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) { heroSection.addEventListener('mousemove', onHeroMouse); heroSection.addEventListener('mouseleave', resetAvatar); }
 
-      function openModal(data, card){ modalTitle.innerText = data.title || 'Project'; modalDesc.innerText = data.desc || ''; modalRepoLink.href = data.repo || '#'; modalBackdrop.classList.add('show'); card.classList.add('glow','active'); setTimeout(()=>card.classList.remove('glow','active'),900); }
-      function closeModal(){ modalBackdrop.classList.remove('show'); }
-
-      projectGrid.querySelectorAll('.project-card').forEach(card=>{ card.addEventListener('click', ()=>{ const data = JSON.parse(card.getAttribute('data-project')); openModal(data, card); }); card.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); const data = JSON.parse(card.getAttribute('data-project')); openModal(data, card); } }); });
-
-      modalClose.addEventListener('click', closeModal); modalBackdrop.addEventListener('click', (e)=>{ if(e.target === modalBackdrop) closeModal(); }); document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+    // PARTICLES BACKGROUND (lightweight)
+    (function initParticles(){
+      const canvas = document.getElementById('particles-canvas');
+      if (!canvas) return;
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      if (prefersReduced || isTouch) { canvas.style.display = 'none'; return; }
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = innerWidth, h = canvas.height = innerHeight;
+      const particleCount = Math.min(80, Math.floor((w*h) / 90000));
+      const particles = [];
+      function rand(min,max){ return Math.random()*(max-min)+min; }
+      for (let i=0;i<particleCount;i++) particles.push({ x: Math.random()*w, y: Math.random()*h, r: rand(0.8,2.2), vx: rand(-0.2,0.2), vy: rand(-0.05,0.15), alpha: rand(0.06,0.28) });
+      function resize(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; }
+      addEventListener('resize', resize);
+      function draw(){ ctx.clearRect(0,0,w,h); for (let p of particles){ p.x += p.vx; p.y += p.vy; if (p.x < -10) p.x = w + 10; if (p.x > w + 10) p.x = -10; if (p.y > h + 10) p.y = -10; const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*8); g.addColorStop(0, `rgba(45,225,230,${p.alpha})`); g.addColorStop(1, `rgba(255,90,140,0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } requestAnimationFrame(draw); }
+      draw();
     })();
 
-    // CONTACT FORM using EMAILJS
+    // VISITOR COUNTER: default 948; override if CountAPI returns value
+    (function(){
+      const el = document.getElementById('visits');
+      if(!el) return;
+      el.innerText = '948'; // default as requested
+      fetch('https://api.countapi.xyz/hit/pradyumntiware/portfolio_visits').then(r=>r.json()).then(j=>{
+        if(j && j.value !== undefined) { el.innerText = j.value.toLocaleString(); }
+      }).catch(()=>{/* keep default */});
+    })();
+
+    // AUDIO player (spotify-like) with progress + visualizer
+    (function(){
+      const audio = document.getElementById('audio');
+      const playBtn = document.getElementById('playBtn');
+      const playIcon = document.getElementById('playIcon');
+      const progressBar = document.getElementById('progressBar');
+      const timeLabel = document.getElementById('timeLabel');
+      const bars = document.querySelectorAll('.visualizer .bar');
+      function format(s){ const m = Math.floor(s/60), ss = Math.floor(s%60).toString().padStart(2,'0'); return `${m}:${ss}`; }
+      audio.addEventListener('loadedmetadata', ()=> { timeLabel.innerText = `0:00 / ${format(audio.duration||0)}`; });
+      audio.addEventListener('timeupdate', ()=> {
+        const pct = (audio.currentTime / (audio.duration || 1))*100;
+        progressBar.style.width = pct + '%';
+        timeLabel.innerText = `${format(audio.currentTime)} / ${format(audio.duration||0)}`;
+        // visualizer effect (not real frequency analysis, but pleasant)
+        bars.forEach((b,i)=> {
+          const h = 6 + Math.abs(Math.sin((audio.currentTime + i)*3.2 + i))*26;
+          b.style.height = `${Math.max(6, Math.min(46,h))}px`;
+        });
+      });
+      playBtn.addEventListener('click', ()=> {
+        if(audio.paused){ audio.play().catch(()=>{}); playIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill=\"#dbeef0\"/>'; }
+        else { audio.pause(); playIcon.innerHTML = '<path d="M8 5v14l11-7L8 5z" fill=\"#dbeef0\"/>'; }
+      });
+      // seek by clicking progress bar area
+      const wrap = document.getElementById('progressWrap');
+      wrap.addEventListener('click', (e)=> {
+        const rect = wrap.getBoundingClientRect();
+        const pct = (e.clientX - rect.left) / rect.width;
+        audio.currentTime = (audio.duration || 0) * pct;
+      });
+      // when audio ends, reset play icon
+      audio.addEventListener('ended', ()=> { playIcon.innerHTML = '<path d="M8 5v14l11-7L8 5z" fill=\"#dbeef0\"/>'; });
+    })();
+
+    // Project modal + glow + elevation on click
+    (function(){
+      const projectGrid = document.getElementById('projectGrid');
+      const modalBackdrop = document.getElementById('modalBackdrop');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalRepoLink = document.getElementById('modalRepoLink');
+      const modalScreenshot = document.getElementById('modalScreenshot');
+      const modalClose = document.getElementById('modalClose');
+
+      function openModal(data, card){
+        modalTitle.innerText = data.title || 'Project';
+        modalDesc.innerText = data.desc || '';
+        modalRepoLink.href = data.repo || '#';
+        modalScreenshot.style.backgroundImage = "linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))";
+        modalBackdrop.classList.add('show'); modalBackdrop.setAttribute('aria-hidden','false');
+        // add a temporary glow + active elevation
+        card.classList.add('glow','active');
+        setTimeout(()=> card.classList.remove('glow','active'), 900);
+      }
+      function closeModal(){ modalBackdrop.classList.remove('show'); modalBackdrop.setAttribute('aria-hidden','true'); }
+      projectGrid.querySelectorAll('.project-card').forEach(card=>{
+        card.addEventListener('click', ()=> {
+          const data = JSON.parse(card.getAttribute('data-project'));
+          openModal(data, card);
+        });
+        card.addEventListener('keydown', (e)=> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const data = JSON.parse(card.getAttribute('data-project')); openModal(data, card); } });
+      });
+      modalClose.addEventListener('click', closeModal);
+      modalBackdrop.addEventListener('click', (e)=> { if (e.target === modalBackdrop) closeModal(); });
+      document.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeModal(); });
+    })();
+
+    // CONTACT FORM: honeypot + mailto fallback to bugcrowdninjatest1.com@gmail.com
     (function(){
       const form = document.getElementById('contactForm');
       const hp = document.getElementById('hp_field');
-      const sendBtn = document.getElementById('sendBtn');
       form.addEventListener('submit', (e)=>{
         e.preventDefault();
-        if(hp && hp.value.trim() !== ''){ alert('Thanks — message submitted.'); form.reset(); return; } // likely bot
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-        if(!name || !email || !message){ alert('Please fill all fields.'); return; }
-        if(!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY || EMAILJS_SERVICE_ID==='YOUR_EMAILJS_SERVICE_ID'){
-          // fallback: open mail client
-          const to = 'bugcrowdninjatest1.com@gmail.com';
-          const subject = encodeURIComponent(`Website contact from ${name}`);
-          const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-          window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-          alert('Email client opened (or use direct mailto) — you can also set EmailJS keys in the HTML to send without mail client.');
+        if (hp && hp.value.trim() !== '') {
+          // likely bot: ignore but show polite message
+          alert('Thanks — message submitted.');
           form.reset();
           return;
         }
-
-        // disable while sending
-        sendBtn.disabled = true; sendBtn.innerText = 'Sending...';
-
-        // prepare template params - make sure template uses these keys
-        const templateParams = { from_name: name, from_email: email, message: message };
-
-        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-          .then((response)=>{ sendBtn.disabled=false; sendBtn.innerText='Send'; alert('Message sent — I will check email soon.'); form.reset(); })
-          .catch((err)=>{ sendBtn.disabled=false; sendBtn.innerText='Send'; console.error('EmailJS error', err); alert('Send failed — opening mail client as fallback.'); const to='bugcrowdninjatest1.com@gmail.com'; const subject=encodeURIComponent(`Website contact from ${name}`); const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`); window.location.href = `mailto:${to}?subject=${subject}&body=${body}`; form.reset(); });
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        if (!name || !email || !message) { alert('Please fill all fields.'); return; }
+        // mailto fallback
+        const to = 'bugcrowdninjatest1.com@gmail.com';
+        const subject = encodeURIComponent(`Website contact from ${name}`);
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+        // give quick feedback and reset
+        setTimeout(()=>{ alert('If your mail client did not open, please email directly to ' + to); }, 500);
+        form.reset();
       });
     })();
 
-    // avatar fallback SVG
-    document.getElementById('avatar-img').addEventListener('error', function(){ this.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320"><rect width="100%" height="100%" rx="20" fill="#0b1113"/><text x="50%" y="52%" fill="#bff9fa" font-size="72" font-family="Montserrat" font-weight="800" text-anchor="middle" alignment-baseline="middle">PTN</text></svg>`); });
+    // Avatar fallback inline svg
+    document.getElementById('avatar-img').addEventListener('error', function(){
+      this.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320"><rect width="100%" height="100%" rx="20" fill="#0b1113"/><text x="50%" y="52%" fill="#bff9fa" font-size="72" font-family="Montserrat" font-weight="800" text-anchor="middle" alignment-baseline="middle">PTN</text></svg>`
+      );
+    });
 
-    // minimal immediate reveal if fast
-    document.addEventListener('DOMContentLoaded', ()=>{ setTimeout(()=>{ document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), i*30)); }, 80); });
+    // small visibility: reveal immediately if JS disabled or fast load
+    document.addEventListener('DOMContentLoaded', ()=> {
+      setTimeout(()=> { document.querySelectorAll('.card').forEach((c,i)=> setTimeout(()=> c.classList.add('visible'), i*50)); }, 80);
+    });
   </script>
 </body>
 </html>
