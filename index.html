@@ -4,1413 +4,1092 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PradyumnTiwareNexus — Cybersecurity Researcher & Bug Bounty Hunter</title>
-  <meta name="description" content="PradyumnTiwareNexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer, and creator of Recon Pipeline Enhanced v2.1. Focused on OSINT, web security, and advanced recon automation." />
+  <meta name="description" content="PradyumnTiwareNexus — Cybersecurity Researcher, Bug Bounty Hunter, Recon Automation Developer, and creator of Recon Pipeline Enhanced v2.1." />
   <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-
   <style>
-    /* ─── TOKENS ─────────────────────────────────────────────────────────────── */
-    :root {
-      --bg:          #030b10;
-      --bg2:         #050e15;
-      --bg3:         #071219;
-      --surface:     rgba(255,255,255,0.028);
-      --surface2:    rgba(255,255,255,0.016);
-      --border:      rgba(255,255,255,0.055);
-      --border2:     rgba(255,255,255,0.03);
-      --cyan:        #2de1e6;
-      --pink:        #ff4fa3;
-      --purple:      #9b59f8;
-      --text:        #d8eef0;
-      --muted:       #7a9aa0;
-      --muted2:      #496068;
-      --on-accent:   #031415;
-      --blur:        saturate(180%) blur(18px);
-      --blur2:       saturate(160%) blur(10px);
-      --glow-cyan:   0 0 40px rgba(45,225,230,0.18);
-      --glow-pink:   0 0 40px rgba(255,79,163,0.14);
-      --shadow:      0 24px 80px rgba(0,0,0,0.65);
-      --shadow2:     0 8px 32px rgba(0,0,0,0.5);
-      --radius:      18px;
-      --radius2:     12px;
-      --radius3:     8px;
-      --trans:       all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-      --font:        'Space Grotesk', 'Inter', system-ui, sans-serif;
-      --mono:        'JetBrains Mono', monospace;
-    }
-    :root[data-theme="light"] {
-      --bg:          #f0f7f9;
-      --bg2:         #e8f3f6;
-      --bg3:         #ffffff;
-      --surface:     rgba(0,0,0,0.025);
-      --surface2:    rgba(0,0,0,0.015);
-      --border:      rgba(0,0,0,0.07);
-      --border2:     rgba(0,0,0,0.04);
-      --cyan:        #007b80;
-      --pink:        #c9005c;
-      --text:        #091a1e;
-      --muted:       #3d6970;
-      --muted2:      #8db5bb;
-      --on-accent:   #ffffff;
-    }
+/* ═══ TOKENS ═══════════════════════════════════════════════════════════════════ */
+:root {
+  --bg:         #030b10;
+  --bg2:        #050e15;
+  --bg3:        #071219;
+  --surface:    rgba(255,255,255,0.028);
+  --surface2:   rgba(255,255,255,0.016);
+  --border:     rgba(255,255,255,0.055);
+  --border2:    rgba(255,255,255,0.03);
+  --cyan:       #2de1e6;
+  --pink:       #ff4fa3;
+  --purple:     #9b59f8;
+  --green:      #1DB954;
+  --text:       #d8eef0;
+  --muted:      #7a9aa0;
+  --muted2:     #496068;
+  --on-acc:     #031415;
+  --blur:       saturate(180%) blur(18px);
+  --blur2:      saturate(160%) blur(10px);
+  --glow-c:     0 0 40px rgba(45,225,230,0.18);
+  --glow-p:     0 0 40px rgba(255,79,163,0.14);
+  --shadow:     0 24px 80px rgba(0,0,0,0.65);
+  --shadow2:    0 8px 32px rgba(0,0,0,0.5);
+  --r:          18px;
+  --r2:         12px;
+  --r3:         8px;
+  --ease:       cubic-bezier(0.22,1,0.36,1);
+  --font:       'Space Grotesk','Inter',system-ui,sans-serif;
+  --mono:       'JetBrains Mono',monospace;
+}
+:root[data-theme="light"] {
+  --bg:#f0f7f9;--bg2:#e8f3f6;--bg3:#ffffff;
+  --surface:rgba(0,0,0,0.025);--surface2:rgba(0,0,0,0.015);
+  --border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.04);
+  --cyan:#007b80;--pink:#c9005c;--text:#091a1e;
+  --muted:#3d6970;--muted2:#8db5bb;--on-acc:#ffffff;
+}
 
-    /* ─── RESET ──────────────────────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
+/* ═══ RESET ═════════════════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font-family:inherit}
 
-    /* ─── BACKGROUND MESH ────────────────────────────────────────────────────── */
-    #bg-canvas {
-      position: fixed; inset: 0; z-index: 0;
-      pointer-events: none; opacity: 0.7;
-    }
-    .noise-overlay {
-      position: fixed; inset: 0; z-index: 1; pointer-events: none;
-      opacity: 0.035;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
+/* ═══ BG CANVAS / NOISE ══════════════════════════════════════════════════════════ */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.7}
+.noise-overlay{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-    /* ─── PRELOADER ──────────────────────────────────────────────────────────── */
-    #preloader {
-      position: fixed; inset: 0; z-index: 10000;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
-      background: var(--bg);
-      transition: opacity 0.7s ease, visibility 0.7s ease;
-    }
-    #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    .pre-logo {
-      width: 88px; height: 88px; border-radius: 24px;
-      background: linear-gradient(135deg, var(--cyan), var(--pink));
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font); font-weight: 800; font-size: 28px;
-      color: var(--on-accent); letter-spacing: -1px;
-      box-shadow: var(--glow-cyan);
-      animation: preLogoBob 1.6s ease-in-out infinite alternate;
-    }
-    .pre-logo img { width: 60%; height: 60%; object-fit: contain; border-radius: 8px; }
-    .pre-name { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: 0.3px; }
-    .pre-bar-wrap {
-      width: 200px; height: 3px; border-radius: 99px;
-      background: var(--surface); overflow: hidden;
-    }
-    .pre-bar {
-      height: 100%; width: 0%;
-      background: linear-gradient(90deg, var(--cyan), var(--pink));
-      border-radius: 99px;
-      animation: preBarFill 1.8s ease forwards;
-    }
-    @keyframes preLogoBob {
-      0%   { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-10px) scale(1.04); }
-    }
-    @keyframes preBarFill {
-      0%   { width: 0%; }
-      80%  { width: 90%; }
-      100% { width: 100%; }
-    }
+/* ═══ PRELOADER ═════════════════════════════════════════════════════════════════ */
+#preloader{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:var(--bg);transition:opacity .7s ease,visibility .7s ease}
+#preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.pre-logo{width:88px;height:88px;border-radius:24px;background:linear-gradient(135deg,var(--cyan),var(--pink));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:28px;color:var(--on-acc);letter-spacing:-1px;box-shadow:var(--glow-c);animation:preLogoBob 1.6s ease-in-out infinite alternate}
+.pre-logo img{width:60%;height:60%;object-fit:contain;border-radius:8px}
+.pre-name{font-size:18px;font-weight:700;color:var(--text)}
+.pre-bar-wrap{width:200px;height:3px;border-radius:99px;background:var(--surface);overflow:hidden}
+.pre-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--pink));border-radius:99px;animation:preBarFill 1.8s ease forwards}
+@keyframes preLogoBob{0%{transform:translateY(0) scale(1)}100%{transform:translateY(-10px) scale(1.04)}}
+@keyframes preBarFill{0%{width:0%}80%{width:90%}100%{width:100%}}
 
-    /* ─── CUSTOM CURSOR ──────────────────────────────────────────────────────── */
-    #cursor {
-      position: fixed; width: 14px; height: 14px; border-radius: 50%;
-      background: var(--cyan); mix-blend-mode: screen;
-      pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.2s;
-    }
-    #cursor-ring {
-      position: fixed; width: 38px; height: 38px; border-radius: 50%;
-      border: 1.5px solid rgba(45,225,230,0.35);
-      pointer-events: none; z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: width 0.25s, height 0.25s, transform 0.08s, border-color 0.2s;
-    }
-    #cursor.hover { width: 8px; height: 8px; background: var(--pink); }
-    #cursor-ring.hover { width: 52px; height: 52px; border-color: rgba(255,79,163,0.35); }
-    @media (pointer: coarse) { #cursor, #cursor-ring { display: none; } }
+/* ═══ CUSTOM CURSOR ═════════════════════════════════════════════════════════════ */
+#cursor{position:fixed;width:14px;height:14px;border-radius:50%;background:var(--cyan);mix-blend-mode:screen;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s}
+#cursor-ring{position:fixed;width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(45,225,230,.35);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .2s}
+#cursor.hover{width:8px;height:8px;background:var(--pink)}
+#cursor-ring.hover{width:52px;height:52px;border-color:rgba(255,79,163,.35)}
+@media(pointer:coarse){#cursor,#cursor-ring{display:none}}
 
-    /* ─── NAV ────────────────────────────────────────────────────────────────── */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      padding: 0 clamp(16px, 4vw, 60px);
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
-      background: rgba(3, 11, 16, 0.55);
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
-      border-bottom: 1px solid var(--border2);
-      transition: var(--trans);
-    }
-    :root[data-theme="light"] .nav { background: rgba(240,247,249,0.65); }
-    .nav-brand {
-      font-size: 17px; font-weight: 800; letter-spacing: -0.4px;
-      background: linear-gradient(90deg, var(--cyan), var(--pink));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 6px;
-      list-style: none;
-    }
-    .nav-links a {
-      padding: 6px 14px; border-radius: var(--radius3);
-      font-size: 14px; font-weight: 500; color: var(--muted);
-      transition: var(--trans);
-    }
-    .nav-links a:hover { color: var(--text); background: var(--surface); }
-    .nav-right { display: flex; align-items: center; gap: 10px; }
-    .nav-btn {
-      padding: 7px 16px; border-radius: var(--radius3);
-      font-size: 14px; font-weight: 600; cursor: pointer;
-      border: 1px solid var(--border); background: var(--surface);
-      color: var(--text); transition: var(--trans);
-      font-family: var(--font);
-    }
-    .nav-btn:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: var(--glow-cyan); }
-    .theme-btn { width: 38px; height: 38px; padding: 0; display: flex; align-items: center; justify-content: center; }
+/* ═══ NAV ════════════════════════════════════════════════════════════════════════ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 clamp(16px,4vw,60px);display:flex;align-items:center;justify-content:space-between;height:64px;background:rgba(3,11,16,.55);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-bottom:1px solid var(--border2);transition:all .3s var(--ease)}
+:root[data-theme="light"] .nav{background:rgba(240,247,249,.65)}
+.nav-brand{font-size:17px;font-weight:800;letter-spacing:-.4px;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;align-items:center;gap:6px;list-style:none}
+.nav-links a{padding:6px 14px;border-radius:var(--r3);font-size:14px;font-weight:500;color:var(--muted);transition:all .25s var(--ease)}
+.nav-links a:hover{color:var(--text);background:var(--surface)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-btn{padding:7px 16px;border-radius:var(--r3);font-size:14px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:all .25s var(--ease);font-family:var(--font)}
+.nav-btn:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:var(--glow-c)}
+.theme-btn{width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center}
 
-    /* ─── LAYOUT ─────────────────────────────────────────────────────────────── */
-    .page { position: relative; z-index: 10; }
-    .container { width: min(1240px, 92vw); margin: 0 auto; }
-    section { padding: clamp(48px, 8vw, 100px) 0; }
+/* ═══ LAYOUT ════════════════════════════════════════════════════════════════════ */
+.page{position:relative;z-index:10}
+.container{width:min(1240px,92vw);margin:0 auto}
+section{padding:clamp(48px,8vw,100px) 0}
 
-    /* ─── GLASS CARD ─────────────────────────────────────────────────────────── */
-    .glass {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      backdrop-filter: var(--blur2);
-      -webkit-backdrop-filter: var(--blur2);
-      box-shadow: var(--shadow);
-      position: relative; overflow: hidden;
-    }
-    .glass::before {
-      content: '';
-      position: absolute; inset: 0; border-radius: inherit;
-      background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 60%);
-      pointer-events: none;
-    }
-    .glass-sm {
-      background: var(--surface2);
-      border: 1px solid var(--border2);
-      border-radius: var(--radius2);
-      backdrop-filter: var(--blur2);
-      -webkit-backdrop-filter: var(--blur2);
-    }
+/* ═══ GLASS CARD ════════════════════════════════════════════════════════════════ */
+.glass{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.glass::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,rgba(255,255,255,0) 60%);pointer-events:none}
+.glass-sm{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r2);backdrop-filter:var(--blur2);-webkit-backdrop-filter:var(--blur2)}
 
-    /* ─── HERO ───────────────────────────────────────────────────────────────── */
-    .hero {
-      padding-top: clamp(100px, 14vh, 140px);
-      padding-bottom: clamp(60px, 8vw, 100px);
-      position: relative;
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 28px; align-items: start;
-    }
+/* ═══ HERO ═══════════════════════════════════════════════════════════════════════ */
+.hero{padding-top:clamp(100px,14vh,140px);padding-bottom:clamp(60px,8vw,100px)}
+.hero-grid{display:grid;grid-template-columns:360px 1fr;gap:28px;align-items:start}
 
-    /* profile card */
-    .profile-card {
-      padding: 32px 24px; text-align: center;
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1);
-    }
-    .profile-card.reveal { opacity: 1; transform: translateY(0); }
+/* Profile card */
+.profile-card{padding:32px 26px;text-align:center;opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s var(--ease)}
+.profile-card.reveal{opacity:1;transform:translateY(0)}
 
-    .avatar-ring {
-      width: 160px; height: 160px; margin: 0 auto;
-      border-radius: 50%; position: relative;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .avatar-ring::before {
-      content: ''; position: absolute; inset: -3px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), var(--pink), var(--purple));
-      animation: ringRotate 4s linear infinite;
-      opacity: 0.85;
-    }
-    .avatar-ring::after {
-      content: ''; position: absolute; inset: -8px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), var(--pink));
-      filter: blur(16px); opacity: 0; z-index: -1;
-      transition: opacity 0.5s ease;
-    }
-    .avatar-ring:hover::after { opacity: 0.6; }
-    @keyframes ringRotate {
-      0%   { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .avatar-inner {
-      width: calc(100% - 6px); height: calc(100% - 6px);
-      border-radius: 50%; background: var(--bg2);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; z-index: 1; overflow: hidden;
-    }
-    .avatar {
-      width: 100%; height: 100%;
-      object-fit: cover; border-radius: 50%;
-      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
-    }
-    .avatar-ring:hover .avatar { transform: scale(1.06); }
-    .avatar-fallback {
-      width: 100%; height: 100%; border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 44px; font-weight: 800; color: var(--on-accent);
-    }
+/* AVATAR — bigger so name on photo is fully visible */
+.avatar-ring{width:200px;height:200px;margin:0 auto;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center}
+.avatar-ring::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(var(--cyan),var(--purple),var(--pink),var(--cyan));animation:ringRotate 3.5s linear infinite;opacity:.9}
+.avatar-ring::after{content:'';position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(var(--cyan),var(--pink));filter:blur(22px);opacity:.35;z-index:-1;animation:ringGlow 3.5s ease-in-out infinite}
+@keyframes ringRotate{to{transform:rotate(360deg)}}
+@keyframes ringGlow{0%,100%{opacity:.25;filter:blur(22px)}50%{opacity:.6;filter:blur(32px)}}
+.avatar-inner{width:calc(100% - 8px);height:calc(100% - 8px);border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;position:relative;z-index:1;overflow:hidden}
+.avatar{width:100%;height:100%;object-fit:cover;border-radius:50%;transition:transform .5s var(--ease)}
+.avatar-ring:hover .avatar{transform:scale(1.04)}
+.avatar-fallback{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-size:52px;font-weight:800;color:var(--on-acc)}
 
-    .profile-name {
-      margin-top: 20px;
-      font-size: 20px; font-weight: 800; letter-spacing: -0.3px;
-    }
-    .profile-sub {
-      margin-top: 6px; font-size: 13px; color: var(--muted);
-      line-height: 1.5;
-    }
-    .status-dot {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 12px; padding: 5px 12px;
-      border-radius: 99px; background: rgba(45,225,230,0.08);
-      border: 1px solid rgba(45,225,230,0.2);
-      font-size: 12px; color: var(--cyan); font-weight: 600;
-    }
-    .status-dot::before {
-      content: ''; width: 7px; height: 7px; border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 8px var(--cyan);
-      animation: statusPulse 2s ease-in-out infinite;
-    }
-    @keyframes statusPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+.profile-name{margin-top:22px;font-size:20px;font-weight:800;letter-spacing:-.3px}
+.profile-sub{margin-top:6px;font-size:13px;color:var(--muted);line-height:1.55}
+.status-dot{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:5px 13px;border-radius:99px;background:rgba(45,225,230,.08);border:1px solid rgba(45,225,230,.2);font-size:12px;color:var(--cyan);font-weight:600}
+.status-dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:statusPulse 2s ease-in-out infinite}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-    .stat-row {
-      display: flex; gap: 12px; margin-top: 20px;
-      opacity: 0; transform: translateY(10px);
-      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
-    }
-    .stat-row.reveal { opacity: 1; transform: translateY(0); }
-    .stat {
-      flex: 1; padding: 14px 10px; border-radius: var(--radius2);
-      background: var(--surface2); border: 1px solid var(--border2);
-      text-align: center;
-    }
-    .stat-val { font-size: 22px; font-weight: 800; color: var(--cyan); }
-    .stat-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+/* Stats */
+.stat-row{display:flex;gap:10px;margin-top:20px;opacity:0;transform:translateY(10px);transition:opacity .7s ease .3s,transform .7s ease .3s}
+.stat-row.reveal{opacity:1;transform:translateY(0)}
+.stat{flex:1;padding:13px 8px;border-radius:var(--r2);background:var(--surface2);border:1px solid var(--border2);text-align:center}
+.stat-val{font-size:20px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
 
-    .profile-btns {
-      display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; justify-content: center;
-      opacity: 0; transform: translateY(10px);
-      transition: opacity 0.6s ease 0.45s, transform 0.6s ease 0.45s;
-    }
-    .profile-btns.reveal { opacity: 1; transform: translateY(0); }
-    .btn-primary {
-      flex: 1; min-width: 120px; padding: 10px 18px;
-      border-radius: var(--radius2); font-size: 14px; font-weight: 700;
-      background: linear-gradient(90deg, var(--cyan), var(--pink));
-      color: var(--on-accent); border: none; cursor: pointer;
-      transition: var(--trans); font-family: var(--font);
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(45,225,230,0.28); }
-    .btn-ghost {
-      flex: 1; min-width: 120px; padding: 10px 18px;
-      border-radius: var(--radius2); font-size: 14px; font-weight: 600;
-      background: transparent; color: var(--muted);
-      border: 1px solid var(--border); cursor: pointer;
-      transition: var(--trans); font-family: var(--font);
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    }
-    .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(45,225,230,0.05); }
+/* Social icons */
+.social-row{display:flex;justify-content:center;gap:9px;margin-top:18px;opacity:0;transform:translateY(10px);transition:opacity .7s ease .42s,transform .7s var(--ease) .42s}
+.social-row.reveal{opacity:1;transform:translateY(0)}
+.soc-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--border2);background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .25s var(--ease)}
+.soc-btn:hover{transform:translateY(-5px);color:var(--text)}
+.soc-btn.li:hover{border-color:rgba(10,102,194,.6);color:#0a66c2;box-shadow:0 10px 28px rgba(10,102,194,.2)}
+.soc-btn.gh:hover,.soc-btn.md:hover,.soc-btn.xx:hover{border-color:rgba(255,255,255,.3);box-shadow:0 10px 28px rgba(255,255,255,.06)}
+.soc-btn svg{width:17px;height:17px}
 
-    /* lead card */
-    .lead-card { padding: 40px 36px; }
-    .lead-greeting {
-      font-size: clamp(36px, 5vw, 60px);
-      font-weight: 800; letter-spacing: -1.5px;
-      line-height: 1.05;
-      opacity: 0; transform: translateX(20px);
-      transition: opacity 0.7s ease 0.15s, transform 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s;
-    }
-    .lead-card.reveal .lead-greeting { opacity: 1; transform: translateX(0); }
-    .lead-greeting .grad {
-      background: linear-gradient(90deg, var(--cyan), var(--pink), var(--purple));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .lead-sub {
-      margin-top: 16px; font-size: 16px; color: var(--muted); max-width: 560px;
-      opacity: 0; transform: translateX(16px);
-      transition: opacity 0.7s ease 0.28s, transform 0.7s ease 0.28s;
-    }
-    .lead-card.reveal .lead-sub { opacity: 1; transform: translateX(0); }
-    .lead-sub strong { color: var(--text); }
-    .typewriter-wrap {
-      margin-top: 22px; display: flex; align-items: center; gap: 10px;
-      opacity: 0; transition: opacity 0.7s ease 0.45s;
-    }
-    .lead-card.reveal .typewriter-wrap { opacity: 1; }
-    .typewriter-prefix { color: var(--cyan); font-family: var(--mono); font-size: 14px; }
-    #typewriter {
-      font-family: var(--mono); font-size: 14px; color: var(--text);
-      border-right: 2px solid var(--cyan); padding-right: 3px;
-      animation: blink 1s step-end infinite;
-    }
-    @keyframes blink { 0%,100% { border-color: var(--cyan); } 50% { border-color: transparent; } }
+/* Profile buttons */
+.profile-btns{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;justify-content:center;opacity:0;transform:translateY(10px);transition:opacity .6s ease .55s,transform .6s ease .55s}
+.profile-btns.reveal{opacity:1;transform:translateY(0)}
+.btn-primary{flex:1;min-width:120px;padding:11px 18px;border-radius:var(--r2);font-size:14px;font-weight:700;background:linear-gradient(90deg,var(--cyan),var(--pink));color:var(--on-acc);border:none;cursor:pointer;transition:all .28s var(--ease);font-family:var(--font);display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(45,225,230,.28)}
+.btn-ghost{flex:1;min-width:120px;padding:11px 18px;border-radius:var(--r2);font-size:14px;font-weight:600;background:transparent;color:var(--muted);border:1px solid var(--border);cursor:pointer;transition:all .25s var(--ease);font-family:var(--font);display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(45,225,230,.05)}
 
-    .quick-skills {
-      margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px;
-      opacity: 0; transition: opacity 0.7s ease 0.6s;
-    }
-    .lead-card.reveal .quick-skills { opacity: 1; }
-    .skill-chip {
-      padding: 5px 12px; border-radius: 99px;
-      background: var(--surface2); border: 1px solid var(--border2);
-      font-size: 12px; font-weight: 600; color: var(--muted);
-      transition: var(--trans);
-    }
-    .skill-chip:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(45,225,230,0.05); }
+/* Lead card */
+.lead-card{padding:40px 36px;opacity:0;transform:translateX(20px);transition:opacity .7s ease .1s,transform .7s var(--ease) .1s}
+.lead-card.reveal{opacity:1;transform:translateX(0)}
+.lead-greeting{font-size:clamp(36px,5vw,60px);font-weight:800;letter-spacing:-1.5px;line-height:1.05}
+.lead-greeting .grad{background:linear-gradient(90deg,var(--cyan),var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lead-sub{margin-top:16px;font-size:16px;color:var(--muted);max-width:560px;line-height:1.78}
+.lead-sub strong{color:var(--text)}
+.typewriter-wrap{margin-top:22px;display:flex;align-items:center;gap:10px}
+.typewriter-prefix{color:var(--cyan);font-family:var(--mono);font-size:14px}
+#typewriter{font-family:var(--mono);font-size:14px;color:var(--text);border-right:2px solid var(--cyan);padding-right:3px;animation:blink 1s step-end infinite;min-height:18px}
+@keyframes blink{0%,100%{border-color:var(--cyan)}50%{border-color:transparent}}
+.quick-skills{margin-top:24px;display:flex;flex-wrap:wrap;gap:8px}
+.skill-chip{padding:5px 12px;border-radius:99px;background:var(--surface2);border:1px solid var(--border2);font-size:12px;font-weight:600;color:var(--muted);transition:all .22s var(--ease);cursor:default}
+.skill-chip:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(45,225,230,.05);transform:translateY(-2px)}
 
-    /* ─── SECTION HEADER ─────────────────────────────────────────────────────── */
-    .section-label {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 5px 14px; border-radius: 99px;
-      border: 1px solid var(--border); background: var(--surface2);
-      font-size: 12px; font-weight: 600; color: var(--cyan);
-      letter-spacing: 1.5px; text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .section-label::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--cyan); box-shadow: 0 0 8px var(--cyan);
-    }
-    .section-title {
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 800; letter-spacing: -1px; line-height: 1.1;
-    }
-    .section-title span {
-      background: linear-gradient(90deg, var(--cyan), var(--pink));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+/* ═══ SECTION HEADER ════════════════════════════════════════════════════════════ */
+.section-label{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface2);font-size:11.5px;font-weight:700;color:var(--cyan);letter-spacing:1.8px;text-transform:uppercase;margin-bottom:16px}
+.section-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.section-title{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.1}
+.section-title span{background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-    /* ─── ABOUT ──────────────────────────────────────────────────────────────── */
-    #about { background: radial-gradient(ellipse at 20% 50%, rgba(45,225,230,0.03) 0%, transparent 70%); }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 380px;
-      gap: 24px; margin-top: 40px;
-    }
-    .about-card { padding: 32px; }
-    .about-text { color: var(--muted); line-height: 1.8; font-size: 15px; }
-    .about-text strong { color: var(--text); }
-    .focus-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 10px; margin-top: 20px;
-    }
-    .focus-item {
-      display: flex; align-items: flex-start; gap: 10px;
-      padding: 12px 14px; border-radius: var(--radius2);
-      background: var(--surface2); border: 1px solid var(--border2);
-      font-size: 13px; color: var(--muted); line-height: 1.4;
-      transition: var(--trans);
-    }
-    .focus-item:hover { border-color: var(--cyan); color: var(--text); transform: translateY(-2px); }
-    .focus-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+/* ═══ ABOUT ══════════════════════════════════════════════════════════════════════ */
+#about{background:radial-gradient(ellipse at 20% 50%,rgba(45,225,230,.03) 0%,transparent 70%)}
+.about-grid{display:grid;grid-template-columns:1fr 380px;gap:24px;margin-top:40px}
+.about-card{padding:32px}
+.about-text{color:var(--muted);line-height:1.82;font-size:15px}
+.about-text strong{color:var(--text)}
+.about-text+.about-text{margin-top:12px}
+.focus-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.focus-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:var(--r2);background:var(--surface2);border:1px solid var(--border2);font-size:13px;color:var(--muted);line-height:1.45;transition:all .25s var(--ease)}
+.focus-item:hover{border-color:var(--cyan);color:var(--text);transform:translateY(-2px)}
+.focus-icon{font-size:15px;flex-shrink:0;margin-top:1px}
+.skills-panel{padding:28px}
+.skills-panel h3{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px}
+.chip-cloud{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:6px 13px;border-radius:99px;background:var(--surface2);border:1px solid var(--border2);font-size:12px;font-weight:600;color:var(--muted);transition:all .22s var(--ease);cursor:default}
+.tag:hover{transform:translateY(-3px);border-color:var(--pink);color:var(--pink);background:rgba(255,79,163,.06);box-shadow:0 8px 20px rgba(255,79,163,.1)}
+.tag.cyan:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(45,225,230,.06);box-shadow:0 8px 20px rgba(45,225,230,.1)}
+.divider{height:1px;background:var(--border2);margin:18px 0}
+.big-stat{text-align:center;padding:18px 0 6px}
+.big-stat-val{font-size:42px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.big-stat-lbl{font-size:13px;color:var(--muted);margin-top:4px}
 
-    .skills-panel { padding: 28px; }
-    .skills-panel h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-    .chip-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag {
-      padding: 6px 13px; border-radius: 99px;
-      background: var(--surface2); border: 1px solid var(--border2);
-      font-size: 12px; font-weight: 600; color: var(--muted);
-      transition: var(--trans); cursor: default;
-    }
-    .tag:hover { transform: translateY(-3px); border-color: var(--pink); color: var(--pink); background: rgba(255,79,163,0.06); box-shadow: 0 8px 20px rgba(255,79,163,0.1); }
-    .tag.cyan:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(45,225,230,0.06); box-shadow: 0 8px 20px rgba(45,225,230,0.1); }
-    .divider { height: 1px; background: var(--border2); margin: 20px 0; }
-    .big-stat { text-align: center; padding: 20px; }
-    .big-stat-val { font-size: 42px; font-weight: 800; background: linear-gradient(90deg, var(--cyan), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .big-stat-lbl { font-size: 13px; color: var(--muted); margin-top: 4px; }
+/* ═══ PROJECTS ═══════════════════════════════════════════════════════════════════ */
+#tools{background:radial-gradient(ellipse at 80% 40%,rgba(155,89,248,.04) 0%,transparent 70%)}
+.brahma-featured{margin-top:36px;padding:36px;background:linear-gradient(135deg,rgba(45,225,230,.055) 0%,rgba(155,89,248,.05) 55%,rgba(255,79,163,.04) 100%);border:1px solid rgba(45,225,230,.2);border-radius:var(--r);position:relative;overflow:hidden}
+.brahma-featured::before{content:'';position:absolute;top:-50px;right:-50px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(45,225,230,.1) 0%,transparent 70%);pointer-events:none}
+.bf-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;background:rgba(45,225,230,.1);border:1px solid rgba(45,225,230,.25);font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:12px}
+.bf-h{font-size:clamp(26px,3.8vw,40px);font-weight:900;letter-spacing:-.8px;background:linear-gradient(100deg,var(--cyan),var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.bf-p{color:var(--muted);font-size:15px;line-height:1.75;margin-top:10px;max-width:620px}
+.bf-btn{display:inline-flex;align-items:center;gap:9px;margin-top:22px;padding:13px 26px;border-radius:var(--r2);background:linear-gradient(90deg,var(--cyan),var(--purple));color:var(--on-acc);font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .28s var(--ease);font-family:var(--font)}
+.bf-btn:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(45,225,230,.3)}
+.bf-btn svg{width:15px;height:15px}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:24px}
+.project-card{cursor:pointer;transition:transform .35s var(--ease),box-shadow .35s ease}
+.project-card:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(0,0,0,.4),var(--glow-c)}
+.project-thumb{height:140px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-radius:var(--r) var(--r) 0 0}
+.pth-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:rgba(255,255,255,.15);font-family:var(--mono);letter-spacing:-1px}
+.pg1{background:linear-gradient(135deg,#0a2a2e 0%,#0d3540 50%,#1a6070 100%)}
+.pg2{background:linear-gradient(135deg,#200a1e 0%,#3a0c30 50%,#5c1250 100%)}
+.pg3{background:linear-gradient(135deg,#06201e 0%,#0b3d38 40%,#1a5a50 100%)}
+.pt-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(3,11,16,.7) 0%,transparent 60%)}
+.pt-icon{position:absolute;bottom:12px;left:14px;font-size:11px;font-weight:700;color:rgba(255,255,255,.55);font-family:var(--mono);letter-spacing:1px;z-index:1}
+.project-body{padding:18px 20px 20px}
+.project-name{font-size:16px;font-weight:700;margin-bottom:6px}
+.project-desc{font-size:13px;color:var(--muted);line-height:1.6}
+.project-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--border2)}
+.project-tags{display:flex;gap:6px;flex-wrap:wrap}
+.project-tag{padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;background:rgba(45,225,230,.08);color:var(--cyan);border:1px solid rgba(45,225,230,.12)}
+.project-link{font-size:12px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:4px;transition:color .2s;white-space:nowrap}
+.project-link:hover{color:var(--cyan)}
+.project-link svg{width:11px;height:11px}
 
-    /* ─── PROJECTS ───────────────────────────────────────────────────────────── */
-    #tools { background: radial-gradient(ellipse at 80% 40%, rgba(155,89,248,0.04) 0%, transparent 70%); }
-    .project-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px; margin-top: 40px;
-    }
-    .project-card {
-      padding: 0; cursor: pointer;
-      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease;
-    }
-    .project-card:hover { transform: translateY(-10px); box-shadow: 0 30px 80px rgba(0,0,0,0.4), var(--glow-cyan); }
-    .project-thumb {
-      height: 140px; border-radius: var(--radius) var(--radius) 0 0;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-    }
-    .project-thumb-inner {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px; font-weight: 800; color: var(--on-accent);
-      font-family: var(--font); letter-spacing: -0.5px;
-    }
-    .project-thumb-grad-1 { background: linear-gradient(135deg, #0a2a2e 0%, #0d3540 50%, var(--cyan) 100%); }
-    .project-thumb-grad-2 { background: linear-gradient(135deg, #200a1e 0%, #3a0c30 50%, var(--pink) 100%); }
-    .project-thumb-grad-3 { background: linear-gradient(135deg, #130a28 0%, #230d45 50%, var(--purple) 100%); }
-    .project-thumb-special { background: linear-gradient(135deg, #06201e 0%, #0b3d38 40%, #1a5a50 100%); }
-    .project-thumb-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(0deg, rgba(3,11,16,0.7) 0%, transparent 60%);
-    }
-    .project-thumb-icon {
-      position: absolute; bottom: 12px; left: 14px;
-      font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.6);
-      font-family: var(--mono); letter-spacing: 1px;
-    }
-    .project-body { padding: 18px 20px 20px; }
-    .project-name { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-    .project-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
-    .project-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 16px; padding-top: 14px;
-      border-top: 1px solid var(--border2);
-    }
-    .project-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .project-tag {
-      padding: 3px 8px; border-radius: 4px;
-      font-size: 11px; font-weight: 600;
-      background: rgba(45,225,230,0.08); color: var(--cyan);
-      border: 1px solid rgba(45,225,230,0.12);
-    }
-    .project-link {
-      font-size: 12px; font-weight: 600; color: var(--muted);
-      display: flex; align-items: center; gap: 4px;
-      transition: var(--trans);
-    }
-    .project-link:hover { color: var(--cyan); }
-    .project-link svg { width: 12px; height: 12px; }
+/* ═══ SPOTIFY PLAYER ═════════════════════════════════════════════════════════════ */
+#music{background:radial-gradient(ellipse at 50% 100%,rgba(29,185,84,.03) 0%,transparent 70%)}
+/* Spotify dark shell */
+.sp-shell{border-radius:var(--r);overflow:hidden;background:#121212;border:1px solid rgba(255,255,255,.06);box-shadow:0 32px 80px rgba(0,0,0,.8);display:flex;flex-direction:column;margin-top:36px}
+/* Top bar */
+.sp-topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:#000;border-bottom:1px solid rgba(255,255,255,.04)}
+.sp-app-name{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#fff}
+.sp-dots{display:flex;gap:6px}
+.sp-dot{width:12px;height:12px;border-radius:50%}
+/* Main layout */
+.sp-main{display:flex;min-height:340px}
+/* Sidebar */
+.sp-sidebar{width:220px;flex-shrink:0;background:#000;padding:16px 0;display:flex;flex-direction:column;gap:4px;border-right:1px solid rgba(255,255,255,.04)}
+.sp-sidebar-h{font-size:10.5px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:1.4px;padding:12px 16px 6px}
+.sp-sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 16px;font-size:13px;font-weight:500;color:#b3b3b3;cursor:pointer;transition:all .18s;border-radius:4px;margin:0 6px}
+.sp-sidebar-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.sp-sidebar-item.active{background:rgba(255,255,255,.1);color:#fff}
+.sp-sidebar-item.active .sp-track-dot{background:var(--green)}
+.sp-track-dot{width:8px;height:8px;border-radius:50%;background:#535353;flex-shrink:0;transition:background .2s}
+.sp-playing-icon{display:none;align-items:flex-end;gap:1.5px;height:14px;margin-left:auto}
+.sp-sidebar-item.active .sp-playing-icon{display:flex}
+.sp-pbar{width:3px;background:var(--green);border-radius:1px;animation:sbar 1.1s ease-in-out infinite alternate}
+.sp-pbar:nth-child(2){animation-delay:.2s}
+.sp-pbar:nth-child(3){animation-delay:.4s}
+@keyframes sbar{0%{height:4px}100%{height:12px}}
+/* Content area */
+.sp-content{flex:1;display:flex;flex-direction:column;background:#121212;overflow:hidden}
+/* Now playing hero */
+.sp-hero{display:flex;align-items:center;gap:24px;padding:28px 28px 20px;background:linear-gradient(180deg,rgba(29,185,84,.12) 0%,transparent 100%)}
+.sp-cover{width:130px;height:130px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#1a3a1a,#1DB954);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:rgba(0,0,0,.3);position:relative;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.sp-cover img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+.sp-cover-spin{animation:coverSpin 10s linear infinite;animation-play-state:paused}
+.sp-cover-spin.playing{animation-play-state:running}
+@keyframes coverSpin{to{filter:hue-rotate(360deg)}}
+.sp-cover-art{font-size:40px;pointer-events:none}
+.sp-now-info{min-width:0}
+.sp-context{font-size:11px;font-weight:700;color:#1DB954;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.sp-track-name{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-artist-name{font-size:14px;color:#b3b3b3;margin-top:4px}
+.sp-now-label{font-size:11px;color:#535353;margin-top:4px;font-family:var(--mono)}
+/* Heart */
+.sp-heart{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:5px 12px;border-radius:99px;border:1px solid rgba(29,185,84,.3);background:rgba(29,185,84,.06);font-size:11px;font-weight:600;color:#1DB954;cursor:pointer;transition:all .2s}
+.sp-heart:hover{background:rgba(29,185,84,.14);border-color:rgba(29,185,84,.5)}
+/* Controls */
+.sp-controls-wrap{padding:12px 28px 20px}
+.sp-buttons{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:14px}
+.sp-ctrl-btn{width:34px;height:34px;border-radius:50%;background:transparent;border:none;display:flex;align-items:center;justify-content:center;color:#b3b3b3;cursor:pointer;transition:all .2s}
+.sp-ctrl-btn:hover{color:#fff;transform:scale(1.08)}
+.sp-ctrl-btn svg{width:18px;height:18px}
+.sp-ctrl-btn.shuffle,.sp-ctrl-btn.repeat{width:28px;height:28px}
+.sp-ctrl-btn.shuffle svg,.sp-ctrl-btn.repeat svg{width:15px;height:15px}
+.sp-ctrl-btn.active{color:var(--green)!important}
+.sp-play-big{width:44px;height:44px;border-radius:50%;background:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .22s var(--ease);box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.sp-play-big:hover{transform:scale(1.08);background:#e5e5e5}
+.sp-play-big svg{width:20px;height:20px;fill:#000}
+/* Progress */
+.sp-prog-row{display:flex;align-items:center;gap:10px}
+.sp-ptime{font-size:11px;color:#b3b3b3;font-family:var(--mono);min-width:30px;white-space:nowrap}
+.sp-prog-track{flex:1;height:4px;border-radius:99px;background:#535353;cursor:pointer;position:relative;overflow:hidden;transition:height .15s}
+.sp-prog-track:hover{height:7px}
+.sp-prog-fill{height:100%;border-radius:99px;background:#fff;transition:width .08s linear;position:relative}
+.sp-prog-track:hover .sp-prog-fill{background:var(--green)}
+.sp-prog-fill::after{content:'';position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:#fff;opacity:0;transition:opacity .15s}
+.sp-prog-track:hover .sp-prog-fill::after{opacity:1}
+/* Vol + extras row */
+.sp-bottom-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 28px 20px;gap:12px}
+.sp-extras{display:flex;align-items:center;gap:8px}
+.sp-extra-btn{width:28px;height:28px;border-radius:50%;background:transparent;border:none;display:flex;align-items:center;justify-content:center;color:#535353;cursor:pointer;transition:all .2s}
+.sp-extra-btn:hover{color:#fff}
+.sp-extra-btn svg{width:15px;height:15px}
+.sp-vol-row{display:flex;align-items:center;gap:8px;min-width:140px}
+.sp-vol-row svg{width:14px;height:14px;color:#b3b3b3;flex-shrink:0}
+.sp-vol-track{flex:1;height:4px;border-radius:99px;background:#535353;cursor:pointer;transition:all .2s}
+.sp-vol-track:hover{height:6px}
+.sp-vol-fill{height:100%;border-radius:99px;background:#b3b3b3;transition:background .2s}
+.sp-vol-track:hover .sp-vol-fill{background:var(--green)}
+/* Visualizer */
+.sp-viz{display:flex;align-items:flex-end;gap:2px;height:20px;flex-shrink:0}
+.sp-viz-bar{width:3px;background:var(--green);border-radius:2px;opacity:.7;transition:height .09s ease}
 
-    /* ─── BRAHMASTRAX FEATURE ─────────────────────────────────────────────────── */
-    .brahma-card {
-      margin-top: 20px; padding: 32px;
-      background: linear-gradient(135deg, rgba(45,225,230,0.06) 0%, rgba(155,89,248,0.06) 50%, rgba(255,79,163,0.04) 100%);
-      border: 1px solid rgba(45,225,230,0.18);
-      position: relative; overflow: hidden;
-    }
-    .brahma-card::before {
-      content: ''; position: absolute; top: -40px; right: -40px;
-      width: 200px; height: 200px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(45,225,230,0.12), transparent 70%);
-      pointer-events: none;
-    }
-    .brahma-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 12px; border-radius: 99px;
-      background: rgba(45,225,230,0.12); border: 1px solid rgba(45,225,230,0.25);
-      font-size: 11px; font-weight: 700; color: var(--cyan);
-      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;
-    }
-    .brahma-title {
-      font-size: clamp(24px, 3.5vw, 36px);
-      font-weight: 800; letter-spacing: -0.5px;
-      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .brahma-desc { color: var(--muted); font-size: 15px; line-height: 1.7; margin-top: 10px; max-width: 600px; }
-    .brahma-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 20px; padding: 12px 24px;
-      border-radius: var(--radius2); font-size: 15px; font-weight: 700;
-      background: linear-gradient(90deg, var(--cyan), var(--purple));
-      color: var(--on-accent); cursor: pointer; border: none;
-      transition: var(--trans); font-family: var(--font);
-    }
-    .brahma-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(45,225,230,0.3); }
-    .brahma-btn svg { width: 16px; height: 16px; }
+/* ═══ CONTACT ════════════════════════════════════════════════════════════════════ */
+#contact{background:radial-gradient(ellipse at 10% 90%,rgba(45,225,230,.03) 0%,transparent 70%)}
+.contact-grid{display:grid;grid-template-columns:1fr 420px;gap:24px;margin-top:40px}
+.contact-info{padding:32px}
+.contact-info h3{font-size:20px;font-weight:800;margin-bottom:10px}
+.contact-info p{color:var(--muted);font-size:14.5px;line-height:1.78}
+.contact-links{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.contact-link-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--r2);background:var(--surface2);border:1px solid var(--border2);transition:all .25s var(--ease)}
+.contact-link-item:hover{transform:translateX(6px);border-color:rgba(45,225,230,.25)}
+.contact-link-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-link-icon svg{width:17px;height:17px;fill:var(--on-acc)}
+.contact-link-label{font-size:14px;font-weight:700}
+.contact-link-val{font-size:12px;color:var(--muted);margin-top:2px}
+.contact-form{padding:32px}
+.contact-form h2{font-size:22px;font-weight:800;margin-bottom:5px}
+.contact-form .sub{font-size:13px;color:var(--muted);margin-bottom:24px}
+.form-row{display:flex;gap:12px}
+.form-group{flex:1;display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.form-group label{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.9px}
+.form-input{padding:11px 14px;border-radius:var(--r3);background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:14px;font-family:var(--font);outline:none;width:100%;transition:all .22s}
+.form-input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(45,225,230,.09)}
+.form-input::placeholder{color:var(--muted2)}
+textarea.form-input{resize:vertical;min-height:110px}
+.form-submit{width:100%;padding:13px;border-radius:var(--r2);border:none;cursor:pointer;background:linear-gradient(90deg,var(--cyan),var(--purple));color:var(--on-acc);font-size:15px;font-weight:700;font-family:var(--font);transition:all .28s var(--ease);position:relative;overflow:hidden}
+.form-submit::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s ease}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(45,225,230,.3)}
+.form-submit:hover::after{transform:translateX(100%)}
+.form-note{font-size:12px;color:var(--muted);text-align:center;margin-top:12px}
+.form-note a{color:var(--cyan)}
+#form-toast{display:none;margin-top:12px;padding:10px 14px;border-radius:var(--r3);font-size:13px;font-weight:600;border:1px solid transparent}
 
-    /* ─── MUSIC PLAYER ───────────────────────────────────────────────────────── */
-    #music { background: radial-gradient(ellipse at 50% 100%, rgba(255,79,163,0.04) 0%, transparent 70%); }
-    .music-card {
-      padding: 28px 32px;
-      display: flex; align-items: center; gap: 24px;
-    }
-    .album-art {
-      width: 80px; height: 80px; border-radius: var(--radius2); flex-shrink: 0;
-      background: linear-gradient(135deg, var(--cyan), var(--pink));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; color: var(--on-accent); font-size: 18px;
-      box-shadow: 0 8px 24px rgba(45,225,230,0.2);
-      position: relative; overflow: hidden;
-    }
-    .album-art.playing { animation: albumSpin 8s linear infinite; }
-    @keyframes albumSpin { 0% { box-shadow: 0 8px 24px rgba(45,225,230,0.2); } 50% { box-shadow: 0 8px 32px rgba(255,79,163,0.3); } 100% { box-shadow: 0 8px 24px rgba(45,225,230,0.2); } }
-    .music-info { flex: 1; min-width: 0; }
-    .music-title { font-size: 17px; font-weight: 700; }
-    .music-artist { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .music-controls { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
-    .play-btn {
-      width: 44px; height: 44px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), var(--pink));
-      border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 6px 20px rgba(45,225,230,0.2);
-      transition: var(--trans); flex-shrink: 0;
-    }
-    .play-btn:hover { transform: scale(1.1); box-shadow: 0 10px 32px rgba(45,225,230,0.35); }
-    .play-btn svg { width: 18px; height: 18px; fill: var(--on-accent); }
-    .progress-area { flex: 1; }
-    .progress-track {
-      height: 4px; border-radius: 99px;
-      background: var(--surface); cursor: pointer; position: relative;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%; width: 0%; border-radius: 99px;
-      background: linear-gradient(90deg, var(--cyan), var(--pink));
-      transition: width 0.1s linear;
-    }
-    .time-row { display: flex; justify-content: space-between; margin-top: 6px; }
-    .time-lbl { font-size: 11px; color: var(--muted); font-family: var(--mono); }
-    .visualizer {
-      display: flex; align-items: flex-end; gap: 3px;
-      height: 36px; flex-shrink: 0;
-    }
-    .vis-bar {
-      width: 4px; background: linear-gradient(0deg, var(--cyan), var(--pink));
-      border-radius: 2px; transition: height 0.1s ease;
-    }
+/* ═══ FOOTER ═════════════════════════════════════════════════════════════════════ */
+footer{padding:36px 0;border-top:1px solid var(--border2);text-align:center}
+footer strong{font-weight:800}
+.footer-tagline{margin-top:8px;font-size:13px;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700}
+.footer-copy{margin-top:5px;font-size:12px;color:var(--muted2)}
 
-    /* ─── CONTACT ────────────────────────────────────────────────────────────── */
-    #contact { background: radial-gradient(ellipse at 10% 90%, rgba(45,225,230,0.03) 0%, transparent 70%); }
-    .contact-grid {
-      display: grid; grid-template-columns: 1fr 440px;
-      gap: 24px; margin-top: 40px;
-    }
-    .contact-info { padding: 32px; }
-    .contact-info h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
-    .contact-info p { color: var(--muted); line-height: 1.7; font-size: 15px; }
-    .contact-links { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
-    .contact-link-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 16px; border-radius: var(--radius2);
-      background: var(--surface2); border: 1px solid var(--border2);
-      transition: var(--trans);
-    }
-    .contact-link-item:hover { border-color: var(--cyan); transform: translateX(4px); }
-    .contact-link-icon {
-      width: 36px; height: 36px; border-radius: var(--radius3);
-      background: linear-gradient(135deg, var(--cyan), var(--pink));
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .contact-link-icon svg { width: 16px; height: 16px; fill: var(--on-accent); }
-    .contact-link-label { font-size: 14px; font-weight: 600; }
-    .contact-link-val { font-size: 12px; color: var(--muted); }
+/* ═══ MODAL ══════════════════════════════════════════════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;z-index:5000;background:rgba(3,11,16,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.modal-overlay.open{opacity:1;visibility:visible}
+.modal-box{width:min(800px,100%);max-height:88vh;overflow-y:auto;border-radius:var(--r);padding:28px;background:linear-gradient(180deg,rgba(8,19,26,.98),rgba(5,14,22,.99));border:1px solid var(--border);box-shadow:var(--shadow);transform:translateY(22px) scale(.97);transition:transform .38s var(--ease)}
+.modal-overlay.open .modal-box{transform:translateY(0) scale(1)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-title{font-size:22px;font-weight:800}
+.modal-close{width:36px;height:36px;border-radius:9px;background:var(--surface);border:1px solid var(--border);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;transition:all .2s}
+.modal-close:hover{border-color:var(--cyan);color:var(--text)}
+.modal-thumb{height:180px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:rgba(255,255,255,.2);margin-bottom:18px;font-family:var(--mono)}
+.modal-desc{color:var(--muted);line-height:1.78;font-size:15px;margin-bottom:20px}
+.modal-actions{display:flex;gap:12px}
 
-    .contact-form { padding: 32px; }
-    .contact-form h2 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-    .contact-form .sub { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
-    .form-row { display: flex; gap: 12px; }
-    .form-group { flex: 1; display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-    .form-group label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
-    .form-input {
-      padding: 11px 14px; border-radius: var(--radius3);
-      background: var(--surface2); border: 1px solid var(--border);
-      color: var(--text); font-size: 14px; font-family: var(--font);
-      transition: var(--trans); outline: none; width: 100%;
-    }
-    .form-input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(45,225,230,0.1); }
-    .form-input::placeholder { color: var(--muted2); }
-    textarea.form-input { resize: vertical; min-height: 100px; }
-    .form-submit {
-      width: 100%; padding: 13px;
-      border-radius: var(--radius2); border: none; cursor: pointer;
-      background: linear-gradient(90deg, var(--cyan), var(--pink));
-      color: var(--on-accent); font-size: 15px; font-weight: 700;
-      font-family: var(--font); transition: var(--trans);
-    }
-    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(45,225,230,0.28); }
-    .form-note { font-size: 12px; color: var(--muted); margin-top: 12px; text-align: center; }
-    .form-note a { color: var(--cyan); }
-    #form-toast {
-      display: none; margin-top: 12px; padding: 10px 14px;
-      border-radius: var(--radius3); font-size: 13px; font-weight: 600;
-      background: rgba(45,225,230,0.1); border: 1px solid rgba(45,225,230,0.2);
-      color: var(--cyan);
-    }
+/* ═══ SCROLL REVEAL ══════════════════════════════════════════════════════════════ */
+.sr{opacity:0;transform:translateY(30px);transition:opacity .75s ease,transform .75s var(--ease)}
+.sr.visible{opacity:1;transform:translateY(0)}
+.sr-delay-1{transition-delay:.1s}.sr-delay-2{transition-delay:.2s}.sr-delay-3{transition-delay:.3s}
 
-    /* ─── FOOTER ─────────────────────────────────────────────────────────────── */
-    footer {
-      padding: 32px 0; border-top: 1px solid var(--border2);
-      text-align: center; color: var(--muted); font-size: 13px;
-    }
-    footer strong { color: var(--text); }
-    .footer-tagline {
-      margin-top: 6px;
-      background: linear-gradient(90deg, var(--cyan), var(--pink));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text; font-weight: 700;
-    }
+/* ═══ SCROLLBAR ══════════════════════════════════════════════════════════════════ */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--muted2);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:var(--muted)}
 
-    /* ─── MODAL ──────────────────────────────────────────────────────────────── */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 5000;
-      background: rgba(3,11,16,0.75);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 20px; opacity: 0; visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .modal-overlay.open { opacity: 1; visibility: visible; }
-    .modal-box {
-      width: min(860px, 100%); max-height: 90vh; overflow-y: auto;
-      border-radius: var(--radius); padding: 28px;
-      background: linear-gradient(180deg, rgba(7,18,25,0.98), rgba(5,14,21,0.98));
-      border: 1px solid var(--border); box-shadow: var(--shadow);
-      transform: translateY(20px) scale(0.97);
-      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
-    }
-    .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
-    .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-    .modal-title { font-size: 22px; font-weight: 800; }
-    .modal-close {
-      width: 36px; height: 36px; border-radius: var(--radius3);
-      background: var(--surface); border: 1px solid var(--border);
-      color: var(--muted); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; font-family: var(--font); transition: var(--trans);
-    }
-    .modal-close:hover { color: var(--text); border-color: var(--cyan); }
-    .modal-thumb {
-      height: 200px; border-radius: var(--radius2); margin-bottom: 20px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 32px; font-weight: 800; color: var(--on-accent);
-    }
-    .modal-desc { color: var(--muted); line-height: 1.7; font-size: 15px; margin-bottom: 20px; }
-    .modal-actions { display: flex; gap: 12px; }
-
-    /* ─── SCROLL REVEAL ──────────────────────────────────────────────────────── */
-    .sr {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1);
-    }
-    .sr.visible { opacity: 1; transform: translateY(0); }
-    .sr-delay-1 { transition-delay: 0.1s; }
-    .sr-delay-2 { transition-delay: 0.2s; }
-    .sr-delay-3 { transition-delay: 0.3s; }
-    .sr-delay-4 { transition-delay: 0.4s; }
-    .sr-delay-5 { transition-delay: 0.5s; }
-
-    /* ─── SCROLLBAR ──────────────────────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--muted2); border-radius: 99px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
-
-    /* ─── RESPONSIVE ─────────────────────────────────────────────────────────── */
-    @media (max-width: 960px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .profile-card { order: -1; max-width: 360px; margin: 0 auto; }
-      .about-grid { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: 1fr; }
-      .focus-grid { grid-template-columns: 1fr; }
-      .music-card { flex-direction: column; align-items: flex-start; }
-    }
-    @media (max-width: 620px) {
-      .nav-links { display: none; }
-      .lead-card { padding: 24px 20px; }
-      .about-card, .skills-panel, .contact-form, .contact-info { padding: 22px 18px; }
-      .form-row { flex-direction: column; gap: 0; }
-      .profile-btns { flex-direction: column; }
-      .btn-primary, .btn-ghost { min-width: unset; width: 100%; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; }
-    }
+/* ═══ RESPONSIVE ═════════════════════════════════════════════════════════════════ */
+@media(max-width:1000px){.hero-grid{grid-template-columns:1fr}.profile-card{max-width:380px;margin:0 auto}.about-grid{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}.focus-grid{grid-template-columns:1fr}.sp-main{flex-direction:column}.sp-sidebar{width:100%;flex-direction:row;flex-wrap:wrap;padding:8px;gap:4px;border-right:none;border-bottom:1px solid rgba(255,255,255,.04)}.sp-sidebar-h{display:none}.sp-sidebar-item{flex:1;min-width:100px;justify-content:center}}
+@media(max-width:640px){.nav-links{display:none}.lead-card{padding:28px 20px}.form-row{flex-direction:column;gap:0}.sp-hero{flex-direction:column;text-align:center}.sp-cover{width:160px;height:160px}.sp-vol-row{display:none}.brahma-featured{padding:24px 20px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
   </style>
 </head>
 <body>
 
-  <!-- BG CANVAS -->
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <div class="noise-overlay" aria-hidden="true"></div>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<div class="noise-overlay" aria-hidden="true"></div>
 
-  <!-- PRELOADER -->
-  <div id="preloader" aria-hidden="false">
-    <div class="pre-logo">
-      <img src="assets/profile-circle.png" alt="" onerror="this.parentElement.textContent='PT'">
-    </div>
-    <div class="pre-name">PradyumnTiwareNexus</div>
-    <div class="pre-bar-wrap"><div class="pre-bar"></div></div>
+<!-- PRELOADER -->
+<div id="preloader" aria-live="polite">
+  <div class="pre-logo">
+    <img src="assets/favicon.png" alt="" onerror="this.parentElement.textContent='PT'">
   </div>
+  <div class="pre-name">PradyumnTiwareNexus</div>
+  <div class="pre-bar-wrap"><div class="pre-bar"></div></div>
+</div>
 
-  <!-- CURSOR -->
-  <div id="cursor" aria-hidden="true"></div>
-  <div id="cursor-ring" aria-hidden="true"></div>
+<!-- CURSOR -->
+<div id="cursor" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
 
-  <!-- NAV -->
-  <nav class="nav" role="navigation" aria-label="Main navigation">
-    <div class="nav-brand">PTN</div>
-    <ul class="nav-links" role="list">
-      <li><a href="#about">About</a></li>
-      <li><a href="#tools">Projects</a></li>
-      <li><a href="#music">Music</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-right">
-      <button class="nav-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle color theme">
-        <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-      </button>
-      <a href="https://github.com/PradyumnTiwareNexus" target="_blank" rel="noopener" class="nav-btn" aria-label="GitHub">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-        </svg>
-      </a>
-    </div>
-  </nav>
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">PTN</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#tools">Projects</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-btn theme-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a class="nav-btn" href="https://github.com/PradyumnTiwareNexus" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
 
-  <!-- PAGE -->
-  <div class="page">
+<div class="page">
 
-    <!-- ── HERO ── -->
-    <section class="hero" id="home">
-      <div class="container">
-        <div class="hero-grid">
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-grid">
 
-          <!-- Profile Card -->
-          <aside class="glass profile-card" id="profileCard">
-            <div class="avatar-ring">
-              <div class="avatar-inner">
-                <img src="assets/profile-circle.png" alt="PradyumnTiwareNexus" class="avatar"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="avatar-fallback" style="display:none">PT</div>
-              </div>
-            </div>
-
-            <h3 class="profile-name">PradyumnTiwareNexus</h3>
-            <p class="profile-sub">Cybersecurity Researcher&nbsp;·&nbsp;Bug Bounty Hunter<br>Recon Automation Developer</p>
-            <div class="status-dot">Available for collaboration</div>
-
-            <div class="stat-row" id="statRow">
-              <div class="stat">
-                <div class="stat-val" id="visits">948</div>
-                <div class="stat-lbl">Profile visits</div>
-              </div>
-              <div class="stat">
-                <div class="stat-val">3</div>
-                <div class="stat-lbl">Pinned projects</div>
-              </div>
-              <div class="stat">
-                <div class="stat-val">v2.1</div>
-                <div class="stat-lbl">Recon Pipeline</div>
-              </div>
-            </div>
-
-            <div class="profile-btns" id="profileBtns">
-              <a class="btn-primary" href="https://github.com/PradyumnTiwareNexus" target="_blank" rel="noopener">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                GitHub
-              </a>
-              <a class="btn-ghost" href="#tools">See Projects</a>
-            </div>
-          </aside>
-
-          <!-- Lead Card -->
-          <section class="glass lead-card" id="leadCard">
-            <h1 class="lead-greeting">
-              Hi — I'm<br>
-              <span class="grad">Pradyumn.</span>
-            </h1>
-            <p class="lead-sub">
-              Creator of <strong>Recon Pipeline Enhanced v2.1</strong>.<br>
-              I hunt bugs and build intelligent recon tools — focused on OSINT, web security, and high-value findings.
-            </p>
-
-            <div class="typewriter-wrap">
-              <span class="typewriter-prefix">&gt;_</span>
-              <span id="typewriter"></span>
-            </div>
-
-            <div class="quick-skills">
-              <span class="skill-chip">HTML</span>
-              <span class="skill-chip">C / C++</span>
-              <span class="skill-chip">Java</span>
-              <span class="skill-chip">Python</span>
-              <span class="skill-chip">Bash</span>
-              <span class="skill-chip">JavaScript</span>
-              <span class="skill-chip">Burp Suite</span>
-              <span class="skill-chip">Wireshark</span>
-              <span class="skill-chip">Nmap</span>
-              <span class="skill-chip">Metasploit</span>
-              <span class="skill-chip">Kali Linux</span>
-            </div>
-          </section>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ── ABOUT ── -->
-    <section id="about">
-      <div class="container">
-        <div class="sr">
-          <div class="section-label">About Me</div>
-          <h2 class="section-title">Building tools that <span>break things</span> first</h2>
-        </div>
-
-        <div class="about-grid">
-          <div class="glass about-card sr sr-delay-1">
-            <p class="about-text">
-              I'm <strong>Pradyumn Tiware</strong>, a Cybersecurity Researcher, Bug Bounty Hunter, and Recon Automation Developer. I build intelligent recon pipelines combining OSINT, automation, JS analysis, and archive forensics to find high-impact bugs responsibly.
-            </p>
-            <p class="about-text" style="margin-top:14px">
-              My methodology goes beyond surface-level scanning — I combine historical CDX data, live JS inspection, and API endpoint mapping to build a full picture of the attack surface before a single payload fires.
-            </p>
-
-            <div class="focus-grid" style="margin-top:22px">
-              <div class="focus-item"><span class="focus-icon">🔎</span><span>Recon automation &amp; tooling (subdomains, Wayback, JS, API)</span></div>
-              <div class="focus-item"><span class="focus-icon">🛡️</span><span>Web exploitation &amp; endpoint analysis</span></div>
-              <div class="focus-item"><span class="focus-icon">🧩</span><span>JavaScript deep-inspection &amp; secret detection</span></div>
-              <div class="focus-item"><span class="focus-icon">🌐</span><span>Asset discovery &amp; attack-surface expansion</span></div>
-              <div class="focus-item"><span class="focus-icon">🔑</span><span>API security &amp; authentication analysis</span></div>
-              <div class="focus-item"><span class="focus-icon">🗂️</span><span>Historical archive (CDX) analysis</span></div>
-              <div class="focus-item"><span class="focus-icon">🛰️</span><span>SOC-style log review &amp; threat hunting</span></div>
-              <div class="focus-item"><span class="focus-icon">🤝</span><span>Responsible disclosure &amp; research collaboration</span></div>
-            </div>
+      <!-- Profile Card -->
+      <aside class="glass profile-card" id="profileCard">
+        <div class="avatar-ring">
+          <div class="avatar-inner">
+            <img class="avatar" src="assets/profile-circle.png" alt="Pradyumn Tiware"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="avatar-fallback" style="display:none">PT</div>
           </div>
-
-          <aside class="glass skills-panel sr sr-delay-2">
-            <h3>Languages &amp; Tools</h3>
-            <div class="chip-cloud">
-              <span class="tag cyan">💻 HTML</span>
-              <span class="tag cyan">⚙️ C / C++</span>
-              <span class="tag cyan">☕ Java</span>
-              <span class="tag cyan">🐍 Python</span>
-              <span class="tag cyan">🔧 Bash</span>
-              <span class="tag cyan">📜 JavaScript</span>
-            </div>
-            <div class="divider"></div>
-            <h3>Security Stack</h3>
-            <div class="chip-cloud">
-              <span class="tag">🐧 Wireshark</span>
-              <span class="tag">🛡️ Burp Suite</span>
-              <span class="tag">🔍 Nmap</span>
-              <span class="tag">💀 Metasploit</span>
-              <span class="tag">⚡ httpx</span>
-              <span class="tag">🧪 SQLmap</span>
-              <span class="tag">📮 Postman</span>
-              <span class="tag">🐉 Kali Linux</span>
-              <span class="tag">🦜 Parrot OS</span>
-            </div>
-            <div class="divider"></div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-              <div class="glass-sm" style="padding:16px;border-radius:12px;text-align:center">
-                <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Programs</div>
-                <div style="font-size:13px;font-weight:700">Private &amp; Public</div>
-              </div>
-              <div class="glass-sm" style="padding:16px;border-radius:12px;text-align:center">
-                <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Disclosure</div>
-                <div style="font-size:13px;font-weight:700">Responsible</div>
-              </div>
-            </div>
-            <div class="big-stat" style="margin-top:8px">
-              <div class="big-stat-val">v2.1</div>
-              <div class="big-stat-lbl">Latest Recon Pipeline Release</div>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── PROJECTS ── -->
-    <section id="tools">
-      <div class="container">
-        <div class="sr">
-          <div class="section-label">Projects</div>
-          <h2 class="section-title">Tools I've <span>built &amp; use</span></h2>
         </div>
 
-        <!-- BrahmastraX Feature Card -->
-        <div class="glass brahma-card sr sr-delay-1">
-          <div class="brahma-badge">✦ Featured Project</div>
-          <div class="brahma-title">BrahmastraX</div>
-          <p class="brahma-desc">
-            An advanced cybersecurity tool crafted for recon, exploitation, and automation. BrahmastraX combines multi-stage attack surface discovery with intelligent automation — built for serious researchers and bounty hunters.
-          </p>
-          <a class="brahma-btn" href="https://pradyumntiwarenexus.github.io/brahmastrax/" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Visit BrahmastraX
+        <div class="profile-name">PradyumnTiwareNexus</div>
+        <p class="profile-sub">Cybersecurity Researcher · Bug Bounty Hunter<br>Recon Automation Developer</p>
+        <div class="status-dot">Available for collaboration</div>
+
+        <div class="stat-row" id="statRow">
+          <div class="stat"><div class="stat-val" id="visits">—</div><div class="stat-lbl">Visits</div></div>
+          <div class="stat"><div class="stat-val">3</div><div class="stat-lbl">Projects</div></div>
+          <div class="stat"><div class="stat-val">v2.1</div><div class="stat-lbl">Latest</div></div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-row" id="socialRow">
+          <a class="soc-btn gh" href="https://github.com/PradyumnTiwareNexus" target="_blank" rel="noopener" title="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+          <a class="soc-btn li" href="https://www.linkedin.com/in/pradyumn-tiwarinexus-b270561b1/" target="_blank" rel="noopener" title="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a class="soc-btn md" href="https://pradyumntiwarenexus.medium.com/" target="_blank" rel="noopener" title="Medium">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+          </a>
+          <a class="soc-btn xx" href="https://x.com/pradyumnTiwari0" target="_blank" rel="noopener" title="X / Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
         </div>
 
-        <!-- Project Grid -->
-        <div class="project-grid" id="projectGrid">
-
-          <article class="glass project-card"
-            data-title="Recon Pipeline Enhanced"
-            data-desc="Automated recon pipeline: subdomains → httpx probe → JS analysis → Wayback CDX → secret detection → nuclei targets. The v2.1 release brings smarter deduplication, faster parallelism, and a structured output format ready for triage."
-            data-repo="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced"
-            tabindex="0" role="button">
-            <div class="project-thumb project-thumb-grad-1">
-              <div class="project-thumb-inner">RP</div>
-              <div class="project-thumb-overlay"></div>
-              <div class="project-thumb-icon">recon_pipeline_enhanced · v2.1</div>
-            </div>
-            <div class="project-body">
-              <div class="project-name">Recon Pipeline Enhanced</div>
-              <div class="project-desc">Automated full-cycle recon orchestration with subdomain discovery, httpx probing, JS analysis, and nuclei target generation.</div>
-              <div class="project-footer">
-                <div class="project-tags">
-                  <span class="project-tag">Python</span>
-                  <span class="project-tag">Bash</span>
-                  <span class="project-tag">OSINT</span>
-                </div>
-                <span class="project-link">GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
-              </div>
-            </div>
-          </article>
-
-          <article class="glass project-card"
-            data-title="Recon Helper Tools"
-            data-desc="A collection of small but powerful scripts and utilities for OSINT and JavaScript analysis. Each helper targets a specific phase of recon — from extracting endpoints from minified JS to resolving historical asset paths from CDX data."
-            data-repo="https://github.com/PradyumnTiwareNexus"
-            tabindex="0" role="button">
-            <div class="project-thumb project-thumb-grad-2">
-              <div class="project-thumb-inner">RH</div>
-              <div class="project-thumb-overlay"></div>
-              <div class="project-thumb-icon">recon_helpers · scripts</div>
-            </div>
-            <div class="project-body">
-              <div class="project-name">Recon Helper Tools</div>
-              <div class="project-desc">Modular scripts and utilities for OSINT workflows, JS endpoint extraction, and archive forensics.</div>
-              <div class="project-footer">
-                <div class="project-tags">
-                  <span class="project-tag">Bash</span>
-                  <span class="project-tag">JS Analysis</span>
-                </div>
-                <span class="project-link">GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
-              </div>
-            </div>
-          </article>
-
-          <article class="glass project-card"
-            data-title="BrahmastraX"
-            data-desc="An advanced cybersecurity tool for recon, exploitation and automation. Visit the live project at pradyumntiwarenexus.github.io/brahmastrax/ to explore its features in full."
-            data-repo="https://pradyumntiwarenexus.github.io/brahmastrax/"
-            data-external="true"
-            tabindex="0" role="button">
-            <div class="project-thumb project-thumb-special">
-              <div class="project-thumb-inner">BX</div>
-              <div class="project-thumb-overlay"></div>
-              <div class="project-thumb-icon">brahmastrax · live</div>
-            </div>
-            <div class="project-body">
-              <div class="project-name">BrahmastraX</div>
-              <div class="project-desc">Advanced recon &amp; exploitation tool. Multi-stage attack surface discovery with intelligent automation for bug bounty researchers.</div>
-              <div class="project-footer">
-                <div class="project-tags">
-                  <span class="project-tag">Recon</span>
-                  <span class="project-tag">Automation</span>
-                </div>
-                <span class="project-link">Live site <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
-              </div>
-            </div>
-          </article>
-
+        <div class="profile-btns" id="profileBtns">
+          <a class="btn-primary" href="https://github.com/PradyumnTiwareNexus" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub
+          </a>
+          <a class="btn-ghost" href="#tools">Projects</a>
         </div>
-      </div>
-    </section>
+      </aside>
 
-    <!-- ── MUSIC ── -->
-    <section id="music">
-      <div class="container">
-        <div class="sr">
-          <div class="section-label">Now Playing</div>
-          <h2 class="section-title">The <span>focus soundtrack</span></h2>
+      <!-- Lead Card -->
+      <section class="glass lead-card" id="leadCard">
+        <div class="lead-greeting">Hi, I'm<br><span class="grad">Pradyumn.</span></div>
+        <p class="lead-sub">Creator of <strong>Recon Pipeline Enhanced v2.1</strong>. I build intelligent reconnaissance systems that combine OSINT, automated JS analysis, CDX archive forensics, and API mapping to surface high-impact vulnerabilities — responsibly.</p>
+        <div class="typewriter-wrap">
+          <span class="typewriter-prefix">&gt;_</span>
+          <span id="typewriter"></span>
         </div>
-
-        <div class="glass music-card sr sr-delay-1" style="margin-top:32px">
-          <div class="album-art" id="albumArt">PT</div>
-          <div class="music-info">
-            <div class="music-title" id="trackTitle">Working Energy — Kinhbach</div>
-            <div class="music-artist">Focus playlist · Cybersec mode</div>
-            <div class="music-controls">
-              <button class="play-btn" id="playBtn" aria-label="Play / Pause">
-                <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z" fill="white"/></svg>
-              </button>
-              <div class="progress-area">
-                <div class="progress-track" id="progressWrap">
-                  <div class="progress-fill" id="progressBar"></div>
-                </div>
-                <div class="time-row">
-                  <span class="time-lbl" id="timeLeft">0:00</span>
-                  <span class="time-lbl" id="timeDur">3:21</span>
-                </div>
-              </div>
-              <div class="visualizer" id="visualizer">
-                <div class="vis-bar" style="height:8px"></div>
-                <div class="vis-bar" style="height:14px"></div>
-                <div class="vis-bar" style="height:6px"></div>
-                <div class="vis-bar" style="height:18px"></div>
-                <div class="vis-bar" style="height:10px"></div>
-              </div>
-            </div>
-          </div>
+        <div class="quick-skills">
+          <span class="skill-chip">Python</span><span class="skill-chip">Bash</span>
+          <span class="skill-chip">JavaScript</span><span class="skill-chip">C / C++</span>
+          <span class="skill-chip">Java</span><span class="skill-chip">HTML</span>
+          <span class="skill-chip">Burp Suite</span><span class="skill-chip">Wireshark</span>
+          <span class="skill-chip">Nmap</span><span class="skill-chip">Metasploit</span>
+          <span class="skill-chip">Kali Linux</span><span class="skill-chip">httpx</span>
         </div>
-        <audio id="audio" src="assets/audio/working-energy.mp3" preload="metadata"></audio>
-      </div>
-    </section>
+      </section>
 
-    <!-- ── CONTACT ── -->
-    <section id="contact">
-      <div class="container">
-        <div class="sr">
-          <div class="section-label">Contact</div>
-          <h2 class="section-title">Let's <span>connect</span></h2>
-        </div>
-
-        <div class="contact-grid">
-          <div class="glass contact-info sr sr-delay-1">
-            <h3>Responsible Disclosure Only</h3>
-            <p>I work within vendor bounty programs and follow coordinated disclosure guidelines. If you've found a bug or want to collaborate on research, reach out — I'm always open to legitimate security collaboration.</p>
-
-            <div class="contact-links">
-              <a class="contact-link-item" href="https://github.com/PradyumnTiwareNexus" target="_blank" rel="noopener">
-                <div class="contact-link-icon">
-                  <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                </div>
-                <div>
-                  <div class="contact-link-label">GitHub</div>
-                  <div class="contact-link-val">PradyumnTiwareNexus</div>
-                </div>
-              </a>
-              <a class="contact-link-item" href="mailto:bugcrowdninjatest1.com@gmail.com">
-                <div class="contact-link-icon">
-                  <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6" stroke="var(--on-accent)" stroke-width="1.5" fill="none"/></svg>
-                </div>
-                <div>
-                  <div class="contact-link-label">Email</div>
-                  <div class="contact-link-val">bugcrowdninjatest1.com@gmail.com</div>
-                </div>
-              </a>
-              <a class="contact-link-item" href="https://pradyumntiwarenexus.github.io/brahmastrax/" target="_blank" rel="noopener">
-                <div class="contact-link-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--on-accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                </div>
-                <div>
-                  <div class="contact-link-label">BrahmastraX</div>
-                  <div class="contact-link-val">pradyumntiwarenexus.github.io/brahmastrax</div>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <div class="glass contact-form sr sr-delay-2">
-            <h2>Send a message</h2>
-            <p class="sub">For responsible disclosure, research collaborations, or general inquiries.</p>
-
-            <input type="text" id="hp_field" name="hp_field" style="display:none" autocomplete="off" tabindex="-1">
-
-            <form id="contactForm" novalidate>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" class="form-input" placeholder="Brief description (program, scope, finding...)" rows="5" required></textarea>
-              </div>
-              <button type="submit" class="form-submit">Send Message</button>
-              <div class="form-note">Or email directly: <a href="mailto:bugcrowdninjatest1.com@gmail.com">bugcrowdninjatest1.com@gmail.com</a></div>
-              <div id="form-toast"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="container">
-        <strong>© 2026 Pradyumn Tiware</strong>
-        <div class="footer-tagline">Stay Ethical · Stay Sharp · Keep Hunting</div>
-      </div>
-    </footer>
-
+    </div>
   </div>
+</section>
 
-  <!-- PROJECT MODAL -->
-  <div id="modalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 class="modal-title" id="modalTitle">Project</h3>
-        <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+<!-- ═══ ABOUT ══════════════════════════════════════════════════════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="sr">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">Building tools that <span>break things</span> first</h2>
+    </div>
+    <div class="about-grid">
+      <div class="glass about-card sr sr-delay-1">
+        <p class="about-text">I'm <strong>Pradyumn Tiware</strong>, a Cybersecurity Researcher, Bug Bounty Hunter, and Recon Automation Developer. My work sits at the intersection of offensive security research, advanced tooling, and responsible vulnerability disclosure.</p>
+        <p class="about-text" style="margin-top:14px">I build intelligent reconnaissance pipelines that combine OSINT, automated JavaScript analysis, CDX archive forensics, and API endpoint mapping to construct a complete picture of any target's attack surface — before a single payload fires.</p>
+        <div class="focus-grid">
+          <div class="focus-item"><span class="focus-icon">🔎</span><span>Recon automation — subdomains, Wayback, JS, API discovery</span></div>
+          <div class="focus-item"><span class="focus-icon">🛡️</span><span>Web exploitation &amp; endpoint analysis</span></div>
+          <div class="focus-item"><span class="focus-icon">🧩</span><span>JavaScript deep-inspection &amp; secret detection</span></div>
+          <div class="focus-item"><span class="focus-icon">🌐</span><span>Asset discovery &amp; attack-surface expansion</span></div>
+          <div class="focus-item"><span class="focus-icon">🔑</span><span>API security &amp; authentication analysis</span></div>
+          <div class="focus-item"><span class="focus-icon">🗂️</span><span>Historical archive (CDX) analysis</span></div>
+          <div class="focus-item"><span class="focus-icon">🛰️</span><span>SOC-style log review &amp; threat hunting</span></div>
+          <div class="focus-item"><span class="focus-icon">🤝</span><span>Responsible disclosure &amp; research collaboration</span></div>
+        </div>
       </div>
-      <div class="modal-thumb" id="modalThumb"></div>
-      <p class="modal-desc" id="modalDesc"></p>
-      <div class="modal-actions">
-        <a id="modalRepoBtn" class="btn-primary" href="#" target="_blank" rel="noopener" style="flex:0 0 auto;padding:10px 20px">Open Repo</a>
-        <button class="btn-ghost" id="modalCloseBtn" style="flex:0 0 auto;padding:10px 20px">Close</button>
+      <aside class="glass skills-panel sr sr-delay-2">
+        <h3>Languages</h3>
+        <div class="chip-cloud">
+          <span class="tag cyan">Python</span><span class="tag cyan">Bash</span>
+          <span class="tag cyan">JavaScript</span><span class="tag cyan">C / C++</span>
+          <span class="tag cyan">Java</span><span class="tag cyan">HTML</span>
+        </div>
+        <div class="divider"></div>
+        <h3>Security Tooling</h3>
+        <div class="chip-cloud">
+          <span class="tag">Burp Suite</span><span class="tag">Wireshark</span>
+          <span class="tag">Nmap</span><span class="tag">Metasploit</span>
+          <span class="tag">httpx</span><span class="tag">SQLmap</span>
+          <span class="tag">Postman</span><span class="tag">nuclei</span>
+          <span class="tag">Kali Linux</span><span class="tag">Parrot OS</span>
+        </div>
+        <div class="divider"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div class="glass-sm" style="padding:14px;text-align:center">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Programs</div>
+            <div style="font-size:13px;font-weight:700">Private &amp; Public</div>
+          </div>
+          <div class="glass-sm" style="padding:14px;text-align:center">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Disclosure</div>
+            <div style="font-size:13px;font-weight:700">Responsible</div>
+          </div>
+        </div>
+        <div class="big-stat"><div class="big-stat-val">v2.1</div><div class="big-stat-lbl">Recon Pipeline Enhanced — Latest Release</div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECTS ════════════════════════════════════════════════════════════════ -->
+<section id="tools">
+  <div class="container">
+    <div class="sr">
+      <div class="section-label">Projects</div>
+      <h2 class="section-title">Tools I've <span>built &amp; use</span></h2>
+    </div>
+
+    <!-- BrahmastraX Hero -->
+    <div class="brahma-featured sr sr-delay-1">
+      <div class="bf-badge">✦ Featured Project</div>
+      <div class="bf-h">BrahmastraX</div>
+      <p class="bf-p">An advanced cybersecurity platform engineered for multi-stage recon, exploitation, and automation. BrahmastraX combines intelligent attack surface discovery with structured automation workflows — purpose-built for professional researchers and bug bounty hunters who need results, not noise.</p>
+      <a class="bf-btn" href="https://pradyumntiwarenexus.github.io/brahmastrax/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Explore BrahmastraX
+      </a>
+    </div>
+
+    <div class="project-grid">
+      <article class="glass project-card"
+        data-title="Recon Pipeline Enhanced"
+        data-desc="A fully automated end-to-end reconnaissance pipeline: subdomain enumeration, httpx probing, JavaScript analysis, Wayback CDX crawling, secret detection, and nuclei target generation. Version 2.1 introduces smarter deduplication, improved parallelism, and structured JSON output ready for triage and downstream tooling integration."
+        data-repo="https://github.com/PradyumnTiwareNexus/recon_pipeline_enhanced"
+        tabindex="0" role="button" aria-label="View Recon Pipeline Enhanced">
+        <div class="project-thumb pg1">
+          <div class="pth-inner">RP</div>
+          <div class="pt-overlay"></div>
+          <div class="pt-icon">recon_pipeline_enhanced · v2.1</div>
+        </div>
+        <div class="project-body">
+          <div class="project-name">Recon Pipeline Enhanced</div>
+          <div class="project-desc">Full-cycle automated recon orchestration — from subdomain discovery to nuclei target generation in a single pipeline.</div>
+          <div class="project-footer">
+            <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Bash</span><span class="project-tag">OSINT</span></div>
+            <span class="project-link">GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="glass project-card"
+        data-title="Recon Helper Tools"
+        data-desc="A curated collection of targeted scripts and utilities for OSINT workflows and JavaScript analysis. Each tool addresses a specific recon phase — endpoint extraction from minified JS bundles, CDX historical path resolution, parameter mining from archived responses, and API key pattern detection."
+        data-repo="https://github.com/PradyumnTiwareNexus"
+        tabindex="0" role="button" aria-label="View Recon Helper Tools">
+        <div class="project-thumb pg2">
+          <div class="pth-inner">RH</div>
+          <div class="pt-overlay"></div>
+          <div class="pt-icon">recon_helpers · scripts</div>
+        </div>
+        <div class="project-body">
+          <div class="project-name">Recon Helper Tools</div>
+          <div class="project-desc">Modular scripts for OSINT, JS endpoint extraction, and CDX archive forensics. Small tools, high signal output.</div>
+          <div class="project-footer">
+            <div class="project-tags"><span class="project-tag">Bash</span><span class="project-tag">JS Analysis</span></div>
+            <span class="project-link">GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="glass project-card"
+        data-title="BrahmastraX"
+        data-desc="An advanced cybersecurity platform for multi-stage recon and exploitation automation. Purpose-built for professional security researchers and bug bounty hunters who require structured, reproducible workflows across large target scopes."
+        data-repo="https://pradyumntiwarenexus.github.io/brahmastrax/"
+        data-external="true"
+        tabindex="0" role="button" aria-label="View BrahmastraX">
+        <div class="project-thumb pg3">
+          <div class="pth-inner">BX</div>
+          <div class="pt-overlay"></div>
+          <div class="pt-icon">brahmastrax · live</div>
+        </div>
+        <div class="project-body">
+          <div class="project-name">BrahmastraX</div>
+          <div class="project-desc">Advanced recon &amp; exploitation automation platform. Multi-stage attack surface mapping for serious researchers.</div>
+          <div class="project-footer">
+            <div class="project-tags"><span class="project-tag">Recon</span><span class="project-tag">Automation</span></div>
+            <span class="project-link">Live site <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MUSIC — SPOTIFY STYLE ══════════════════════════════════════════════════ -->
+<section id="music">
+  <div class="container">
+    <div class="sr">
+      <div class="section-label">Now Playing</div>
+      <h2 class="section-title">The <span>focus soundtrack</span></h2>
+    </div>
+
+    <div class="sp-shell sr sr-delay-1">
+      <!-- Window top bar -->
+      <div class="sp-topbar">
+        <div class="sp-dots">
+          <div class="sp-dot" style="background:#ff5f57"></div>
+          <div class="sp-dot" style="background:#febc2e"></div>
+          <div class="sp-dot" style="background:#28c840"></div>
+        </div>
+        <div class="sp-app-name">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#1DB954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          Spotify — Focus Playlist
+        </div>
+        <div style="font-size:12px;color:#535353;font-family:var(--mono)">cybersec.session</div>
+      </div>
+
+      <!-- Main content -->
+      <div class="sp-main">
+        <!-- Sidebar / Queue -->
+        <div class="sp-sidebar" id="spSidebar">
+          <div class="sp-sidebar-h">Queue</div>
+          <!-- Items rendered by JS -->
+        </div>
+
+        <!-- Player content -->
+        <div class="sp-content">
+          <!-- Now playing hero -->
+          <div class="sp-hero">
+            <div class="sp-cover" id="spCover">
+              <div class="sp-cover-art" id="spCoverArt">♯</div>
+            </div>
+            <div class="sp-now-info">
+              <div class="sp-context" id="spCtx">FOCUS SESSION</div>
+              <div class="sp-track-name" id="spTitle">Select a track</div>
+              <div class="sp-artist-name" id="spArtist">Focus Playlist</div>
+              <div class="sp-now-label" id="spNowLabel">· PAUSED ·</div>
+              <div class="sp-heart" id="spHeart">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#1DB954"><path d="M12 21.593c-.425-.382-9-7.638-9-12.593A6 6 0 0 1 12 3.624 6 6 0 0 1 21 9c0 4.955-8.575 12.211-9 12.593z"/></svg>
+                Saved to playlist
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="sp-controls-wrap">
+            <div class="sp-buttons">
+              <button class="sp-ctrl-btn shuffle" id="shuffleBtn" title="Shuffle">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+              </button>
+              <button class="sp-ctrl-btn" id="prevBtn" title="Previous">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6L18 18V6z"/></svg>
+              </button>
+              <button class="sp-play-big" id="playBtn" aria-label="Play / Pause">
+                <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z"/></svg>
+              </button>
+              <button class="sp-ctrl-btn" id="nextBtn" title="Next">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+              </button>
+              <button class="sp-ctrl-btn repeat" id="repeatBtn" title="Repeat">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+              </button>
+            </div>
+            <div class="sp-prog-row">
+              <span class="sp-ptime" id="tCur">0:00</span>
+              <div class="sp-prog-track" id="progWrap">
+                <div class="sp-prog-fill" id="progFill" style="width:0%"></div>
+              </div>
+              <span class="sp-ptime" id="tDur">0:00</span>
+              <div class="sp-viz" id="spViz">
+                <div class="sp-viz-bar" style="height:4px"></div>
+                <div class="sp-viz-bar" style="height:8px"></div>
+                <div class="sp-viz-bar" style="height:5px"></div>
+                <div class="sp-viz-bar" style="height:12px"></div>
+                <div class="sp-viz-bar" style="height:7px"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom bar: extras + volume -->
+          <div class="sp-bottom-bar">
+            <div class="sp-extras">
+              <button class="sp-extra-btn" title="Queue">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
+              </button>
+              <button class="sp-extra-btn" title="Devices">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
+              </button>
+            </div>
+            <div class="sp-vol-row">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+              <div class="sp-vol-track" id="volTrack">
+                <div class="sp-vol-fill" id="volFill" style="width:80%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <audio id="audio" preload="metadata"></audio>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ══════════════════════════════════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="sr">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">Let's <span>connect</span></h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="glass contact-info sr sr-delay-1">
+        <h3>Responsible Disclosure Only</h3>
+        <p>I work within vendor bounty programs and follow coordinated disclosure guidelines. Open to legitimate research collaborations, tool discussions, and security-related inquiries from like-minded professionals.</p>
+
+        <div class="contact-links">
+          <a class="contact-link-item" href="https://github.com/PradyumnTiwareNexus" target="_blank" rel="noopener">
+            <div class="contact-link-icon"><svg viewBox="0 0 24 24" fill="var(--on-acc)"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div>
+            <div><div class="contact-link-label">GitHub</div><div class="contact-link-val">PradyumnTiwareNexus</div></div>
+          </a>
+          <a class="contact-link-item" href="https://www.linkedin.com/in/pradyumn-tiwarinexus-b270561b1/" target="_blank" rel="noopener">
+            <div class="contact-link-icon" style="background:linear-gradient(135deg,#0a66c2,#004182)"><svg viewBox="0 0 24 24" fill="white"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+            <div><div class="contact-link-label">LinkedIn</div><div class="contact-link-val">Pradyumn Tiware Nexus</div></div>
+          </a>
+          <a class="contact-link-item" href="https://pradyumntiwarenexus.medium.com/" target="_blank" rel="noopener">
+            <div class="contact-link-icon" style="background:linear-gradient(135deg,#111,#333)"><svg viewBox="0 0 24 24" fill="white"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg></div>
+            <div><div class="contact-link-label">Medium</div><div class="contact-link-val">pradyumntiwarenexus.medium.com</div></div>
+          </a>
+          <a class="contact-link-item" href="https://x.com/pradyumnTiwari0" target="_blank" rel="noopener">
+            <div class="contact-link-icon" style="background:linear-gradient(135deg,#000,#222)"><svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+            <div><div class="contact-link-label">X (Twitter)</div><div class="contact-link-val">@pradyumnTiwari0</div></div>
+          </a>
+          <a class="contact-link-item" href="mailto:bugcrowdninjatest1.com@gmail.com">
+            <div class="contact-link-icon" style="background:linear-gradient(135deg,var(--cyan),var(--pink))"><svg viewBox="0 0 24 24" fill="none" stroke="var(--on-acc)" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><div class="contact-link-label">Email</div><div class="contact-link-val">bugcrowdninjatest1.com@gmail.com</div></div>
+          </a>
+          <a class="contact-link-item" href="https://pradyumntiwarenexus.github.io/brahmastrax/" target="_blank" rel="noopener">
+            <div class="contact-link-icon" style="background:linear-gradient(135deg,var(--purple),var(--pink))"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+            <div><div class="contact-link-label">BrahmastraX</div><div class="contact-link-val">Live project site</div></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="glass contact-form sr sr-delay-2">
+        <h2>Send a message</h2>
+        <p class="sub">For responsible disclosure, research collaborations, or security inquiries.</p>
+        <input type="text" id="hp_field" name="hp_field" style="display:none" autocomplete="off" tabindex="-1">
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group"><label for="fname">Name</label><input type="text" id="fname" class="form-input" placeholder="Your name" required></div>
+            <div class="form-group"><label for="femail">Email</label><input type="email" id="femail" class="form-input" placeholder="your@email.com" required></div>
+          </div>
+          <div class="form-group"><label for="fmsg">Message</label><textarea id="fmsg" class="form-input" placeholder="Program, scope, finding..." rows="5" required></textarea></div>
+          <button type="submit" class="form-submit">Send Message</button>
+          <div class="form-note">Or email: <a href="mailto:bugcrowdninjatest1.com@gmail.com">bugcrowdninjatest1.com@gmail.com</a></div>
+          <div id="form-toast"></div>
+        </form>
       </div>
     </div>
   </div>
+</section>
 
-  <script>
-    // ─── THEME ──────────────────────────────────────────────────────────────────
-    (function(){
-      const root = document.documentElement;
-      const btn = document.getElementById('themeBtn');
-      const saved = localStorage.getItem('ptn_theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-      function applyTheme(t){ root.dataset.theme = t; localStorage.setItem('ptn_theme', t); }
-      applyTheme(saved);
-      btn.addEventListener('click', () => applyTheme(root.dataset.theme === 'light' ? 'dark' : 'light'));
-    })();
+<footer>
+  <div class="container">
+    <strong>Pradyumn Tiware — PradyumnTiwareNexus</strong>
+    <div class="footer-tagline">Stay Ethical · Stay Sharp · Keep Hunting</div>
+    <div class="footer-copy">© 2026 · All findings disclosed responsibly</div>
+  </div>
+</footer>
 
-    // ─── PRELOADER ───────────────────────────────────────────────────────────────
-    const _t0 = performance.now();
-    function hidePreloader(){
-      const waited = performance.now() - _t0;
-      const wait = Math.max(0, 1400 - waited);
-      setTimeout(() => {
-        const pl = document.getElementById('preloader');
-        pl.classList.add('hidden');
-        pl.setAttribute('aria-hidden','true');
-        setTimeout(revealHero, 80);
-      }, wait);
+</div><!-- .page -->
+
+<!-- PROJECT MODAL -->
+<div id="modalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Project</h3>
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-thumb" id="modalThumb"></div>
+    <p class="modal-desc" id="modalDesc"></p>
+    <div class="modal-actions">
+      <a id="modalRepoBtn" class="btn-primary" href="#" target="_blank" rel="noopener" style="flex:0 0 auto;padding:11px 22px;border-radius:12px">Open Repo</a>
+      <button class="btn-ghost" id="modalCloseBtn" style="flex:0 0 auto;padding:11px 22px;border-radius:12px">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── THEME ───────────────────────────────────────────────────────────────────
+(function(){
+  const root=document.documentElement,btn=document.getElementById('themeBtn');
+  const saved=localStorage.getItem('ptn_theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
+  function applyTheme(t){root.dataset.theme=t;localStorage.setItem('ptn_theme',t);}
+  applyTheme(saved);
+  btn.addEventListener('click',()=>applyTheme(root.dataset.theme==='light'?'dark':'light'));
+})();
+
+// ─── PRELOADER ────────────────────────────────────────────────────────────────
+const _t0=performance.now();
+function hidePreloader(){
+  const waited=performance.now()-_t0;
+  const wait=Math.max(0,1600-waited);
+  setTimeout(()=>{
+    const pl=document.getElementById('preloader');
+    pl.classList.add('hidden');pl.setAttribute('aria-hidden','true');
+    setTimeout(revealHero,80);
+  },wait);
+}
+window.addEventListener('load',hidePreloader);setTimeout(hidePreloader,3000);
+
+function revealHero(){
+  document.getElementById('profileCard').classList.add('reveal');
+  document.getElementById('leadCard').classList.add('reveal');
+  setTimeout(()=>document.getElementById('statRow').classList.add('reveal'),350);
+  setTimeout(()=>{
+    document.getElementById('socialRow').classList.add('reveal');
+    document.getElementById('profileBtns').classList.add('reveal');
+  },500);
+}
+
+// ─── CUSTOM CURSOR ────────────────────────────────────────────────────────────
+(function(){
+  if(!matchMedia('(pointer:fine)').matches)return;
+  const c=document.getElementById('cursor'),r=document.getElementById('cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.left=mx+'px';c.style.top=my+'px';});
+  function lerp(a,b,t){return a+(b-a)*t}
+  function tick(){rx=lerp(rx,mx,.12);ry=lerp(ry,my,.12);r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(tick);}
+  tick();
+  document.querySelectorAll('a,button,.project-card,.skill-chip,.tag,.focus-item,.sp-sidebar-item,.soc-btn').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{c.classList.add('hover');r.classList.add('hover');});
+    el.addEventListener('mouseleave',()=>{c.classList.remove('hover');r.classList.remove('hover');});
+  });
+})();
+
+// ─── PARTICLES ────────────────────────────────────────────────────────────────
+(function(){
+  const canvas=document.getElementById('bg-canvas');if(!canvas)return;
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches||matchMedia('(pointer:coarse)').matches){canvas.style.display='none';return;}
+  const ctx=canvas.getContext('2d');let W,H;
+  function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}resize();addEventListener('resize',resize);
+  const N=Math.min(60,Math.floor((innerWidth*innerHeight)/100000));
+  const pts=Array.from({length:N},()=>({
+    x:Math.random()*innerWidth,y:Math.random()*innerHeight,
+    vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.25,
+    r:.8+Math.random()*1.8,a:.04+Math.random()*.18,
+    col:[[45,225,230],[155,89,248],[255,79,163]][Math.floor(Math.random()*3)]
+  }));
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of pts){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<-20)p.x=W+20;if(p.x>W+20)p.x=-20;
+      if(p.y<-20)p.y=H+20;if(p.y>H+20)p.y=-20;
+      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*10);
+      g.addColorStop(0,`rgba(${p.col[0]},${p.col[1]},${p.col[2]},${p.a})`);
+      g.addColorStop(1,`rgba(${p.col[0]},${p.col[1]},${p.col[2]},0)`);
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r*4,0,Math.PI*2);ctx.fill();
     }
-    window.addEventListener('load', hidePreloader);
-    setTimeout(hidePreloader, 2800);
+    requestAnimationFrame(draw);
+  }draw();
+})();
 
-    function revealHero(){
-      const pc = document.getElementById('profileCard');
-      const lc = document.getElementById('leadCard');
-      pc.classList.add('reveal');
-      lc.classList.add('reveal');
-      setTimeout(() => document.getElementById('statRow').classList.add('reveal'), 350);
-      setTimeout(() => document.getElementById('profileBtns').classList.add('reveal'), 500);
+// ─── TYPEWRITER ───────────────────────────────────────────────────────────────
+(function(){
+  const el=document.getElementById('typewriter');
+  const phrases=["I hunt bugs & build recon tools.","OSINT · Recon Automation · JS Analysis","Responsible disclosure · High-value findings","Building tools that break things first.","Creator of Recon Pipeline Enhanced v2.1"];
+  let pi=0,ci=0,del=false;
+  function tick(){if(!el)return;const f=phrases[pi];if(!del){ci++;el.textContent=f.slice(0,ci);if(ci===f.length){del=true;return setTimeout(tick,1200);}}else{ci--;el.textContent=f.slice(0,ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;return setTimeout(tick,300);}}setTimeout(tick,del?35:55);}
+  setTimeout(tick,1200);
+})();
+
+// ─── SCROLL REVEAL ────────────────────────────────────────────────────────────
+(function(){
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
+})();
+
+// ─── AVATAR PARALLAX ──────────────────────────────────────────────────────────
+(function(){
+  if(!matchMedia('(pointer:fine)').matches)return;
+  const hero=document.querySelector('.hero'),ring=document.querySelector('.avatar-ring');
+  if(!hero||!ring)return;
+  hero.addEventListener('mousemove',e=>{const r=hero.getBoundingClientRect();const dx=(e.clientX-r.left-r.width/2)/r.width;const dy=(e.clientY-r.top-r.height/2)/r.height;ring.style.transform=`translate(${dx*10}px,${dy*8}px)`;});
+  hero.addEventListener('mouseleave',()=>{ring.style.transform='';});
+})();
+
+// ─── VISITOR COUNTER ──────────────────────────────────────────────────────────
+(function(){
+  const el=document.getElementById('visits');if(!el)return;
+  fetch('https://api.countapi.xyz/hit/pradyumntiwarenexus/portfolio_v3')
+    .then(r=>r.json()).then(j=>{
+      if(j&&j.value!=null){
+        const target=j.value;let cur=Math.max(0,target-25);
+        const step=()=>{cur=Math.min(target,cur+Math.ceil((target-cur)/7)+1);el.textContent=cur.toLocaleString();if(cur<target)requestAnimationFrame(step);};
+        requestAnimationFrame(step);
+      }
+    }).catch(()=>{el.textContent='—';});
+})();
+
+// ─── SPOTIFY PLAYER ───────────────────────────────────────────────────────────
+(function(){
+  const TRACKS=[
+    {title:'Working Energy',artist:'Kinhbach',dur:'3:21',src:'assets/audio/working-energy.mp3',ctx:'FOCUS SESSION',art:'🎵',color:'linear-gradient(135deg,#1a3a1a,#1DB954)'},
+    {title:'Lo-Fi Study',artist:'ChillHop Records',dur:'4:02',src:'assets/audio/lofi-study.mp3',ctx:'DEEP WORK',art:'☕',color:'linear-gradient(135deg,#1a1a3a,#7c3aed)'},
+    {title:'Dark Techno',artist:'Industrial Set',dur:'5:14',src:'assets/audio/dark-techno.mp3',ctx:'RECON MODE',art:'⚡',color:'linear-gradient(135deg,#1a0d0d,#dc2626)'},
+    {title:'Midnight Code',artist:'Synthwave',dur:'3:47',src:'assets/audio/midnight-code.mp3',ctx:'NIGHT SESSION',art:'🌙',color:'linear-gradient(135deg,#0d1a2a,#0ea5e9)'},
+  ];
+  let curIdx=0,isPlaying=false,shuffle=false,repeat=false,vol=0.8;
+  const audio=document.getElementById('audio');
+  audio.volume=vol;
+
+  const playBtn=document.getElementById('playBtn');
+  const playIcon=document.getElementById('playIcon');
+  const prevBtn=document.getElementById('prevBtn');
+  const nextBtn=document.getElementById('nextBtn');
+  const shuffleBtn=document.getElementById('shuffleBtn');
+  const repeatBtn=document.getElementById('repeatBtn');
+  const progWrap=document.getElementById('progWrap');
+  const progFill=document.getElementById('progFill');
+  const tCur=document.getElementById('tCur');
+  const tDur=document.getElementById('tDur');
+  const spTitle=document.getElementById('spTitle');
+  const spArtist=document.getElementById('spArtist');
+  const spCtx=document.getElementById('spCtx');
+  const spNowLabel=document.getElementById('spNowLabel');
+  const spCover=document.getElementById('spCover');
+  const spCoverArt=document.getElementById('spCoverArt');
+  const spSidebar=document.getElementById('spSidebar');
+  const vizBars=document.querySelectorAll('.sp-viz-bar');
+  const volTrack=document.getElementById('volTrack');
+  const volFill=document.getElementById('volFill');
+
+  function fmt(s){const m=Math.floor(s/60),ss=String(Math.floor(s%60)).padStart(2,'0');return`${m}:${ss}`;}
+
+  function loadTrack(idx){
+    curIdx=idx;const t=TRACKS[idx];
+    spTitle.textContent=t.title;spArtist.textContent=t.artist;
+    spCtx.textContent=t.ctx;tDur.textContent=t.dur;
+    tCur.textContent='0:00';progFill.style.width='0%';
+    spCoverArt.textContent=t.art;
+    spCover.style.background=t.color;
+    audio.src=t.src;audio.load();
+    renderSidebar();
+    if(isPlaying)audio.play().catch(()=>{isPlaying=false;updBtn();});
+  }
+
+  function updBtn(){
+    if(isPlaying){
+      playIcon.innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+      spNowLabel.textContent='· NOW PLAYING ·';
+      spCover.classList.add('sp-cover-spin','playing');
+    } else {
+      playIcon.innerHTML='<path d="M8 5v14l11-7L8 5z"/>';
+      spNowLabel.textContent='· PAUSED ·';
+      spCover.classList.remove('playing');
     }
+  }
 
-    // ─── CUSTOM CURSOR ───────────────────────────────────────────────────────────
-    (function(){
-      if (!matchMedia('(pointer: fine)').matches) return;
-      const c = document.getElementById('cursor');
-      const r = document.getElementById('cursor-ring');
-      let mx=0, my=0, rx=0, ry=0;
-      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; c.style.left = mx+'px'; c.style.top = my+'px'; });
-      function lerp(a,b,t){ return a+(b-a)*t; }
-      function tick(){ rx = lerp(rx,mx,0.12); ry = lerp(ry,my,0.12); r.style.left = rx+'px'; r.style.top = ry+'px'; requestAnimationFrame(tick); }
-      tick();
-      document.querySelectorAll('a,button,.project-card,.skill-chip,.tag,.focus-item').forEach(el => {
-        el.addEventListener('mouseenter', () => { c.classList.add('hover'); r.classList.add('hover'); });
-        el.addEventListener('mouseleave', () => { c.classList.remove('hover'); r.classList.remove('hover'); });
-      });
-    })();
+  playBtn.addEventListener('click',()=>{
+    if(isPlaying){audio.pause();isPlaying=false;}
+    else{audio.play().catch(()=>{});isPlaying=true;}
+    updBtn();
+  });
 
-    // ─── PARTICLES BG CANVAS ────────────────────────────────────────────────────
-    (function(){
-      const canvas = document.getElementById('bg-canvas');
-      if (!canvas) return;
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches || matchMedia('(pointer: coarse)').matches){
-        canvas.style.display = 'none'; return;
-      }
-      const ctx = canvas.getContext('2d');
-      let W, H;
-      function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
-      resize(); addEventListener('resize', resize);
-      const N = Math.min(60, Math.floor((innerWidth * innerHeight) / 100000));
-      const pts = Array.from({length:N}, () => ({
-        x: Math.random()*innerWidth, y: Math.random()*innerHeight,
-        vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.25,
-        r: 0.8 + Math.random()*1.8, a: 0.04 + Math.random()*0.18,
-        col: Math.random() > 0.5 ? [45,225,230] : [155,89,248]
-      }));
-      function draw(){
-        ctx.clearRect(0,0,W,H);
-        for(const p of pts){
-          p.x += p.vx; p.y += p.vy;
-          if(p.x < -20) p.x = W+20; if(p.x > W+20) p.x = -20;
-          if(p.y < -20) p.y = H+20; if(p.y > H+20) p.y = -20;
-          const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*10);
-          g.addColorStop(0, `rgba(${p.col[0]},${p.col[1]},${p.col[2]},${p.a})`);
-          g.addColorStop(1, `rgba(${p.col[0]},${p.col[1]},${p.col[2]},0)`);
-          ctx.fillStyle = g;
-          ctx.beginPath(); ctx.arc(p.x,p.y,p.r*4,0,Math.PI*2); ctx.fill();
-        }
-        requestAnimationFrame(draw);
-      }
-      draw();
-    })();
+  prevBtn.addEventListener('click',()=>loadTrack((curIdx-1+TRACKS.length)%TRACKS.length));
+  nextBtn.addEventListener('click',()=>{
+    if(shuffle){loadTrack(Math.floor(Math.random()*TRACKS.length));}
+    else{loadTrack((curIdx+1)%TRACKS.length);}
+  });
 
-    // ─── TYPEWRITER ──────────────────────────────────────────────────────────────
-    (function(){
-      const el = document.getElementById('typewriter');
-      const phrases = [
-        "I hunt bugs & build recon tools.",
-        "OSINT · Recon Automation · JS Analysis",
-        "Responsible disclosure · High-value findings",
-        "Building tools that break things first."
-      ];
-      let pi=0, ci=0, del=false;
-      function tick(){
-        if(!el) return;
-        const full = phrases[pi];
-        if(!del){ ci++; el.textContent = full.slice(0,ci); if(ci===full.length){ del=true; return setTimeout(tick,1200); } }
-        else { ci--; el.textContent = full.slice(0,ci); if(ci===0){ del=false; pi=(pi+1)%phrases.length; return setTimeout(tick,300); } }
-        setTimeout(tick, del ? 35 : 55);
-      }
-      setTimeout(tick, 1200);
-    })();
+  shuffleBtn.addEventListener('click',()=>{shuffle=!shuffle;shuffleBtn.classList.toggle('active',shuffle);});
+  repeatBtn.addEventListener('click',()=>{repeat=!repeat;repeatBtn.classList.toggle('active',repeat);});
 
-    // ─── SCROLL REVEAL ───────────────────────────────────────────────────────────
-    (function(){
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll('.sr').forEach(el => obs.observe(el));
-    })();
+  audio.addEventListener('timeupdate',()=>{
+    if(!audio.duration)return;
+    const p=(audio.currentTime/audio.duration)*100;
+    progFill.style.width=p+'%';
+    tCur.textContent=fmt(audio.currentTime);
+    if(isPlaying){vizBars.forEach((b,i)=>{const h=3+Math.abs(Math.sin((audio.currentTime+i*.9)*3.2+i))*20;b.style.height=Math.max(3,Math.min(22,h))+'px';});}
+  });
 
-    // ─── AVATAR PARALLAX ─────────────────────────────────────────────────────────
-    (function(){
-      if (!matchMedia('(pointer: fine)').matches) return;
-      const hero = document.querySelector('.hero');
-      const ring = document.querySelector('.avatar-ring');
-      if(!hero || !ring) return;
-      hero.addEventListener('mousemove', e => {
-        const rect = hero.getBoundingClientRect();
-        const dx = (e.clientX - rect.left - rect.width/2) / rect.width;
-        const dy = (e.clientY - rect.top - rect.height/2) / rect.height;
-        ring.style.transform = `translate(${dx*10}px, ${dy*8}px)`;
-      });
-      hero.addEventListener('mouseleave', () => { ring.style.transform = ''; });
-    })();
+  audio.addEventListener('loadedmetadata',()=>{tDur.textContent=fmt(audio.duration||0);});
 
-    // ─── VISITOR COUNTER ─────────────────────────────────────────────────────────
-    (function(){
-      const el = document.getElementById('visits');
-      if(!el) return;
-      fetch('https://api.countapi.xyz/hit/pradyumntiware/portfolio_visits')
-        .then(r => r.json()).then(j => { if(j && j.value != null) el.textContent = j.value.toLocaleString(); })
-        .catch(() => {});
-    })();
+  audio.addEventListener('ended',()=>{
+    if(repeat){audio.currentTime=0;audio.play().catch(()=>{});}
+    else if(shuffle){loadTrack(Math.floor(Math.random()*TRACKS.length));}
+    else{loadTrack((curIdx+1)%TRACKS.length);}
+  });
 
-    // ─── AUDIO PLAYER ────────────────────────────────────────────────────────────
-    (function(){
-      const audio = document.getElementById('audio');
-      const playBtn = document.getElementById('playBtn');
-      const playIcon = document.getElementById('playIcon');
-      const progressBar = document.getElementById('progressBar');
-      const progressWrap = document.getElementById('progressWrap');
-      const timeLeft = document.getElementById('timeLeft');
-      const timeDur = document.getElementById('timeDur');
-      const bars = document.querySelectorAll('.vis-bar');
-      const albumArt = document.getElementById('albumArt');
-      function fmt(s){ const m=Math.floor(s/60),ss=String(Math.floor(s%60)).padStart(2,'0'); return `${m}:${ss}`; }
-      audio.addEventListener('loadedmetadata', () => { timeDur.textContent = fmt(audio.duration||0); });
-      audio.addEventListener('timeupdate', () => {
-        const p = (audio.currentTime/(audio.duration||1))*100;
-        progressBar.style.width = p+'%';
-        timeLeft.textContent = fmt(audio.currentTime);
-        bars.forEach((b,i) => {
-          const h = 6 + Math.abs(Math.sin((audio.currentTime+i)*3.1+i))*28;
-          b.style.height = Math.max(4,Math.min(40,h))+'px';
-        });
-      });
-      playBtn.addEventListener('click', () => {
-        if(audio.paused){
-          audio.play().catch(()=>{});
-          playIcon.innerHTML = '<rect x="6" y="4" width="4" height="16" fill="white"/><rect x="14" y="4" width="4" height="16" fill="white"/>';
-          albumArt.classList.add('playing');
-        } else {
-          audio.pause();
-          playIcon.innerHTML = '<path d="M8 5v14l11-7L8 5z" fill="white"/>';
-          albumArt.classList.remove('playing');
-        }
-      });
-      progressWrap.addEventListener('click', e => {
-        const r = progressWrap.getBoundingClientRect();
-        audio.currentTime = ((e.clientX-r.left)/r.width) * (audio.duration||0);
-      });
-      audio.addEventListener('ended', () => {
-        playIcon.innerHTML = '<path d="M8 5v14l11-7L8 5z" fill="white"/>';
-        albumArt.classList.remove('playing');
-      });
-    })();
+  progWrap.addEventListener('click',e=>{
+    const r=progWrap.getBoundingClientRect();
+    audio.currentTime=((e.clientX-r.left)/r.width)*(audio.duration||0);
+  });
 
-    // ─── PROJECT MODAL ───────────────────────────────────────────────────────────
-    (function(){
-      const overlay = document.getElementById('modalOverlay');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalDesc = document.getElementById('modalDesc');
-      const modalThumb = document.getElementById('modalThumb');
-      const modalRepoBtn = document.getElementById('modalRepoBtn');
-      const modalClose = document.getElementById('modalClose');
-      const modalCloseBtn = document.getElementById('modalCloseBtn');
-      const gradients = ['linear-gradient(135deg,#0a2a2e,var(--cyan))','linear-gradient(135deg,#200a1e,var(--pink))','linear-gradient(135deg,#06201e,#1a5a50)'];
+  volTrack.addEventListener('click',e=>{
+    const r=volTrack.getBoundingClientRect();
+    vol=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
+    audio.volume=vol;volFill.style.width=(vol*100)+'%';
+  });
 
-      function openModal(card, idx){
-        modalTitle.textContent = card.dataset.title || 'Project';
-        modalDesc.textContent = card.dataset.desc || '';
-        modalThumb.style.background = gradients[idx % gradients.length];
-        modalThumb.textContent = (card.dataset.title||'').split(' ').map(w=>w[0]).join('').slice(0,3);
-        const repo = card.dataset.repo || '#';
-        modalRepoBtn.href = repo;
-        modalRepoBtn.textContent = card.dataset.external === 'true' ? 'Visit Live Site' : 'Open Repository';
-        overlay.classList.add('open');
-        overlay.setAttribute('aria-hidden','false');
-        document.body.style.overflow = 'hidden';
-        modalClose.focus();
-      }
-      function closeModal(){
-        overlay.classList.remove('open');
-        overlay.setAttribute('aria-hidden','true');
-        document.body.style.overflow = '';
-      }
+  function renderSidebar(){
+    spSidebar.innerHTML='<div class="sp-sidebar-h">Queue</div>';
+    TRACKS.forEach((t,i)=>{
+      const div=document.createElement('div');
+      div.className='sp-sidebar-item'+(i===curIdx?' active':'');
+      div.innerHTML=`<div class="sp-track-dot"></div><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.title}</span><div class="sp-playing-icon"><div class="sp-pbar" style="height:4px"></div><div class="sp-pbar" style="height:8px"></div><div class="sp-pbar" style="height:5px"></div></div>`;
+      div.addEventListener('click',()=>loadTrack(i));
+      spSidebar.appendChild(div);
+    });
+  }
 
-      document.querySelectorAll('.project-card').forEach((card, i) => {
-        card.addEventListener('click', () => openModal(card, i));
-        card.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') openModal(card, i); });
-      });
-      modalClose.addEventListener('click', closeModal);
-      modalCloseBtn.addEventListener('click', closeModal);
-      overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
-      document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
-    })();
+  loadTrack(0);
+})();
 
-    // ─── CONTACT FORM ────────────────────────────────────────────────────────────
-    (function(){
-      const form = document.getElementById('contactForm');
-      const toast = document.getElementById('form-toast');
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        const hp = document.getElementById('hp_field');
-        if(hp && hp.value) return;
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-        if(!name || !email || !message){ toast.style.display='block'; toast.style.background='rgba(255,79,163,0.1)'; toast.style.borderColor='rgba(255,79,163,0.25)'; toast.style.color='var(--pink)'; toast.textContent='Please fill in all fields.'; return; }
-        const subject = encodeURIComponent(`[PTN Portfolio] Message from ${name}`);
-        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-        window.location.href = `mailto:bugcrowdninjatest1.com@gmail.com?subject=${subject}&body=${body}`;
-        toast.style.display='block'; toast.style.background='rgba(45,225,230,0.1)'; toast.style.borderColor='rgba(45,225,230,0.25)'; toast.style.color='var(--cyan)'; toast.textContent='Opening your email client...';
-        setTimeout(() => form.reset(), 600);
-      });
-    })();
-  </script>
+// ─── PROJECT MODAL ────────────────────────────────────────────────────────────
+(function(){
+  const overlay=document.getElementById('modalOverlay');
+  const mTitle=document.getElementById('modalTitle'),mDesc=document.getElementById('modalDesc');
+  const mThumb=document.getElementById('modalThumb'),mRepoBtn=document.getElementById('modalRepoBtn');
+  const mClose=document.getElementById('modalClose'),mCloseBtn=document.getElementById('modalCloseBtn');
+  const grads=['linear-gradient(135deg,#0a2a2e,#1a6070)','linear-gradient(135deg,#200a1e,#5c1250)','linear-gradient(135deg,#06201e,#1a5a50)'];
+  function open(card,i){
+    mTitle.textContent=card.dataset.title||'Project';mDesc.textContent=card.dataset.desc||'';
+    mThumb.style.background=grads[i%grads.length];
+    mThumb.textContent=(card.dataset.title||'').split(' ').map(w=>w[0]).join('').slice(0,3);
+    mRepoBtn.href=card.dataset.repo||'#';
+    mRepoBtn.textContent=card.dataset.external==='true'?'Visit Live Site':'Open Repository';
+    overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';mClose.focus();
+  }
+  function close(){overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  document.querySelectorAll('.project-card').forEach((c,i)=>{
+    c.addEventListener('click',()=>open(c,i));
+    c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')open(c,i);});
+  });
+  mClose.addEventListener('click',close);mCloseBtn.addEventListener('click',close);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+})();
+
+// ─── CONTACT FORM ─────────────────────────────────────────────────────────────
+(function(){
+  const form=document.getElementById('contactForm'),toast=document.getElementById('form-toast');
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    if(document.getElementById('hp_field').value)return;
+    const name=document.getElementById('fname').value.trim();
+    const email=document.getElementById('femail').value.trim();
+    const msg=document.getElementById('fmsg').value.trim();
+    if(!name||!email||!msg){
+      toast.style.cssText='display:block;background:rgba(255,79,163,.1);border-color:rgba(255,79,163,.25);color:var(--pink)';
+      toast.textContent='Please fill in all fields.';return;
+    }
+    const sub=encodeURIComponent(`[PTN Portfolio] Message from ${name}`);
+    const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`);
+    window.location.href=`mailto:bugcrowdninjatest1.com@gmail.com?subject=${sub}&body=${body}`;
+    toast.style.cssText='display:block;background:rgba(45,225,230,.1);border-color:rgba(45,225,230,.25);color:var(--cyan)';
+    toast.textContent='Opening your email client...';
+    setTimeout(()=>form.reset(),700);
+  });
+})();
+</script>
 </body>
 </html>
