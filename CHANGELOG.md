@@ -1,5 +1,59 @@
 # Changelog
 
+## [Phase 2] Research Timeline + Methodology + Open Source scaling
+
+**Date:** 2026-08-06
+
+### What was added
+- **New "Research Timeline" section** (`#timeline`), placed after the
+  Achievement Dashboard, before About. Milestone *order* reflects your actual
+  journey (bug hunting → first disclosure → first Hall of Fame → first reward
+  → first open source contribution → current research). **Dates are
+  placeholders** (`[Add date]`) — I don't have your real dates, so I did not
+  invent them. Search-and-replace `[Add date]` in `index.html` with the real
+  ones before publishing. Reuses the existing `.term`/`.term-body` terminal
+  card style from the About section — zero new CSS.
+- **New "Research Methodology" section** (`#methodology`), placed after
+  Skills, before Hall of Fame. A 9-step pipeline (Recon → Enumeration →
+  Analysis → Validation → Proof of Concept → Responsible Disclosure → Vendor
+  Validation → Fix → Recognition). This describes your process generically,
+  so no fabricated personal data was needed. Reuses the existing `.hof-chip`
+  style from the Hall of Fame marquee — zero new CSS.
+- **Open Source Contributions section refactored to be data-driven** (visual
+  output unchanged — verified pixel-for-pixel via screenshot). The single
+  IntersectMBO entry now lives in an `OSS_DATA` JavaScript array; a
+  `renderOSS()` function generates the cards, and filter tabs (matching the
+  CTF section's `.ctf-tabs`/`.ctf-tab` style) let visitors filter by
+  contribution type. **Adding a future contribution now only requires adding
+  one object to `OSS_DATA`** — no HTML editing. The stats row (OSS
+  Contributions / Merged Fixes / Public Advisories / Repos Improved) is now
+  computed from `OSS_DATA` automatically instead of being hand-typed.
+
+### Explicitly skipped this round (flagged, not forgotten)
+- **Awards & Recognition as a separate new section** — your Hall of Fame and
+  Certificates sections already cover "Hall of Fame" and "Certificates."
+  Building a third section that just re-lists the same entries under a new
+  heading would duplicate content for no benefit (and hurts SEO via
+  duplicate content). If you have actual **Letters, Recommendations, or
+  Swag** to show (categories not currently on the site), send them over and
+  I'll add a real section for those specifically.
+- Testimonials and Research Statistics (severity/industry charts) — still
+  waiting on your real data, per our earlier agreement.
+
+### What was NOT changed
+Verified by diffing byte-for-byte against your original upload: `<nav>`,
+the About section's terminal + bio text, Skills, Hall of Fame, Certificates,
+Projects, CTF, Writeups, Contact, and `<footer>` are all **identical** to the
+original file. Only new sections were inserted between existing ones, and the
+Open Source section (added by me last round, not part of your original site)
+was refactored as requested. No existing CSS rule was edited — only new rules
+were added, built from existing color/spacing/radius/transition tokens. No
+original JavaScript was edited — the new OSS renderer reuses the page's
+existing `esc()` helper instead of duplicating it, and the animated-counter
+script (added last round) is unchanged.
+
+---
+
 ## [Phase 1] Identity rewrite + Premium badges + Achievement Dashboard
 
 **Date:** 2026-08-06
