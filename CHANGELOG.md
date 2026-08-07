@@ -1,5 +1,70 @@
 # Changelog
 
+## [Phase 3] SEO/Schema + Accessibility + Performance
+
+**Date:** 2026-08-07
+
+### What I found already in place (no action needed)
+Your site already had excellent SEO before this phase: Person schema,
+WebSite schema (with SearchAction), FAQPage schema, full OpenGraph + Twitter
+Card tags, canonical URL, geo tags, `robots`/`googlebot` meta, and
+`preconnect` hints for fonts. I did not touch any of it — re-doing solid
+work would only risk breaking something. Item 11 ("SEO — Highest Priority")
+was, in practice, largely already done.
+
+### What was added (all new, additive — no existing tag/section edited)
+- **Skip-to-content link** — a standard, WCAG 2.4.1 "skip navigation" link,
+  invisible until keyboard-focused. Verified it correctly reveals on Tab and
+  jumps to `<main>`.
+- **Site-wide visible keyboard-focus ring** (`:focus-visible`) — the site
+  uses a custom cursor (`cursor:none`), which makes a strong focus indicator
+  more important for keyboard users. This is a new, supplementary rule; it
+  doesn't remove or replace any existing `:focus` styling (e.g. the contact
+  form's existing purple border-on-focus still works exactly as before).
+- **`prefers-reduced-motion` support** (WCAG 2.3.3) — users who've enabled
+  "reduce motion" at the OS level now get instant transitions instead of the
+  site's animations. No visual change for everyone else.
+- **LCP image preload** — added `<link rel="preload" as="image">` for
+  `profile.png` (your hero image) to shave time off the Largest Contentful
+  Paint metric.
+- **`id="main-content"` added to `<main>`** — required as the skip-link's
+  jump target. This is the one existing tag that got a new attribute; no
+  visual/behavioral change.
+- **Runtime accessibility script** (new `<script>`, doesn't edit any existing
+  HTML in the file): at page-load it (1) programmatically links each contact
+  form `<label>` to its input via `id`/`for` so screen readers announce them
+  together, (2) marks the "message sent" confirmation as a live region
+  (`role="status" aria-live="polite"`) so screen reader users are notified
+  without focus changing, and (3) keeps `aria-pressed` in sync on the CTF and
+  Open Source filter tabs. None of this changes the saved HTML — it's
+  progressive enhancement applied in the browser.
+- **`sitemap.xml`** `lastmod` bumped to reflect the real content update.
+
+### Checked, deliberately left alone
+- **Color contrast** — computed the actual contrast ratios for the site's
+  `--muted` text color: ~6.6:1 against the background, which passes WCAG AA
+  comfortably. `--muted2` (used for small secondary labels like timeline
+  arrows) is lower-contrast and wouldn't pass for body text, but fixing it
+  means editing the global color tokens used across every protected section
+  — which you said not to touch. Flagging it here in case you ever want that
+  specific token adjusted; I didn't change it.
+- **Image dimensions / CLS** — checked `.profile-img`: it's already sized by
+  its wrapper's CSS (not intrinsic `<img>` width/height), so there's no
+  layout-shift risk to fix.
+- Real Lighthouse score / live Google ranking can't be verified from a
+  sandbox with no internet access — the changes above follow Lighthouse's
+  documented best practices, but you'll want to run a real Lighthouse pass
+  once this is deployed to GitHub Pages to confirm the number.
+
+### What was NOT changed
+Re-verified byte-for-byte against your original upload: `<nav>`, Hero,
+Skills, Hall of Fame, Certificates, Projects, CTF, Writeups, **Contact form**
+(including its `<label>`/`<input>` markup — the association is done at
+runtime, not in the file), and `<footer>` are all identical to the original.
+No color, font, spacing, or animation-timing variable was edited.
+
+---
+
 ## [Phase 2] Research Timeline + Methodology + Open Source scaling
 
 **Date:** 2026-08-06

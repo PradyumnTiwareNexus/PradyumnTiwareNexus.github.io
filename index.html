@@ -183,6 +183,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="preload" as="image" href="assets/profile.png" fetchpriority="high"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -507,10 +508,25 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:1.8rem 2.5rem;margin-t
 /* ── RESPONSIVE ── */
 @media(max-width:1100px){.hero-wrap{grid-template-columns:1fr}.hero-right{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.ag,.cg{grid-template-columns:1fr}}
 @media(max-width:640px){main{padding:5.5rem 1.2rem 2rem}nav{padding:.75rem 1.2rem}.hero-name{font-size:2.1rem}.stats-bar{grid-template-columns:repeat(2,1fr)}.nav-links{display:none}.hero-btns{flex-direction:column}.hof-grid{grid-template-columns:1fr}}
+
+/* ═══════ PHASE 3 — ACCESSIBILITY (new, additive rules only — nothing above is edited) ═══════ */
+/* Skip-to-content link: invisible until keyboard-focused, standard WCAG 2.4.1 pattern */
+.skip-link{position:absolute;top:0;left:0;transform:translateY(-140%);background:var(--purple);color:#fff;padding:.7rem 1.15rem;z-index:10000;border-radius:0 0 10px 0;font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;text-decoration:none;transition:transform .2s}
+.skip-link:focus{transform:translateY(0)}
+
+/* Visible keyboard-focus indicator site-wide. Supplements (does not remove) any existing :focus styling —
+   the site sets cursor:none for its custom cursor, so a strong focus-visible ring matters for keyboard users. */
+:focus-visible{outline:2px solid var(--purple2);outline-offset:3px;border-radius:4px}
+
+/* Respect OS-level "reduce motion" setting — WCAG 2.3.3. Purely additive; only activates for users who request it. */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
 </style>
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <div id="cur"></div>
 <div id="cur-ring"></div>
 <div class="bg-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div><div class="orb orb4"></div></div>
@@ -530,7 +546,7 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:1.8rem 2.5rem;margin-t
   <a href="#contact" class="nav-cta">Let's Connect</a>
 </nav>
 
-<main aria-label="Pradyumn Tiware Nexus Portfolio">
+<main id="main-content" aria-label="Pradyumn Tiware Nexus Portfolio">
 
 <!-- ═══ HERO ═══ -->
 <section id="home" aria-label="Hero — Pradyumn Tiware Nexus, Bug Bounty Hunter" style="position:relative;z-index:1" itemscope itemtype="https://schema.org/Person">
@@ -1444,6 +1460,38 @@ function filterOSS(type){
 
 renderOSSTabs();
 renderOSS();
+</script>
+
+<!-- ── PHASE 3: ACCESSIBILITY ENHANCEMENTS (runtime only — original HTML source is not edited) ── -->
+<!-- Progressively links form labels to inputs, marks the form-feedback region as a live region, -->
+<!-- and keeps aria-pressed in sync on filter tabs, without changing any existing markup on disk. -->
+<script>
+(function(){
+  // Associate each .fl-label with its sibling input/textarea for screen readers
+  document.querySelectorAll('.fg').forEach((group,i)=>{
+    const label=group.querySelector('.fl-label');
+    const field=group.querySelector('.fi,.ftx');
+    if(label&&field&&!field.id){
+      const id='field-'+i;
+      field.id=id;
+      label.setAttribute('for',id);
+    }
+  });
+  // Announce the "message sent" confirmation to screen readers
+  const fok=document.getElementById('fok');
+  if(fok){fok.setAttribute('role','status');fok.setAttribute('aria-live','polite');}
+
+  // Keep aria-pressed in sync on any .ctf-tab filter button (CTF and Open Source)
+  function syncTabs(){
+    document.querySelectorAll('.ctf-tab').forEach(btn=>{
+      btn.setAttribute('aria-pressed',btn.classList.contains('active')?'true':'false');
+    });
+  }
+  syncTabs();
+  document.querySelectorAll('.ctf-tabs').forEach(wrap=>{
+    new MutationObserver(syncTabs).observe(wrap,{childList:true,subtree:true,attributes:true});
+  });
+})();
 </script>
 
 <!-- ── ANIMATED STAT COUNTERS (Open Source stats + Achievement Dashboard) ── -->
