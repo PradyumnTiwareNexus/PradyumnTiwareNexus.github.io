@@ -199,13 +199,15 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden;cursor:none;min-height:100vh}
 
 /* ── CURSOR ── */
-#cur{position:fixed;width:7px;height:7px;background:var(--cyan2);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .15s,height .15s}
-#cur-ring{position:fixed;width:28px;height:28px;border:1.5px solid rgba(168,85,247,.55);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .22s,height .22s,border-color .22s}
+#cur{position:fixed;top:0;left:0;width:7px;height:7px;background:var(--cyan2);border-radius:50%;pointer-events:none;z-index:99999;transform:translate3d(50vw,50vh,0) translate(-50%,-50%);will-change:transform;mix-blend-mode:screen;transition:width .15s,height .15s}
+#cur-ring{position:fixed;top:0;left:0;width:28px;height:28px;border:1.5px solid rgba(168,85,247,.55);border-radius:50%;pointer-events:none;z-index:99998;transform:translate3d(50vw,50vh,0) translate(-50%,-50%);will-change:transform;transition:width .22s,height .22s,border-color .22s}
 #cur.big{width:4px;height:4px}#cur-ring.big{width:42px;height:42px;border-color:rgba(168,85,247,.9)}
+/* Fallback when the custom cursor is disabled (touch/coarse pointer, reduced-motion, or a JS failure) so the real pointer is never hidden */
+html.no-custom-cursor body{cursor:auto}
 
 /* ── BG ORBS ── */
 .bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.orb{position:absolute;border-radius:50%;filter:blur(110px);animation:orbF 22s ease-in-out infinite}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:orbF 22s ease-in-out infinite;will-change:transform}
 .orb1{width:800px;height:800px;background:rgba(124,58,237,.09);top:-350px;left:-200px}
 .orb2{width:650px;height:650px;background:rgba(6,182,212,.06);bottom:-280px;right:-150px;animation-delay:-8s}
 .orb3{width:500px;height:500px;background:rgba(236,72,153,.04);top:38%;left:28%;animation-delay:-15s}
@@ -219,7 +221,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:linear-gradient(var(--purple),var(--cyan));border-radius:2px}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.85rem 2.5rem;display:flex;align-items:center;justify-content:space-between;background:rgba(4,4,14,.82);backdrop-filter:blur(30px) saturate(180%);border-bottom:1px solid rgba(255,255,255,.04)}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.85rem 2.5rem;display:flex;align-items:center;justify-content:space-between;background:rgba(4,4,14,.82);backdrop-filter:blur(18px) saturate(150%);border-bottom:1px solid rgba(255,255,255,.04)}
 .nav-logo{font-family:var(--mono);font-size:.82rem;font-weight:600;background:linear-gradient(135deg,var(--purple2),var(--cyan2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;letter-spacing:.1em}
 .nav-links{display:flex;gap:1.8rem;list-style:none}
 .nav-links a{font-size:.72rem;color:var(--muted);text-decoration:none;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;position:relative;font-family:var(--mono)}
@@ -231,7 +233,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.85rem 2.5rem;displ
 main{min-height:100vh;padding:6.5rem 2.5rem 3rem;max-width:1300px;margin:0 auto;position:relative;z-index:1}
 
 /* ── GLASS CARD ── */
-.gc{background:rgba(255,255,255,.028);backdrop-filter:blur(28px) saturate(200%);border:1px solid rgba(255,255,255,.07);border-radius:20px;position:relative;overflow:hidden;transition:border-color .35s,box-shadow .35s,transform .35s}
+.gc{background:rgba(255,255,255,.028);backdrop-filter:blur(18px) saturate(150%);border:1px solid rgba(255,255,255,.07);border-radius:20px;position:relative;overflow:hidden;transition:border-color .35s,box-shadow .35s,transform .35s}
 .gc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(168,85,247,.04) 0%,transparent 55%,rgba(6,182,212,.03) 100%);pointer-events:none}
 .gc:hover{border-color:rgba(168,85,247,.28);box-shadow:0 0 0 1px rgba(168,85,247,.1),0 20px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08);transform:translateY(-4px)}
 .gc:hover::before{background:linear-gradient(135deg,rgba(168,85,247,.08) 0%,transparent 50%,rgba(6,182,212,.06) 100%)}
@@ -286,7 +288,7 @@ main{min-height:100vh;padding:6.5rem 2.5rem 3rem;max-width:1300px;margin:0 auto;
 .soc-section{margin-bottom:2.4rem}
 .soc-label{font-family:var(--mono);font-size:.55rem;color:var(--muted2);letter-spacing:.22em;text-transform:uppercase;margin-bottom:.75rem}
 .soc-row{display:flex;gap:.55rem;flex-wrap:wrap}
-.soc-card{display:flex;align-items:center;gap:.55rem;padding:.52rem 1.1rem;border-radius:12px;background:rgba(255,255,255,.04);backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,.08);color:var(--muted);text-decoration:none;font-family:var(--mono);font-size:.63rem;font-weight:600;letter-spacing:.07em;transition:all .28s;position:relative;overflow:hidden}
+.soc-card{display:flex;align-items:center;gap:.55rem;padding:.52rem 1.1rem;border-radius:12px;background:rgba(255,255,255,.04);backdrop-filter:blur(14px) saturate(150%);border:1px solid rgba(255,255,255,.08);color:var(--muted);text-decoration:none;font-family:var(--mono);font-size:.63rem;font-weight:600;letter-spacing:.07em;transition:all .28s;position:relative;overflow:hidden}
 .soc-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .28s;z-index:0;border-radius:inherit}
 .soc-card:hover::before{opacity:1}
 .soc-card:hover{color:#fff;transform:translateY(-3px)}
@@ -306,7 +308,7 @@ main{min-height:100vh;padding:6.5rem 2.5rem 3rem;max-width:1300px;margin:0 auto;
 
 /* stats */
 .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem}
-.sc{background:rgba(255,255,255,.03);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:1rem .8rem;text-align:center;transition:all .32s;position:relative;overflow:hidden}
+.sc{background:rgba(255,255,255,.03);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:1rem .8rem;text-align:center;transition:all .32s;position:relative;overflow:hidden}
 .sc::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(168,85,247,.1),transparent 70%);opacity:0;transition:opacity .32s}
 .sc:hover{border-color:rgba(168,85,247,.32);transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,.4)}.sc:hover::after{opacity:1}
 .si{font-size:1.35rem;margin-bottom:.35rem;display:block}
@@ -337,7 +339,7 @@ main{min-height:100vh;padding:6.5rem 2.5rem 3rem;max-width:1300px;margin:0 auto;
 
 /* ═══════ ABOUT ═══════ */
 .ag{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-.term{background:rgba(0,0,0,.6);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.term{background:rgba(0,0,0,.6);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
 .term:hover{border-color:rgba(16,185,129,.22);box-shadow:0 16px 48px rgba(0,0,0,.5)}
 .term-bar{padding:.58rem 1rem;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:.4rem}
 .dot{width:9px;height:9px;border-radius:50%}.dot.r{background:#ff5f57}.dot.y{background:#ffbd2e}.dot.g{background:#28c840}
@@ -370,7 +372,7 @@ main{min-height:100vh;padding:6.5rem 2.5rem 3rem;max-width:1300px;margin:0 auto;
 .hof-intro{font-size:.88rem;color:var(--muted);line-height:1.88;max-width:700px;margin-bottom:3rem}
 .hof-intro strong{color:var(--text)}
 .hof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.3rem}
-.hof-card{background:rgba(255,255,255,.028);backdrop-filter:blur(30px) saturate(200%);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:1.5rem;position:relative;overflow:hidden;transition:all .38s;display:flex;flex-direction:column;gap:1rem}
+.hof-card{background:rgba(255,255,255,.028);backdrop-filter:blur(18px) saturate(150%);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:1.5rem;position:relative;overflow:hidden;transition:all .38s;display:flex;flex-direction:column;gap:1rem}
 .hof-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.03) 0%,transparent 60%);pointer-events:none}
 .hof-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--hof-color,rgba(168,85,247,.6)),transparent);opacity:.5;transition:opacity .38s}
 .hof-card:hover{transform:translateY(-7px);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06),inset 0 1px 0 rgba(255,255,255,.1);border-color:var(--hof-color,rgba(168,85,247,.4))}.hof-card:hover::after{opacity:1}
@@ -413,7 +415,7 @@ main{min-height:100vh;padding:6.5rem 2.5rem 3rem;max-width:1300px;margin:0 auto;
 
 /* ═══════ PROJECTS ═══════ */
 .prj-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem}
-.prj{background:rgba(255,255,255,.028);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:1.5rem;position:relative;overflow:hidden;transition:all .35s;display:flex;flex-direction:column;gap:.95rem}
+.prj{background:rgba(255,255,255,.028);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:1.5rem;position:relative;overflow:hidden;transition:all .35s;display:flex;flex-direction:column;gap:.95rem}
 .prj::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple2),var(--cyan2),transparent);opacity:0;transition:opacity .35s}
 .prj::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(168,85,247,.06),transparent 70%);opacity:0;transition:opacity .35s;pointer-events:none}
 .prj:hover{border-color:rgba(168,85,247,.3);transform:translateY(-6px);box-shadow:0 24px 50px rgba(0,0,0,.5)}.prj:hover::after,.prj:hover::before{opacity:1}
@@ -433,7 +435,7 @@ main{min-height:100vh;padding:6.5rem 2.5rem 3rem;max-width:1300px;margin:0 auto;
 .ctf-tab{font-family:var(--mono);font-size:.61rem;padding:.3rem .78rem;border-radius:7px;background:transparent;border:1px solid rgba(255,255,255,.07);color:var(--muted);cursor:pointer;transition:all .22s;letter-spacing:.08em}
 .ctf-tab.active,.ctf-tab:hover{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.32);color:var(--purple2)}
 .ctf-grid{display:flex;flex-direction:column;gap:.7rem}
-.ctf-card{background:rgba(255,255,255,.028);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1.2rem;transition:all .28s;position:relative;overflow:hidden}
+.ctf-card{background:rgba(255,255,255,.028);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1.2rem;transition:all .28s;position:relative;overflow:hidden}
 .ctf-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px}
 .ctf-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 0% 50%,rgba(168,85,247,.05),transparent 60%);opacity:0;transition:opacity .28s;pointer-events:none}
 .ctf-card.diff-easy::before{background:var(--green)}
@@ -458,7 +460,7 @@ main{min-height:100vh;padding:6.5rem 2.5rem 3rem;max-width:1300px;margin:0 auto;
 
 /* ═══════ BUG BOUNTY WRITEUPS ═══════ */
 .wu-l{display:flex;flex-direction:column;gap:.7rem}
-.wu{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:rgba(255,255,255,.028);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.07);border-radius:14px;transition:all .28s;position:relative;overflow:hidden}
+.wu{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:rgba(255,255,255,.028);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.07);border-radius:14px;transition:all .28s;position:relative;overflow:hidden}
 .wu::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 0% 50%,rgba(168,85,247,.05),transparent 60%);opacity:0;transition:opacity .28s;pointer-events:none}
 .wu:hover{border-color:rgba(168,85,247,.28);transform:translateX(6px);box-shadow:0 6px 28px rgba(0,0,0,.38)}.wu:hover::before{opacity:1}
 .wu-ic{width:37px;height:37px;border-radius:10px;background:rgba(168,85,247,.09);border:1px solid rgba(168,85,247,.16);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
@@ -473,7 +475,7 @@ main{min-height:100vh;padding:6.5rem 2.5rem 3rem;max-width:1300px;margin:0 auto;
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
 .ci p{font-size:.88rem;color:var(--muted);line-height:1.88;margin-bottom:1.8rem}
 .cl{display:flex;flex-direction:column;gap:.58rem}
-.clk{display:flex;align-items:center;gap:.9rem;padding:.88rem 1.1rem;background:rgba(255,255,255,.028);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.07);border-radius:14px;text-decoration:none;color:var(--text);transition:all .28s;position:relative;overflow:hidden}
+.clk{display:flex;align-items:center;gap:.9rem;padding:.88rem 1.1rem;background:rgba(255,255,255,.028);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.07);border-radius:14px;text-decoration:none;color:var(--text);transition:all .28s;position:relative;overflow:hidden}
 .clk::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 0% 50%,rgba(168,85,247,.07),transparent 60%);opacity:0;transition:opacity .28s;pointer-events:none}
 .clk:hover{border-color:rgba(168,85,247,.32);background:rgba(168,85,247,.04);transform:translateX(6px);box-shadow:0 6px 24px rgba(168,85,247,.18)}.clk:hover::before{opacity:1}
 .clk-i{width:34px;height:34px;border-radius:9px;background:rgba(168,85,247,.09);border:1px solid rgba(168,85,247,.18);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.62rem;color:var(--purple2);flex-shrink:0;font-weight:700}
@@ -1154,6 +1156,29 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:1.8rem 2.5rem;margin-t
 <!-- NEW CERTIFICATE ENTRY END -->
 <!-- ========================================================= -->
 
+<!-- ========================================================= -->
+<!-- NEW CERTIFICATE ENTRY START -->
+<!-- LG — Letter of Appreciation. Only verified facts used: org name, letter of appreciation, LinkedIn reference. -->
+<!-- No vulnerability details, severity, bounty, date, or title are invented. -->
+<!-- ========================================================= -->
+  <div class="hof-card" style="--hof-color:rgba(228,0,43,.45)">
+    <div class="hof-top">
+      <div class="hof-logo" style="background:rgba(228,0,43,.09);border-color:rgba(228,0,43,.22)">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="84" height="84" rx="20" fill="rgba(228,0,43,0.1)" stroke="rgba(228,0,43,0.7)" stroke-width="3"/>
+          <text x="50" y="63" text-anchor="middle" fill="rgba(228,0,43,0.95)" font-size="34" font-weight="900" font-family="Arial">L</text>
+        </svg>
+      </div>
+      <div><div class="hof-company">LG</div><div class="hof-via">Letter of Appreciation</div></div>
+    </div>
+    <div class="hof-badge-row"><span class="hof-badge cert">📨 Letter of Appreciation</span></div>
+    <p class="hof-desc">Letter of Appreciation received from LG, shared publicly on LinkedIn.</p>
+    <div><a href="https://www.linkedin.com/posts/pradyumn-tiwarinexus-b270561b1_connections-bugbounty-cybersecurity-share-7493958358652104705-d5Oe/?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAADFOk88BgmL7c31I7NwnB6syTrp8OM5oDIg" target="_blank" rel="noopener" class="hof-btn">View LinkedIn Post →</a></div>
+  </div>
+<!-- ========================================================= -->
+<!-- NEW CERTIFICATE ENTRY END -->
+<!-- ========================================================= -->
+
 </div>
 </section>
 
@@ -1286,52 +1311,107 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:1.8rem 2.5rem;margin-t
 
 <script>
 // ── CURSOR ──
-const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
-let mx=window.innerWidth/2,my=window.innerHeight/2,rx=mx,ry=my;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.classList.add('big');ring.classList.add('big')});
-  el.addEventListener('mouseleave',()=>{cur.classList.remove('big');ring.classList.remove('big')});
-});
-(function animR(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR)})();
+// Guarded so a failure here can never block the rest of the page (typing, reveal, form, etc. below).
+// Disabled on touch/coarse-pointer devices and when prefers-reduced-motion is set — falls back to the
+// native pointer in both cases. Uses a single rAF loop (no per-mousemove DOM writes) and transform/
+// translate3d instead of left/top so it never triggers layout. Pauses entirely while the tab is hidden.
+try{
+  const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+  const reduceMotion=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarsePointer=window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  if(!cur||!ring||coarsePointer||reduceMotion){
+    if(cur)cur.style.display='none';
+    if(ring)ring.style.display='none';
+    document.documentElement.classList.add('no-custom-cursor');
+  }else{
+    let mx=window.innerWidth/2,my=window.innerHeight/2,rx=mx,ry=my,rafId=null;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY},{passive:true});
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{cur.classList.add('big');ring.classList.add('big')});
+      el.addEventListener('mouseleave',()=>{cur.classList.remove('big');ring.classList.remove('big')});
+    });
+    function frame(){
+      cur.style.transform=`translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+      rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+      ring.style.transform=`translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
+      rafId=requestAnimationFrame(frame);
+    }
+    rafId=requestAnimationFrame(frame);
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden){if(rafId)cancelAnimationFrame(rafId);rafId=null;}
+      else if(!rafId){rafId=requestAnimationFrame(frame);}
+    });
+  }
+}catch(err){
+  console.warn('Cursor init skipped:',err);
+  try{
+    document.documentElement.classList.add('no-custom-cursor');
+    const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+    if(cur)cur.style.display='none';
+    if(ring)ring.style.display='none';
+  }catch(_){}
+}
 
 // ── TYPING ──
-const roles=['Cybersecurity Researcher','Bug Bounty Hunter','Recon Automation Developer','OSINT Engineer','Penetration Tester','CTF Player'];
-let ri=0,ci=0,del=false;
-const tel=document.getElementById('tr');
-function type(){
-  const w=roles[ri];
-  if(!del){tel.textContent=w.slice(0,ci+1);ci++;if(ci===w.length){del=true;setTimeout(type,2000);return;}}
-  else{tel.textContent=w.slice(0,ci-1);ci--;if(ci===0){del=false;ri=(ri+1)%roles.length;}}
-  setTimeout(type,del?34:78);
-}
-type();
+try{
+  const roles=['Cybersecurity Researcher','Bug Bounty Hunter','Recon Automation Developer','OSINT Engineer','Penetration Tester','CTF Player'];
+  let ri=0,ci=0,del=false;
+  const tel=document.getElementById('tr');
+  if(tel){
+    function type(){
+      const w=roles[ri];
+      if(!del){tel.textContent=w.slice(0,ci+1);ci++;if(ci===w.length){del=true;setTimeout(type,2000);return;}}
+      else{tel.textContent=w.slice(0,ci-1);ci--;if(ci===0){del=false;ri=(ri+1)%roles.length;}}
+      setTimeout(type,del?34:78);
+    }
+    type();
+  }
+}catch(err){console.warn('Typing effect skipped:',err);}
 
 // ── VULN BARS ──
-setTimeout(()=>{document.querySelectorAll('.vbf').forEach(b=>{b.style.width=b.dataset.w})},900);
+try{
+  setTimeout(()=>{document.querySelectorAll('.vbf').forEach(b=>{b.style.width=b.dataset.w})},900);
+}catch(err){console.warn('Vuln bars skipped:',err);}
 
 // ── REVEAL ──
-const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')})},{threshold:0.07});
-document.querySelectorAll('.rev').forEach(r=>obs.observe(r));
+// If IntersectionObserver is unavailable or setup throws, reveal everything immediately rather than
+// leaving sections permanently hidden (they start at opacity:0 until the '.vis' class is added).
+try{
+  if('IntersectionObserver' in window){
+    const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('vis');obs.unobserve(x.target);}})},{threshold:0.07});
+    document.querySelectorAll('.rev').forEach(r=>obs.observe(r));
+  }else{
+    document.querySelectorAll('.rev').forEach(r=>r.classList.add('vis'));
+  }
+}catch(err){
+  console.warn('Reveal observer failed, showing all sections:',err);
+  document.querySelectorAll('.rev').forEach(r=>r.classList.add('vis'));
+}
 
 // ── CERTIFICATE TABS (Appreciation & Certificates) ──
 function showCert(orgId,idx,tabEl){
-  const card=tabEl.closest('.hof-card');
-  card.querySelectorAll('.cert-tab').forEach(t=>t.classList.remove('active'));
-  card.querySelectorAll('.cert-panel').forEach(p=>p.classList.remove('active'));
-  tabEl.classList.add('active');
-  const panel=document.getElementById(orgId+'-panel-'+idx);
-  if(panel)panel.classList.add('active');
+  try{
+    const card=tabEl.closest('.hof-card');
+    if(!card)return;
+    card.querySelectorAll('.cert-tab').forEach(t=>t.classList.remove('active'));
+    card.querySelectorAll('.cert-panel').forEach(p=>p.classList.remove('active'));
+    tabEl.classList.add('active');
+    const panel=document.getElementById(orgId+'-panel-'+idx);
+    if(panel)panel.classList.add('active');
+  }catch(err){console.warn('showCert failed:',err);}
 }
 
 // ── FORM ──
 function fSubmit(e){
-  e.preventDefault();
-  const ok=document.getElementById('fok');
-  ok.textContent='> Message sent! Will respond within 48 hours.';
-  ok.style.display='block';
-  e.target.reset();
-  setTimeout(()=>ok.style.display='none',5000);
+  try{
+    e.preventDefault();
+    const ok=document.getElementById('fok');
+    if(!ok)return;
+    ok.textContent='> Message sent! Will respond within 48 hours.';
+    ok.style.display='block';
+    e.target.reset();
+    setTimeout(()=>ok.style.display='none',5000);
+  }catch(err){console.warn('fSubmit failed:',err);}
 }
 
 // ── CTF (read-only display, no add/edit/delete) ──
@@ -1376,7 +1456,7 @@ function filterCTF(cat){
   renderCTF();
 }
 
-renderCTF();
+try{renderCTF();}catch(err){console.warn('CTF render failed:',err);}
 </script>
 
 <!-- ── OPEN SOURCE CONTRIBUTIONS: data-driven renderer ── -->
@@ -1458,8 +1538,7 @@ function filterOSS(type){
   renderOSS();
 }
 
-renderOSSTabs();
-renderOSS();
+try{renderOSSTabs();renderOSS();}catch(err){console.warn('OSS render failed:',err);}
 </script>
 
 <!-- ── PHASE 3: ACCESSIBILITY ENHANCEMENTS (runtime only — original HTML source is not edited) ── -->
@@ -1467,6 +1546,7 @@ renderOSS();
 <!-- and keeps aria-pressed in sync on filter tabs, without changing any existing markup on disk. -->
 <script>
 (function(){
+try{
   // Associate each .fl-label with its sibling input/textarea for screen readers
   document.querySelectorAll('.fg').forEach((group,i)=>{
     const label=group.querySelector('.fl-label');
@@ -1491,6 +1571,7 @@ renderOSS();
   document.querySelectorAll('.ctf-tabs').forEach(wrap=>{
     new MutationObserver(syncTabs).observe(wrap,{childList:true,subtree:true,attributes:true});
   });
+}catch(err){console.warn('Accessibility enhancements skipped:',err);}
 })();
 </script>
 
@@ -1498,6 +1579,7 @@ renderOSS();
 <!-- Standalone script, scoped only to elements with [data-target]. Does not touch any existing script/logic above. -->
 <script>
 (function(){
+try{
   function countUp(el){
     const target=parseInt(el.dataset.target,10)||0;
     const dur=900,start=performance.now();
@@ -1512,6 +1594,10 @@ renderOSS();
     const wrap=document.getElementById(id);
     if(!wrap)return;
     let done=false;
+    if(!('IntersectionObserver' in window)){
+      wrap.querySelectorAll('.sn[data-target]').forEach(countUp);
+      return;
+    }
     const obs=new IntersectionObserver(entries=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting&&!done){
@@ -1523,6 +1609,7 @@ renderOSS();
     },{threshold:0.3});
     obs.observe(wrap);
   });
+}catch(err){console.warn('Stat counters skipped:',err);}
 })();
 </script>
 </body>
