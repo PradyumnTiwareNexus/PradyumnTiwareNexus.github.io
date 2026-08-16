@@ -1077,6 +1077,26 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:1.8rem 2.5rem;margin-t
 
 </div>
 
+<!-- ═══ ADDITIONAL RECOGNITIONS — compact list, intentionally lighter than the .hof-card grid above ═══ -->
+<!-- Reuses the existing .cl/.clk components from the Contact section (already styled, already optimized). -->
+<!-- For smaller/lesser-known acknowledgements — keeps this section from growing into a wall of large cards. -->
+<div class="sh" style="margin-top:2.8rem;margin-bottom:1.2rem">
+  <div class="st">More Listings</div>
+  <h2 style="font-size:clamp(1.25rem,2.1vw,1.6rem)">Additional <em>Recognitions</em></h2>
+</div>
+<div class="cl" style="max-width:640px">
+  <a href="https://www.4leggedit.com/security-hall-of-fame" target="_blank" rel="noopener" class="clk">
+    <div class="clk-i" style="background:rgba(59,130,246,.09);border-color:rgba(59,130,246,.22);color:#60a5fa">4L</div>
+    <div><span class="clk-lb">Hall of Fame</span><span class="clk-v">4leggedIT</span></div>
+    <span class="clk-a">→</span>
+  </a>
+  <a href="https://leaksnitch.com/hall-of-fame" target="_blank" rel="noopener" class="clk">
+    <div class="clk-i" style="background:rgba(6,182,212,.09);border-color:rgba(6,182,212,.22);color:var(--cyan2)">LS</div>
+    <div><span class="clk-lb">Hall of Fame</span><span class="clk-v">LeakSnitch</span></div>
+    <span class="clk-a">→</span>
+  </a>
+</div>
+
 <!-- Marquee strip -->
 <div class="hof-strip">
   <div class="hof-marquee">
@@ -1128,12 +1148,13 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:1.8rem 2.5rem;margin-t
       </div>
       <div><div class="hof-company">Devsly</div><div class="hof-via">A WAPI Project · Security Hall of Fame</div></div>
     </div>
-    <div class="hof-badge-row"><span class="hof-badge cert">📜 Certificate of Appreciation</span><span class="hof-badge pub">3 Certificates</span></div>
+    <div class="hof-badge-row"><span class="hof-badge cert">📜 Certificate of Appreciation</span><span class="hof-badge pub">4 Certificates</span></div>
 
     <div class="cert-tabs">
       <span class="cert-tab active" onclick="showCert('devsly',1,this)">Cert 1 · Low</span>
       <span class="cert-tab" onclick="showCert('devsly',2,this)">Cert 2 · Info</span>
       <span class="cert-tab" onclick="showCert('devsly',3,this)">Cert 3 · Info</span>
+      <span class="cert-tab" onclick="showCert('devsly',4,this)">Cert 4 · Low</span>
     </div>
 
     <div class="cert-panel active" id="devsly-panel-1">
@@ -1150,6 +1171,11 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:1.8rem 2.5rem;margin-t
       <div class="cert-row"><span class="cert-sev">INFO SEVERITY</span><span class="cert-id">ID: C8B2-A8B0-5E65</span></div>
       // Responsible disclosure acknowledged<br>→ Info-severity vulnerability on Devsly (devsly.io)<br>→ Issued Jul 24, 2026 · Devsly Security Team
       <div><a href="https://devsly.io/thanks/cert/c8b2a8b05e65f9c44bdefecb32cd10e2" target="_blank" rel="noopener" class="hof-btn">View Certificate →</a></div>
+    </div>
+    <div class="cert-panel" id="devsly-panel-4">
+      <div class="cert-row"><span class="cert-sev">LOW SEVERITY</span><span class="cert-id">ID: 4225-725A-9444</span></div>
+      // Responsible disclosure acknowledged<br>→ Low-severity vulnerability on Devsly (devsly.io)<br>→ Issued Aug 15, 2026 · Devsly Security Team
+      <div><a href="https://devsly.io/thanks/cert/4225725a94443f4ab969a048d8884ca3" target="_blank" rel="noopener" class="hof-btn">View Certificate →</a></div>
     </div>
   </div>
 <!-- ========================================================= -->
